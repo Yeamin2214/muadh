@@ -1,7 +1,7 @@
 # Starting version (declared before 4 October 2026)
 
 As required by the challenge terms (clause 8), this file declares everything that existed
-before the challenge period began. It is tagged in Git as `v0-starting-version`.
+before the challenge period began.
 
 ## Prepared before 4 October 2026
 - Architecture document (`docs/architecture.md`)
