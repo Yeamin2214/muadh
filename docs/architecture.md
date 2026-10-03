@@ -1,4 +1,4 @@
-# Mu'adh: System Architecture (Team Sabeel)
+# Mu'adh: System Architecture
 
 ## Purpose
 
