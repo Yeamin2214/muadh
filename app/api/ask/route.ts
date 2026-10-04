@@ -16,6 +16,7 @@ export async function POST(req: Request) {
   const text = typeof body?.question === "string" ? body.question.trim() : "";
   const lang: Lang = LANGS.includes(body?.lang) ? body.lang : me.language;
   if (text.length < 2 || text.length > 1000) return json({ error: "invalid_question" }, 400);
+  const lesson = Number.isInteger(body?.lesson) && body.lesson >= 1 && body.lesson <= 40 ? (body.lesson as number) : undefined;
 
   const since = new Date(Date.now() - 60_000).toISOString();
   const { count } = await adminClient()
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
   if ((count ?? 0) >= PER_MINUTE) return json({ error: "slow_down" }, 429);
 
   try {
-    return json(await ask(text, lang, { id: me.id, gender: me.gender }));
+    return json(await ask(text, lang, { id: me.id, gender: me.gender }, lesson));
   } catch (err) {
     console.error("ask failed", err);
     return json({ error: "temporarily_unavailable" }, 503);

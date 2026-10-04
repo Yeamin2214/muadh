@@ -1,5 +1,5 @@
 import { adminClient } from "./supabase/admin";
-import { embed } from "./embed";
+import { embedQuery } from "./embed";
 
 export type Passage = {
   id: string;
@@ -17,12 +17,12 @@ const COLUMNS = "id, kind, arabic, translations, reference, grade, grade_source"
  * Hybrid search over approved passages only: vector search plus keyword search,
  * merged with reciprocal rank fusion. Returns the top passages and the best vector similarity.
  */
-export async function retrieve(question: string, k = 6): Promise<{ passages: Passage[]; bestSimilarity: number }> {
+export async function retrieve(question: string, k = 6): Promise<{ passages: Passage[]; bestSimilarity: number; keywordHits: number }> {
   const db = adminClient();
-  const [vector] = await embed([question]);
+  const vector = await embedQuery(question).catch(() => null);
 
   const [byVector, byKeyword] = await Promise.all([
-    db.rpc("match_passages", { query_embedding: vector, match_count: 12 }),
+    vector ? db.rpc("match_passages", { query_embedding: vector, match_count: 12 }) : Promise.resolve({ data: [] }),
     db.from("passages").select("id").textSearch("fts", question, { type: "websearch", config: "simple" }).limit(12),
   ]);
 
@@ -33,11 +33,12 @@ export async function retrieve(question: string, k = 6): Promise<{ passages: Pas
 
   const topIds = [...scores.entries()].sort((a, b) => b[1] - a[1]).slice(0, k).map(([id]) => id);
   const bestSimilarity = (byVector.data?.[0] as { similarity?: number } | undefined)?.similarity ?? 0;
-  if (!topIds.length) return { passages: [], bestSimilarity };
+  const keywordHits = byKeyword.data?.length ?? 0;
+  if (!topIds.length) return { passages: [], bestSimilarity, keywordHits };
 
   const { data } = await db.from("passages").select(COLUMNS).in("id", topIds);
   const byId = new Map((data ?? []).map((p) => [p.id, p as Passage]));
-  return { passages: topIds.map((id) => byId.get(id)).filter((p): p is Passage => !!p), bestSimilarity };
+  return { passages: topIds.map((id) => byId.get(id)).filter((p): p is Passage => !!p), bestSimilarity, keywordHits };
 }
 
 /** Text of a passage for prompts: translation in the learner's language, falling back to English. */

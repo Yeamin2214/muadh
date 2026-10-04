@@ -1,0 +1,564 @@
+[
+ {
+  "n": 1,
+  "title": "Welcome to Islam, the shahada",
+  "stage": 1,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [],
+  "body": "Welcome. You have said the most important words a person can say. They are called the **shahada**, which means \"testimony\":\n\n> **أشهد أن لا إله إلا الله، وأشهد أن محمدًا رسول الله**\n> Ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan rasulullah.\n> I bear witness that there is no god worthy of worship except Allah, and I bear witness that Muhammad is the Messenger of Allah.\n\nThe shahada has two parts.\n\n**Part one: no god but Allah.** Only Allah deserves to be worshipped. Not a person, an idol or anything else. Allah tells us to know this truth:\n\n[Quran 47:19]\n\n**Part two: Muhammad is His Messenger.** Allah sent the Prophet Muhammad (peace be upon him) to teach us how to worship Him. So we learn our prayer, our fasting and our good manners from his example.\n\nThe Prophet (peace be upon him) said that Islam is built on five pillars, and the shahada is the first of them:\n\n[Hadith: Bukhari 8, Muslim 16]\n\nEverything else you will learn grows from these two sentences.",
+  "key": "The shahada means: only Allah is worshipped, and we follow His Messenger, Muhammad (peace be upon him).",
+  "today": "Say the shahada slowly once, thinking about its meaning. You can listen to it in the app.",
+  "mentor": "if you are unsure whether your shahada was said correctly, or about anything that happened when you said it."
+ },
+ {
+  "n": 2,
+  "title": "Tawhid, Allah is One",
+  "stage": 1,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   1
+  ],
+  "body": "**Tawhid** means believing that Allah is One, and worshipping Him alone. It is the heart of the first part of your shahada.\n\nAllah describes Himself in a short chapter of the Quran called **Surah Al-Ikhlas**:\n\n[Quran 112:1-4]\n\nIn simple words, this chapter teaches four things about Allah:\n\n- He is One. There is no other god beside Him.\n- Everything needs Him, and He needs no one.\n- He has no parents and no children.\n- Nothing is like Him.\n\nTawhid is not only a belief in your mind. It shapes how you live. When you pray, you pray to Allah alone. When you ask for help, you ask Allah directly. You do not need any person or object between you and Him. He hears you wherever you are, in any language.",
+  "key": "Allah is One, and all worship is for Him alone.",
+  "today": "Listen to Surah Al-Ikhlas with its meaning in the app. It is only four short verses, and many Muslims learn it early because it is easy to recite in prayer.",
+  "mentor": "if you have questions about beliefs you held before Islam, or how to talk about them with your family."
+ },
+ {
+  "n": 3,
+  "title": "Who is Allah, His names and mercy",
+  "stage": 1,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   2
+  ],
+  "body": "We come to know Allah through the names He gave Himself in the Quran. At the end of Surah Al-Hashr, Allah mentions many of His names together:\n\n[Quran 59:22-24]\n\nHere are four of them to start with:\n\n- **Ar-Rahman, Ar-Rahim:** the Most Merciful, the Especially Merciful.\n- **As-Salam:** the Source of Peace.\n- **Al-Khaliq:** the Creator of everything.\n\nOf all His names, mercy comes up again and again. Allah tells us how wide His mercy is:\n\n[Quran 7:156]\n\nThis matters for you right now. Maybe you worry that you are learning slowly, or that you still make mistakes. Your Lord is the Most Merciful. He knows you are new, and He sees every small effort you make.",
+  "key": "Allah is the Most Merciful, and His mercy covers everything.",
+  "today": "When you start something, say \"Bismillah ar-Rahman ar-Rahim\": in the name of Allah, the Most Merciful, the Especially Merciful.",
+  "mentor": "if you want to learn more of Allah's names, or have questions about what a name means."
+ },
+ {
+  "n": 4,
+  "title": "Muhammad, the final Messenger",
+  "stage": 1,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   1
+  ],
+  "body": "The second part of your shahada is about the Prophet Muhammad (peace be upon him). Who is he, and why do we follow him?\n\nAllah sent many prophets to humanity over history, all calling people to worship Allah alone. Muhammad (peace be upon him) is the last of them. After him, no new prophet will come:\n\n[Quran 33:40]\n\nAllah also tells us why He sent him:\n\n[Quran 21:107]\n\nHe was sent as a mercy. Through him, Allah taught people how to pray, how to treat their families and neighbours, and how to live a good life.\n\nThat is why Muslims follow his example, called the **Sunnah**. The Quran tells us to pray, and the Prophet (peace be upon him) showed us exactly how. When you learn to pray in the coming lessons, you will be following what he taught.\n\nMuslims love and respect him. When his name is mentioned, many say \"peace be upon him\", or in Arabic, \"sallallahu alayhi wa sallam\".",
+  "key": "Muhammad (peace be upon him) is the final Messenger of Allah, sent as a mercy, and we learn how to live Islam from his example.",
+  "today": "Next time you hear or say his name, add \"peace be upon him\".",
+  "mentor": "if you want a short, reliable book about his life to read next."
+ },
+ {
+  "n": 5,
+  "title": "Your past is forgiven",
+  "stage": 1,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   1
+  ],
+  "body": "Many new Muslims carry a heavy feeling: \"What about everything I did before?\" This lesson is good news.\n\nAllah promises that when a person turns to Islam, what came before is forgiven:\n\n[Quran 8:38]\n\nOne of the Prophet's companions, Amr ibn al-As, felt the same worry when he came to accept Islam. He held back his hand and asked for one condition first: that his past be forgiven. The Prophet (peace be upon him) told him that Islam wipes away what came before it:\n\n[Hadith: Muslim 121]\n\nSo you do not need to live with guilt about your past. You start with a clean page. What matters now is what you do from today.\n\nIf an old memory makes you feel low, remember this lesson. Turning to Allah is never too late, and He is the Most Merciful.",
+  "key": "Entering Islam wipes away the past. You start fresh.",
+  "today": "Make a short dua in your own language, thanking Allah for guiding you to Islam.",
+  "mentor": "about anything from your past that involves other people, such as debts, promises or money you owe. These are personal questions, and your mentor will help you with them."
+ },
+ {
+  "n": 6,
+  "title": "The six pillars of faith",
+  "stage": 1,
+  "minutes": 5,
+  "level": "Level A",
+  "prereqs": [
+   2,
+   4
+  ],
+  "body": "One day, the angel Jibril (Gabriel) came to the Prophet (peace be upon him) in the form of a man and asked him about faith, called **iman**. The Prophet answered with six things a Muslim believes in:\n\n[Hadith: Muslim 8]\n\nHere they are in simple words:\n\n1. **Allah:** He is One, and only He is worshipped.\n2. **His angels:** created by Allah, they obey Him and carry out His commands.\n3. **His books:** Allah sent books to His messengers. The last is the Quran.\n4. **His messengers:** from Adam, Nuh (Noah), Ibrahim (Abraham), Musa (Moses) and Isa (Jesus), to the last, Muhammad (peace be upon them all).\n5. **The Last Day:** life continues after death, and every person will meet Allah and be judged fairly.\n6. **Divine decree (qadar):** Allah knows and has decreed all things. We still make our own choices and are responsible for them.\n\nThe Quran mentions believers' faith in several of these together:\n\n[Quran 2:285]",
+  "key": "Faith rests on six pillars: Allah, His angels, His books, His messengers, the Last Day, and divine decree.",
+  "today": "Read the six pillars once more and pick the one you would like to learn more about.",
+  "mentor": "detailed questions about divine decree, angels or the Last Day. These go deep, and a teacher explains them best."
+ },
+ {
+  "n": 7,
+  "title": "The five pillars of Islam",
+  "stage": 1,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   1
+  ],
+  "body": "If faith is what you believe, the five pillars are what you do. The Prophet (peace be upon him) compared Islam to a building that stands on five pillars:\n\n[Hadith: Bukhari 8, Muslim 16]\n\nThe five pillars are:\n\n1. **Shahada:** bearing witness that there is no god but Allah and that Muhammad is His Messenger. You have already done this.\n2. **Salah:** the five daily prayers.\n3. **Zakat:** giving a set share of your wealth to people in need, once it reaches a certain amount.\n4. **Sawm:** fasting in the month of Ramadan.\n5. **Hajj:** the pilgrimage to Makkah.\n\nYou do not need to learn all of them this week. The next step after the shahada is prayer, so most of your coming lessons prepare you for it. The others will come in their time, step by step.",
+  "key": "Islam stands on five pillars: shahada, prayer, zakat, fasting in Ramadan, and hajj.",
+  "today": "Say the five pillars aloud from memory. Check yourself against the list.",
+  "mentor": "whether zakat or hajj applies to you yet. These depend on your personal situation."
+ },
+ {
+  "n": 8,
+  "title": "Step by step, how Islam is learned",
+  "stage": 1,
+  "minutes": 5,
+  "level": "Level A",
+  "prereqs": [
+   7
+  ],
+  "body": "You may feel there is a lot to learn. That is normal, and Islam itself teaches in steps.\n\nWhen the Prophet (peace be upon him) sent his companion **Mu'adh ibn Jabal** to teach the people of Yemen, he told him the order: first call them to the shahada; when they accept it, teach them the five daily prayers; when they accept that, teach them zakat:\n\n[Hadith: Bukhari 1395, Muslim 19]\n\nThe Quran itself was revealed step by step. Aisha, the Prophet's wife, explained that the first parts revealed spoke about faith, Paradise and the Hereafter, and the rules about what is lawful and forbidden came later, once hearts were ready:\n\n[Hadith: Bukhari 4993]\n\nAnd Allah never asks a person for more than they can carry:\n\n[Quran 2:286]\n\nThis app is built on that same order, and it is named after Mu'adh for that reason. Learning is gradual, but prayer is your first priority after belief, so it comes next.\n\nMu'adh is an AI assistant. It answers from approved sources only. Personal questions about your own situation, like marriage, family or work, always go to a human mentor, who will reply to you.",
+  "key": "Learn step by step, with prayer first. Allah does not burden you beyond what you can bear.",
+  "today": "Look at your journey in the app and see what is coming next.",
+  "mentor": "any question about your own life. That is exactly what your mentor is for."
+ },
+ {
+  "n": 9,
+  "title": "Why purity matters",
+  "stage": 2,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   7
+  ],
+  "body": "Before you learn to pray, you need to learn about **purity**, called **taharah** in Arabic. In Islam, cleanliness is not just good hygiene. It is part of worship.\n\nAllah tells us He loves people who keep themselves pure:\n\n[Quran 2:222]\n\nThe same verse also mentions people who turn back to Allah in repentance. So purity in Islam has two sides:\n\n- **Inner purity:** a clean heart, by turning to Allah and leaving what is wrong.\n- **Outer purity:** a clean body, clean clothes and a clean place, especially for prayer.\n\nThe Prophet (peace be upon him) said that purity is half of faith:\n\n[Hadith: Muslim 223]\n\nThat shows how much it matters. In the next lessons you will learn the practical steps: the full bath (ghusl), the washing before prayer (wudu), and what to do when there is no water.",
+  "key": "Purity is part of faith. Allah loves those who keep themselves pure, inside and out.",
+  "today": "Check that the place where you will pray, and the clothes you will pray in, are clean.",
+  "mentor": "if something specific in your home or workplace makes staying clean difficult."
+ },
+ {
+  "n": 10,
+  "title": "Ghusl, the full bath",
+  "stage": 2,
+  "minutes": 5,
+  "level": "Level A, with one Level C point",
+  "prereqs": [
+   9
+  ],
+  "body": "**Ghusl** is washing the whole body in a special way, to become pure for prayer. Allah mentions it in the verse about preparing for prayer:\n\n[Quran 5:6]\n\n**When is ghusl needed?** After marital relations or any sexual discharge, a state called **janabah**. Women also do ghusl when their monthly period ends, as this verse refers to:\n\n[Quran 2:222]\n\n**How to do it.** The Prophet's wife Aisha described how he did ghusl:\n\n[Hadith: Bukhari 248, Muslim 316]\n\nIn simple steps:\n\n1. Make the intention in your heart to purify yourself.\n2. Wash your hands.\n3. Do wudu, as you will learn in lesson 11.\n4. Wet your hair, running your wet fingers through it to the roots.\n5. Pour water over your head three times.\n6. Pour water over the rest of your body, making sure it reaches everywhere.\n\nThe main thing is that water reaches your whole body. If you are unsure about any detail, your mentor can explain.",
+  "key": "Ghusl means washing the whole body, and it is needed after janabah, and for women at the end of their monthly period.",
+  "today": "Read the steps once more so you are ready when you need them.",
+  "mentor": "whether you should do ghusl because you have just entered Islam. Scholars differ on this (Level C), so your mentor will advise you. Women can also ask about details specific to them."
+ },
+ {
+  "n": 11,
+  "title": "Wudu step by step",
+  "stage": 2,
+  "minutes": 5,
+  "level": "Level A",
+  "prereqs": [
+   9
+  ],
+  "body": "**Wudu** is the washing you do before prayer. Allah describes it in the Quran:\n\n[Quran 5:6]\n\nThe Prophet's companion Uthman showed people how the Prophet (peace be upon him) made wudu:\n\n[Hadith: Bukhari 159, Muslim 226]\n\nFollowing that example, the steps are:\n\n1. Make the intention in your heart to do wudu.\n2. Wash your hands three times.\n3. Rinse your mouth, and rinse your nose by drawing in a little water and blowing it out.\n4. Wash your face three times, from the hairline to the chin and from ear to ear.\n5. Wash your right arm up to and including the elbow three times, then the left.\n6. Wipe your head once with wet hands.\n7. Wash your right foot up to and including the ankle three times, then the left.\n\nOnce you have wudu, you can pray as many prayers as you like until something breaks it. That is the next lesson.",
+  "key": "Wudu washes the face, arms, head and feet, in order, before prayer.",
+  "today": "Make wudu once, slowly, following the steps in the app.",
+  "mentor": "what to do about things like a cast, a bandage or nail polish that stops water reaching the skin."
+ },
+ {
+  "n": 12,
+  "title": "What breaks wudu",
+  "stage": 2,
+  "minutes": 4,
+  "level": "Level A, with Level C points",
+  "prereqs": [
+   11
+  ],
+  "body": "Wudu stays with you until something breaks it. Then you make wudu again before your next prayer. The Prophet (peace be upon him) said that Allah does not accept the prayer of someone whose wudu has been broken until they make wudu again:\n\n[Hadith: Bukhari 135, Muslim 225]\n\nIn that hadith, the companion Abu Hurayra explained that passing wind is one of the things meant. The things all scholars agree break wudu include:\n\n- Using the toilet: urine or stool.\n- Passing wind.\n- Losing consciousness, for example by fainting.\n\nDeep sleep also breaks wudu, but scholars describe the details differently, for example sleeping while sitting upright.\n\nIf you are unsure whether your wudu is broken, do not worry too much. Islam is easy. Your mentor can help with the cases that confuse you.",
+  "key": "Using the toilet, passing wind and losing consciousness break wudu. Then you make wudu again before praying.",
+  "today": "Before each prayer, ask yourself: has my wudu been broken since I last made it?",
+  "mentor": "about things scholars differ on (Level C), such as sleep, touching, bleeding or eating camel meat."
+ },
+ {
+  "n": 13,
+  "title": "Toilet manners and staying clean",
+  "stage": 2,
+  "minutes": 3,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   9
+  ],
+  "body": "Islam even teaches how to use the toilet. When someone mocked the companion Salman for this, saying \"your Prophet teaches you everything, even toilet manners\", Salman answered proudly: yes, he does. Then he described some of what was taught:\n\n[Hadith: Muslim 262]\n\nFrom this hadith and the Prophet's way, the basic habits are:\n\n- Do not face the qibla (the direction of Makkah) while relieving yourself.\n- Clean yourself with your left hand, not your right.\n- Clean well afterwards. Water is best, and tissue is fine when there is no water.\n- Keep urine off your body and clothes, since they need to be clean for prayer.\n\nThese small habits keep you ready for prayer at any time.",
+  "key": "Clean yourself well after using the toilet, using the left hand, so your body and clothes stay pure for prayer.",
+  "today": "Keep a small water bottle or jug near your toilet if it has no washing spray.",
+  "mentor": "whether the qibla rule applies inside a building with walls. Scholars differ on this (Level C)."
+ },
+ {
+  "n": 14,
+  "title": "Tayammum, when there is no water",
+  "stage": 2,
+  "minutes": 4,
+  "level": "Level A, with Level C points",
+  "prereqs": [
+   11
+  ],
+  "body": "What if you cannot find water, or you are ill and water would harm you? Islam has an easy answer: **tayammum**, purifying yourself with clean earth. The same verse that teaches wudu mentions it:\n\n[Quran 5:6]\n\nThe companion Ammar once thought he had to roll in the dust to purify himself. The Prophet (peace be upon him) showed him a much simpler way:\n\n[Hadith: Bukhari 338, Muslim 368]\n\nFollowing that hadith, the steps are:\n\n1. Make the intention in your heart.\n2. Strike clean earth or dust lightly with both palms.\n3. Blow lightly on your hands.\n4. Wipe your face with your palms.\n5. Wipe the back of each hand.\n\nTayammum takes the place of wudu or ghusl until water is available again, or until you are able to use it.",
+  "key": "When there is no water, or water would harm you, tayammum with clean earth takes its place.",
+  "today": "Read the steps once so you know them if you ever need them, for example while travelling.",
+  "mentor": "whether your illness or situation allows tayammum, and which surfaces count as clean earth. These details depend on your case (Level C)."
+ },
+ {
+  "n": 15,
+  "title": "Why Muslims pray",
+  "stage": 3,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   7
+  ],
+  "body": "Prayer, called **salah**, is the second pillar of Islam and the first practice that comes after belief. But why do we pray?\n\n**To remember Allah.** Allah told the Prophet Musa (Moses) to establish prayer for His remembrance:\n\n[Quran 20:14]\n\nFive times a day, you stop what you are doing and turn to your Lord. Work, worries and busy days pause, and you remember why you are here.\n\n**To keep away from wrong.** Allah tells us that prayer keeps a person away from shameful and wrong actions:\n\n[Quran 29:45]\n\nWhen you stand before Allah five times a day, it becomes harder to do things you would be ashamed of in front of Him.\n\nPrayer is also a conversation. You praise Allah, you ask Him for guidance, and you ask for what you need, in His presence.\n\nIn the next lessons you will learn prayer step by step, and very soon you will pray your first full prayer.",
+  "key": "We pray to remember Allah, five times a day, and prayer keeps us away from wrong.",
+  "today": "Look at today's prayer times in the app, and notice when each one comes.",
+  "mentor": "if you feel nervous about praying, or about praying where other people can see you."
+ },
+ {
+  "n": 16,
+  "title": "The five prayers and their times",
+  "stage": 3,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   15
+  ],
+  "body": "Each prayer has its own time window. Allah says:\n\n[Quran 4:103]\n\nThe Prophet (peace be upon him) explained when each prayer's time begins and ends:\n\n[Hadith: Muslim 612]\n\nHere are the five prayers in order through the day:\n\n| Prayer | When it starts | When it ends |\n| --- | --- | --- |\n| **Fajr** | At dawn, when the first light appears | At sunrise |\n| **Dhuhr** | Just after midday, when the sun passes its highest point | When Asr begins |\n| **Asr** | In the afternoon | Before sunset |\n| **Maghrib** | Just after sunset | When the red glow leaves the sky |\n| **Isha** | When night has fallen | Middle of the night |\n\nYou do not need to calculate any of this. The app shows the exact times for your city every day, and can remind you when each prayer begins.\n\nIt is best to pray early in the time window, and you should never let a prayer's time end without praying it.",
+  "key": "Fajr, Dhuhr, Asr, Maghrib and Isha each have a set time. Pray each one within its time.",
+  "today": "Turn on prayer reminders in the app.",
+  "mentor": "if your work or sleep schedule makes one of the prayer times hard. Lesson 25 also covers this."
+ },
+ {
+  "n": 17,
+  "title": "Before you pray",
+  "stage": 3,
+  "minutes": 4,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   11,
+   16
+  ],
+  "body": "Before you start a prayer, check five things:\n\n1. **The time has begun.** Each prayer has its time, as you learned in lesson 16.\n2. **You have wudu.** If it was broken, make it again (lessons 11 and 12).\n3. **Your body, clothes and place are clean.**\n4. **You are properly covered.**\n5. **You face the qibla,** the direction of the Kaaba in Makkah.\n\n**Facing the qibla.** Allah commanded the believers to turn their faces towards the Sacred Mosque in Makkah:\n\n[Quran 2:144]\n\nThe app has a compass that shows you the qibla wherever you are.\n\n**Covering.** Allah tells us to take our proper clothing when we come to pray:\n\n[Quran 7:31]\n\nIn general, a man covers at least from his navel to his knees, and a woman covers her whole body except her face and hands. Wear clean, decent clothes, as you would to meet someone important.",
+  "key": "Before praying: the time has begun, you have wudu, you are clean and covered, and you face the qibla.",
+  "today": "Use the app's compass to find the qibla in your room, and remember the direction.",
+  "mentor": "about the details of covering, which scholars describe a little differently (Level C), or if you cannot tell the qibla direction."
+ },
+ {
+  "n": 18,
+  "title": "Al-Fatiha, its meaning",
+  "stage": 3,
+  "minutes": 5,
+  "level": "Level A",
+  "prereqs": [
+   15
+  ],
+  "body": "**Al-Fatiha**, \"the Opening\", is the first chapter of the Quran. Muslims recite it in every unit of every prayer. The Prophet (peace be upon him) said that there is no prayer for someone who does not recite it:\n\n[Hadith: Bukhari 756, Muslim 394]\n\nHere is the whole chapter, in Arabic with its approved translation:\n\n[Quran 1:1-7]\n\nIn simple words, Al-Fatiha moves through three parts:\n\n1. **Praising Allah** (verses 1 to 4): we begin in His name, praise Him as Lord of all the worlds, the Most Merciful, and the Master of the Day of Judgement.\n2. **Our promise** (verse 5): You alone we worship, and You alone we ask for help. This is tawhid, in one line.\n3. **Our request** (verses 6 and 7): guide us to the straight path, the path of those You have blessed.\n\nSo every time you pray, you praise Allah, renew your promise to worship only Him, and ask Him for guidance.",
+  "key": "Al-Fatiha is recited in every unit of prayer. It praises Allah, promises to worship only Him, and asks for guidance.",
+  "today": "Read the meaning of Al-Fatiha slowly, verse by verse, in your language.",
+  "mentor": "if you want a deeper explanation of any verse."
+ },
+ {
+  "n": 19,
+  "title": "Learning Al-Fatiha, line by line",
+  "stage": 3,
+  "minutes": 10,
+  "level": "Level A",
+  "prereqs": [
+   18
+  ],
+  "body": "Now you know what Al-Fatiha means. The next step is learning to recite it in Arabic, because it is recited in Arabic in prayer. Do not worry if Arabic is new to you. Millions of new Muslims have learned it, one line at a time.\n\n[Quran 1:1-7]\n\n**How to learn it with the app:**\n\n1. Tap a verse to hear it recited. Listen to it three times.\n2. Repeat it aloud after the recording, slowly.\n3. When the verse feels easy, add the next one, then recite both together.\n4. Learn one or two verses a day. In about a week you will know the whole chapter.\n\nRecite it to yourself while walking, waiting or before sleeping. Every repetition counts as remembering Allah.\n\n**Do not wait until you are perfect to start praying.** Lesson 24 explains what to do while you are still learning.",
+  "key": "Learn Al-Fatiha one or two verses a day, by listening and repeating.",
+  "today": "Listen to the first two verses three times each, and repeat them aloud.",
+  "mentor": "to listen to your recitation once you know it, so they can gently correct your pronunciation."
+ },
+ {
+  "n": 20,
+  "title": "One rak'ah, step by step",
+  "stage": 3,
+  "minutes": 6,
+  "level": "Level A",
+  "prereqs": [
+   17,
+   19
+  ],
+  "body": "A prayer is made of units called **rak'ahs**. Learn one rak'ah well, and you can build every prayer from it. The Prophet (peace be upon him) told us:\n\n[Hadith: Bukhari 631]\n\nOnce, a man prayed quickly and carelessly. The Prophet (peace be upon him) told him to pray again, and then taught him the steps, telling him to be calm and still in each position:\n\n[Hadith: Bukhari 757, Muslim 397]\n\n**The steps of one rak'ah:**\n\n1. **Standing (qiyam):** raise your hands and say \"Allahu Akbar\" (Allah is the Greatest) to begin. Then recite Al-Fatiha.\n2. **Bowing (ruku'):** say \"Allahu Akbar\" and bow, hands on your knees, back straight. Stay still for a moment.\n3. **Rising:** stand up straight again and be still.\n4. **Prostrating (sujud):** say \"Allahu Akbar\" and go down, with your forehead, nose, palms, knees and toes on the ground. Stay still.\n5. **Sitting:** sit up briefly and be still.\n6. **Second prostration:** prostrate again, the same way.\n\nIn bowing, the Prophet (peace be upon him) said \"Subhana Rabbiyal-Azim\" (Glory be to my Lord, the Almighty), and in prostration \"Subhana Rabbiyal-A'la\" (Glory be to my Lord, the Most High). This source is added here and is not yet on the lesson map:\n\n[Hadith: Muslim 772]\n\nThree more short phrases complete the rak'ah. After the opening \"Allahu Akbar\", you may say an opening dua such as Sana (Muslim 399; another authentic version is in Bukhari 744, Muslim 598). When rising from bowing, say \"Sami'allahu liman hamidah\", then \"Rabbana wa lakal-hamd\" (Bukhari, number to verify on Dorar). Between the two prostrations, say \"Rabbighfir li\" (Sunan, verified on Dorar). The app shows each phrase with its source, plays it in our hafiz's voice, and shows each position with a picture.",
+  "key": "One rak'ah is: standing with Al-Fatiha, bowing, rising, two prostrations with a sitting between, each done calmly.",
+  "today": "Practise the movements of one rak'ah slowly, with the app's guide.",
+  "mentor": "if an injury or health problem makes any position difficult."
+ },
+ {
+  "n": 21,
+  "title": "Your first full prayer, Fajr",
+  "stage": 3,
+  "minutes": 6,
+  "level": "Level A",
+  "prereqs": [
+   20
+  ],
+  "body": "This is the big moment: your first complete prayer. **Fajr**, the dawn prayer, has two rak'ahs, so it is the perfect one to start with. You pray it the way the Prophet (peace be upon him) prayed:\n\n[Hadith: Bukhari 631]\n\n**Fajr, from start to finish:**\n\n1. Check the five things from lesson 17: time, wudu, clean, covered, facing the qibla.\n2. Make the intention in your heart to pray Fajr.\n3. **First rak'ah:** everything from lesson 20, from \"Allahu Akbar\" to the second prostration.\n4. Stand up for the **second rak'ah** and do it the same way.\n5. After the second prostration, stay sitting and recite the **tashahhud**. You will learn its words in lesson 22.\n6. End the prayer with **salam**: turn your head to the right and say \"As-salamu alaykum wa rahmatullah\", then to the left and say it again.\n\nThe salam to the right and left comes from this hadith, a source added here and not yet on the lesson map:\n\n[Hadith: Muslim 582]\n\nIt is fine to go slowly and to follow the app's guide while you pray. Allah sees your effort.",
+  "key": "Fajr is two rak'ahs, then the tashahhud, then salam to the right and left.",
+  "today": "Pray your first full Fajr, or practise it now if Fajr has passed, using the guide.",
+  "mentor": "if you make a mistake in prayer and are not sure what to do."
+ },
+ {
+  "n": 22,
+  "title": "The tashahhud",
+  "stage": 3,
+  "minutes": 10,
+  "level": "Level A",
+  "prereqs": [
+   21
+  ],
+  "body": "The **tashahhud** is what you say while sitting near the end of the prayer. The companion Ibn Mas'ud said the Prophet (peace be upon him) taught it to him as carefully as he taught a chapter of the Quran:\n\n[Hadith: Bukhari 831, Muslim 402]\n\nThe app shows the exact words in Arabic, with transliteration, meaning and audio, taken from the hadith. In simple words, the tashahhud says:\n\n1. All greetings, prayers and good things belong to Allah.\n2. Peace be upon you, O Prophet, and the mercy and blessings of Allah.\n3. Peace be upon us, and upon all of Allah's righteous servants.\n4. I bear witness that there is no god but Allah, and that Muhammad is His servant and Messenger.\n\nNotice how it ends: with your shahada, the same words from lesson 1. Every prayer brings you back to them.\n\n**How to learn it:** the same way as Al-Fatiha. Listen, repeat one line at a time, and add a line each day. Until you have memorised it, you can follow the app's guide.",
+  "key": "In the sitting near the end of the prayer, you recite the tashahhud, which ends with the shahada.",
+  "today": "Listen to the first line of the tashahhud three times, and repeat it aloud.",
+  "mentor": "what else is said in the final sitting, such as sending blessings on the Prophet, once you know the tashahhud well."
+ },
+ {
+  "n": 23,
+  "title": "Three- and four-rak'ah prayers",
+  "stage": 3,
+  "minutes": 5,
+  "level": "Level A",
+  "prereqs": [
+   22
+  ],
+  "body": "You can now pray two rak'ahs. The other prayers are longer, but they use the same building blocks. Aisha, the Prophet's wife, explained that prayer was first prescribed as two rak'ahs, and later some prayers were made longer for people at home:\n\n[Hadith: Bukhari 350, Muslim 685]\n\n**How many rak'ahs each prayer has:**\n\n| Prayer | Rak'ahs |\n| --- | --- |\n| Fajr | 2 |\n| Dhuhr | 4 |\n| Asr | 4 |\n| Maghrib | 3 |\n| Isha | 4 |\n\n**How a three- or four-rak'ah prayer works:**\n\n1. Pray two rak'ahs, as in Fajr.\n2. After the second rak'ah, sit and recite the tashahhud. This is the **first sitting**.\n3. Say \"Allahu Akbar\" and stand up for the third rak'ah. In the third and fourth rak'ahs, you recite Al-Fatiha only.\n4. After the last rak'ah (the third for Maghrib, the fourth for the others), sit for the **final sitting**: recite the tashahhud, then durood Ibrahim, sending blessings on the Prophet (Bukhari 3370, Muslim 406), then the dua before salam, \"Allahumma inni zalamtu nafsi...\" (Bukhari 834, Muslim 2705), and end with salam.\n\nYou are still praying the way the Prophet (peace be upon him) taught:\n\n[Hadith: Bukhari 631]",
+  "key": "Longer prayers add rak'ahs after a first sitting, and always end with the final sitting and salam.",
+  "today": "Pray Maghrib, with its three rak'ahs, using the app's guide.",
+  "mentor": "which prayers are recited aloud and which quietly, and how this differs when you pray alone or behind an imam."
+ },
+ {
+  "n": 24,
+  "title": "Praying while you are still learning",
+  "stage": 3,
+  "minutes": 4,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   20
+  ],
+  "body": "Many new Muslims think: \"I will start praying once I know everything perfectly.\" Please do not wait. Allah asks us to do what we are able to:\n\n[Quran 64:16]\n\nThe Prophet (peace be upon him) said the same thing about his commands: do of them what you are able to:\n\n[Hadith: Bukhari 7288, Muslim 1337]\n\nSo pray now, with what you know. Your prayer is not judged against someone who has prayed for forty years. Allah sees your effort and your sincerity.\n\n**Ways to pray while you are learning:**\n\n- **Pray with others.** At the mosque, follow the imam's movements. You do not need to know every word to stand with the congregation.\n- **Use the app's guide** at home, which shows each position and plays each word.\n- **Keep learning a little every day,** one verse or one line at a time, as in lessons 19 and 22.\n\nEvery prayer you pray while learning is a step forward, not a failure.",
+  "key": "Do not wait to be perfect. Pray with what you know, and keep learning.",
+  "today": "Pray today's prayers as best you can, even if you do not yet know all the words.",
+  "mentor": "what you should say in prayer before you have memorised Al-Fatiha. Scholars give different guidance on this (Level C), and your mentor will tell you what to do."
+ },
+ {
+  "n": 25,
+  "title": "Praying at work and on night shifts",
+  "stage": 3,
+  "minutes": 4,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   16,
+   21
+  ],
+  "body": "Work can make prayer feel hard to fit in. But remember: each prayer has a time window, often a few hours long, and a prayer takes only about five minutes:\n\n[Quran 4:103]\n\n**Practical tips:**\n\n- **Plan ahead.** Check today's prayer times in the app and see which ones fall during your shift.\n- **Use your breaks.** A short break is usually enough time for wudu and a prayer.\n- **Find a clean spot.** A quiet corner, a clean cloth or a small prayer mat is enough.\n- **Ask politely.** Many employers, especially in Saudi Arabia, already make time for prayer. A short, respectful request often works.\n- **Night shifts:** your Fajr may fall during work and your Dhuhr while you sleep. Set app reminders so you pray each prayer within its own time, before or after sleeping.\n\nIf you miss a prayer despite trying, lesson 26 explains what to do.",
+  "key": "Each prayer has a window of time, and a prayer takes only minutes. Plan your prayers around your shift.",
+  "today": "Look at your next shift and mark which prayers fall inside it, and when you can pray them.",
+  "mentor": "whether you can combine prayers because of your work. Scholars differ on when this is allowed (Level C), and your mentor will look at your situation."
+ },
+ {
+  "n": 26,
+  "title": "If you miss a prayer",
+  "stage": 3,
+  "minutes": 3,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   16
+  ],
+  "body": "Everyone sometimes oversleeps or forgets. Islam gives a simple answer. The Prophet (peace be upon him) said that whoever forgets a prayer, or sleeps through it, should pray it as soon as they remember, and that this is all that is needed:\n\n[Hadith: Bukhari 597, Muslim 684]\n\n**So if you miss a prayer by accident:**\n\n1. Do not panic, and do not give up on the day.\n2. As soon as you remember or wake up, make wudu and pray the missed prayer.\n3. Then carry on with the next prayers as normal.\n\n**What about the years before you became Muslim?** You do not need to make up any prayers from before you entered Islam. Remember lesson 5: Islam wipes away what came before it.\n\nThe goal is to pray each prayer on time, and the app's reminders help with that. But a missed prayer is never a reason to stop praying.",
+  "key": "If you forget or sleep through a prayer, pray it as soon as you remember. Prayers from before Islam do not need to be made up.",
+  "today": "Set a Fajr alarm in the app, a few minutes before Fajr begins.",
+  "mentor": "about prayers missed on purpose since you became Muslim. Scholars differ on how to handle these (Level C), and your mentor will guide you."
+ },
+ {
+  "n": 27,
+  "title": "Remembrance after prayer",
+  "stage": 3,
+  "minutes": 3,
+  "level": "Level A",
+  "prereqs": [
+   21
+  ],
+  "body": "After the salam, don't rush away. Spending a minute remembering Allah, called **dhikr**, completes your prayer beautifully. The Prophet (peace be upon him) taught a simple dhikr to say after every prayer, with a great reward:\n\n[Hadith: Muslim 597]\n\n**The dhikr, in simple steps:**\n\n1. **SubhanAllah**, 33 times: Glory be to Allah.\n2. **Alhamdulillah**, 33 times: All praise is for Allah.\n3. **Allahu Akbar**, 33 times: Allah is the Greatest.\n4. Complete one hundred with: **La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd, wa huwa 'ala kulli shay'in qadir.** There is no god but Allah alone, with no partner. His is the dominion and His is the praise, and He has power over all things.\n\nThe hadith says that whoever does this after each prayer has their sins forgiven, even if they are as many as the foam of the sea.\n\nMany people count on their fingers. The app also has a simple counter.",
+  "key": "After each prayer: SubhanAllah 33 times, Alhamdulillah 33, Allahu Akbar 33, then La ilaha illallah to complete a hundred.",
+  "today": "After your next prayer, say the dhikr once, counting on your fingers.",
+  "mentor": "if you would like to learn other remembrances said after prayer."
+ },
+ {
+  "n": 28,
+  "title": "Jumu'ah, the Friday prayer",
+  "stage": 3,
+  "minutes": 4,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   23
+  ],
+  "body": "Friday is a special day for Muslims. At midday, instead of the usual Dhuhr, Muslims gather at the mosque for **Jumu'ah**, the Friday prayer. Allah says:\n\n[Quran 62:9-10]\n\nThese verses tell believers to hurry to the remembrance of Allah when the call to Friday prayer is made and to leave their trading, and afterwards to go back out and seek Allah's bounty.\n\n**What happens at Jumu'ah:**\n\n1. The call to prayer (adhan) is made.\n2. The imam gives a short talk, the **khutbah**. Listen quietly.\n3. Everyone prays **two rak'ahs** together, led by the imam. This takes the place of Dhuhr.\n\nJumu'ah is also a chance to meet other Muslims, and many mosques welcome new Muslims warmly. It is a good day to introduce yourself to the imam.",
+  "key": "Every Friday at midday, Muslims gather at the mosque to hear the khutbah and pray two rak'ahs in place of Dhuhr.",
+  "today": "Find the nearest mosque that holds Friday prayer, and plan to go this Friday.",
+  "mentor": "whether Jumu'ah is required for you, for example if your shift falls on Friday at midday, or if you are a woman. The details depend on the person (Level C)."
+ },
+ {
+  "n": 29,
+  "title": "Halal and haram food",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   7
+  ],
+  "body": "**Halal** means allowed, and **haram** means forbidden. When it comes to food, the basic rule is generous: good, clean food is allowed, and only a few things are forbidden. Allah says:\n\n[Quran 2:172-173]\n\nAnd in another verse, Allah lists the forbidden kinds of meat in more detail:\n\n[Quran 5:3]\n\n**In simple words, these verses forbid:**\n\n- Pork and anything made from pigs.\n- Blood.\n- Animals that died by themselves, or were killed in the ways the verse lists, without being properly slaughtered.\n- Meat sacrificed to anything other than Allah.\n\n**In daily life:** check labels for pork, lard and gelatin from pigs. In Saudi Arabia, meat in shops and restaurants is generally halal. Fruit, vegetables, grains, fish, eggs and milk are all fine.\n\nThe verses also show Allah's mercy: if someone is forced by real need, such as starvation, they are not blamed.",
+  "key": "Eat good, clean food. Pork, blood, dead animals and meat offered to other than Allah are forbidden.",
+  "today": "Check the ingredients on one packaged food at home for pork or pig gelatin.",
+  "mentor": "about meat when you are outside Muslim countries, or eating with non-Muslim family. Scholars give different details on this (Level C)."
+ },
+ {
+  "n": 30,
+  "title": "Alcohol and intoxicants",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A, with a Level D point",
+  "prereqs": [
+   29
+  ],
+  "body": "Islam forbids alcohol and anything that intoxicates. Allah explains why:\n\n[Quran 5:90-91]\n\nIn simple words, these verses call intoxicants and gambling the work of Satan, and tell believers to stay away from them. They explain that Satan uses them to stir up hatred between people and to turn them away from remembering Allah and from prayer.\n\n**This includes:**\n\n- All alcoholic drinks, whatever the amount.\n- Drugs that intoxicate or change the mind.\n- Gambling, which the same verses forbid.\n\nIf you used to drink, this may be one of the biggest changes in your life. Remember lesson 8: the Quran itself prepared people's hearts before this rule came. Be patient with yourself, but stay firm.\n\n**If you find it very hard to stop,** you are not alone, and asking for help is a sign of strength. Talk to your mentor, and if you feel your body or mind depends on alcohol or drugs, please speak to a doctor too.",
+  "key": "Alcohol, intoxicating drugs and gambling are forbidden, because they harm people and keep them from Allah and prayer.",
+  "today": "If there is any alcohol in your home, decide how you will remove it.",
+  "mentor": "about your own situation, such as a job where alcohol is served or sold, or family events where it is present. These are personal questions (Level D), and your mentor will advise you."
+ },
+ {
+  "n": 31,
+  "title": "Eating with Bismillah",
+  "stage": 4,
+  "minutes": 3,
+  "level": "Level A",
+  "prereqs": [
+   29
+  ],
+  "body": "In Islam, even an ordinary meal can become an act of worship. When the Prophet's young stepson Umar ibn Abi Salamah was a boy, he ate carelessly, reaching all over the plate. The Prophet (peace be upon him) gently taught him three manners:\n\n[Hadith: Bukhari 5376, Muslim 2022]\n\n**The three manners:**\n\n1. **Say \"Bismillah\"** (in the name of Allah) before you start eating.\n2. **Eat with your right hand.**\n3. **Eat from what is in front of you,** not from all over a shared plate.\n\nNotice how gently the Prophet (peace be upon him) taught a child. That is also how you can learn: one good habit at a time, without being hard on yourself.",
+  "key": "Before eating, say Bismillah, eat with your right hand, and eat from what is in front of you.",
+  "today": "Say \"Bismillah\" before every meal and snack today, and eat with your right hand.",
+  "mentor": "if you would like to learn more manners of eating and drinking from the Sunnah."
+ },
+ {
+  "n": 32,
+  "title": "Duas for sleeping and waking",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   8
+  ],
+  "body": "A **dua** is a personal prayer to Allah: asking, thanking or remembering Him. You can make dua in any language, at any time. The Prophet (peace be upon him) also taught short duas for everyday moments. Two of the easiest are for going to sleep and waking up:\n\n[Hadith: Bukhari 6312]\n\nThe app shows both duas in Arabic, with transliteration, meaning and audio, taken from this hadith.\n\n**Before sleeping**, the meaning is: \"In Your name, O Allah, I die and I live.\" Sleep is like a small death, and we place ourselves in Allah's care.\n\n**On waking up**, the meaning is: \"All praise is for Allah, who gave us life after He had caused us to die, and to Him is the return.\" The first words of your day are thanks.\n\nThese two duas wrap your night in remembrance of Allah, from the moment you lie down to the moment you wake.",
+  "key": "Before sleeping, say \"Bismika Allahumma amutu wa ahya.\" On waking, thank Allah for giving you life again.",
+  "today": "Learn the sleeping dua tonight. It is only a few words.",
+  "mentor": "if you would like to learn more duas for other moments of the day."
+ },
+ {
+  "n": 33,
+  "title": "Duas in hard times",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   8
+  ],
+  "body": "Becoming Muslim can bring hard days: family tension, loneliness, pressure at work. In these moments, turn to Allah. The Prophet (peace be upon him) had a dua he said when he was in distress:\n\n[Hadith: Bukhari 6346, Muslim 2730]\n\nThe app shows the full dua in Arabic, with transliteration, meaning and audio. In simple words, it repeats three times that there is no god but Allah, and calls Him the Almighty, the Forbearing, and the Lord of the heavens, the earth and the great Throne.\n\nNotice that the dua does not list problems. It reminds the heart how great Allah is. When you remember that the Lord of the heavens and the earth is with you, your problem looks smaller.\n\nYou can also make dua in your own language, from your heart, at any time. Allah understands every language.\n\n**If you feel overwhelmed for a long time,** please do not carry it alone. Talk to your mentor or someone you trust. If you ever feel unsafe, contact local emergency services right away.",
+  "key": "In hard times, remember Allah's greatness with the Prophet's dua, and speak to Him in your own words too.",
+  "today": "Listen to the dua for distress once with its meaning, and save it in the app for when you need it.",
+  "mentor": "whenever life feels heavy. Talking to someone is part of looking after yourself."
+ },
+ {
+  "n": 34,
+  "title": "Kindness to your non-Muslim family",
+  "stage": 4,
+  "minutes": 5,
+  "level": "Level A, with Level C and D points",
+  "prereqs": [
+   5
+  ],
+  "body": "One of the most common worries for new Muslims is family. Does becoming Muslim mean distancing yourself from your parents? No. Islam asks you to stay kind and dutiful to them, even if they do not share your faith. Allah says:\n\n[Quran 31:14-15]\n\nThese verses tell us to be grateful to our parents, and that even if parents push their child to worship others besides Allah, the child should not obey them in that, but should still keep company with them in this world with kindness.\n\nThe Prophet's companion Asma had a mother who was not Muslim. When her mother came to visit, Asma asked the Prophet (peace be upon him) whether she should be kind to her. He told her: yes, keep good relations with your mother:\n\n[Hadith: Bukhari 2620, Muslim 1003]\n\n**In daily life:**\n\n- Keep calling and visiting your parents.\n- Help them, respect them, and speak gently, even when they are upset about your new faith.\n- Your good character may speak to them more than any argument.",
+  "key": "Islam asks you to stay kind and dutiful to your non-Muslim parents, while not obeying them in anything against Allah.",
+  "today": "Call or message a family member just to ask how they are.",
+  "mentor": "about specific family situations, such as religious celebrations, living arrangements or conflict at home. These depend on your circumstances (Level C or D)."
+ },
+ {
+  "n": 35,
+  "title": "Sharing your faith with wisdom",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   34
+  ],
+  "body": "Family and friends will have questions about your new faith. Some will be curious, some worried, and some may be upset. Allah teaches the best way to talk about Islam:\n\n[Quran 16:125]\n\nThis verse tells us to invite to the way of Allah with **wisdom** and **good advice**, and to discuss in the **best way**.\n\n**What this looks like in practice:**\n\n- **Let your character speak first.** Kindness, honesty and patience often say more than words.\n- **Keep answers simple.** Share what Islam means to you, in your own words.\n- **It is fine to say \"I don't know yet, let me find out.\"** You are still learning, and that is honest.\n- **Do not argue to win.** If a conversation becomes heated, end it politely and try another day.\n- **Never pressure anyone.** Your job is to share kindly; guidance is from Allah.\n\nWhen people ask common questions about Islam, the app can point you to clear, approved answers from the book **Bayyinat**, published by Osoul Center.",
+  "key": "Talk about Islam with wisdom, kindness and patience, without arguing or pressuring.",
+  "today": "Think of one question someone has asked you about Islam, and practise a short, kind answer.",
+  "mentor": "for help answering a difficult question or doubt someone has raised with you."
+ },
+ {
+  "n": 36,
+  "title": "Truthfulness and honest work",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A, with a Level D point",
+  "prereqs": [
+   7
+  ],
+  "body": "Honesty is at the heart of a Muslim's character. The Prophet (peace be upon him) explained where truth and lies lead:\n\n[Hadith: Bukhari 6094, Muslim 2607]\n\nIn simple words: truthfulness leads to goodness, and goodness leads to Paradise. Lying leads to wrongdoing, and wrongdoing leads to the Fire. A person who keeps telling the truth becomes known to Allah as truthful.\n\n**Honesty at work:**\n\n- Work the hours you are paid for, and do your job properly.\n- Never take what is not yours, even something small.\n- Keep your promises and agreements.\n- Be fair and truthful with customers, colleagues and your employer.\n\nHonest work is also worship. When you earn a lawful living to support yourself and your family, you are doing something Allah loves.",
+  "key": "Always tell the truth, and earn your living honestly. Truthfulness leads to goodness and to Paradise.",
+  "today": "At work today, notice one moment where honesty matters, and choose it, even if it is hard.",
+  "mentor": "if you are unsure whether your job or part of it is allowed in Islam. This depends on your own situation (Level D)."
+ },
+ {
+  "n": 37,
+  "title": "Modesty in dress and behaviour",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A, with Level C points",
+  "prereqs": [
+   7
+  ],
+  "body": "**Modesty**, called **haya'** in Arabic, is a beautiful part of a Muslim's character. It applies to both men and women, in how we dress, look and behave. Allah speaks to believing men first, and then to believing women:\n\n[Quran 24:30-31]\n\nIn simple words, these verses ask:\n\n- **Believing men** to lower their gaze and guard their chastity.\n- **Believing women** to lower their gaze, guard their chastity, and not show their beauty except what normally appears, and to draw their head covers over their chests.\n\n**What modesty looks like day to day:** clothes that are not tight or see-through, polite speech, respectful behaviour with the opposite sex, and lowering your gaze from what is not appropriate to look at.\n\nIf a change in your dress feels hard at first, that is understandable. Take it as part of your journey, keep your intention sincere, and ask for help when you need it.",
+  "key": "Modesty is for both men and women: lowering the gaze, guarding chastity, and dressing and behaving decently.",
+  "today": "Choose your clothes for tomorrow with modesty in mind.",
+  "mentor": "about the details of dress for men and women, including hijab, which scholars describe with some differences (Level C). Sisters can ask to be connected with a female mentor."
+ },
+ {
+  "n": 38,
+  "title": "Brotherhood, finding your community",
+  "stage": 4,
+  "minutes": 4,
+  "level": "Level A",
+  "prereqs": [
+   7
+  ],
+  "body": "Many new Muslims feel lonely. Old friends may drift away, and new ones take time to find. But in Islam you are never truly alone. You have joined a worldwide family. The Prophet (peace be upon him) described believers like this, interlacing his fingers as he spoke:\n\n[Hadith: Bukhari 481, Muslim 2585]\n\nBelievers are like a building, each part holding up the others. You support your brothers and sisters, and they support you.\n\n**How to find your community:**\n\n- **Go to your local mosque,** especially for Friday prayer (lesson 28). Introduce yourself to the imam.\n- **Visit a da'wah centre** for new Muslims. Many cities have one, with classes and friendly people who understand your journey.\n- **Pray in congregation** when you can. Standing shoulder to shoulder builds bonds.\n- **Stay in touch with your mentor,** who can connect you with other Muslims nearby.\n\nTake the first step, even if it feels awkward. Most Muslims are delighted to welcome someone new.",
+  "key": "Believers support each other like the parts of one building. Find your community at the mosque and through your mentor.",
+  "today": "Find the nearest mosque or da'wah centre for new Muslims, and plan a visit this week.",
+  "mentor": "to introduce you to a study circle or other new Muslims near you."
+ },
+ {
+  "n": 39,
+  "title": "Ramadan and fasting, the basics",
+  "stage": 5,
+  "minutes": 5,
+  "level": "Level A, with a Level C point",
+  "prereqs": [
+   16
+  ],
+  "body": "Fasting in the month of **Ramadan** is the fourth pillar of Islam. Allah says:\n\n[Quran 2:183-185]\n\nIn simple words, these verses teach that:\n\n- Fasting was prescribed for believers, as it was for people before them, so that they may become mindful of Allah.\n- Ramadan is the month in which the Quran was revealed.\n- Someone who is ill or travelling may skip fasting and make up the days later.\n- Allah wants ease for us, not hardship.\n\n**What fasting means:** from dawn (the start of Fajr time) until sunset (Maghrib), a fasting person does not eat, drink or have marital relations.\n\n**A day in Ramadan:**\n\n1. **Suhur:** a meal before dawn, to give you strength.\n2. **The fast:** through the day, with your prayers as normal.\n3. **Iftar:** breaking the fast at sunset, often with dates and water.\n\nRamadan is also a time for more prayer, Quran, charity and good character. Many mosques hold iftar meals, which are a wonderful way to meet the community.",
+  "key": "In Ramadan, Muslims fast from dawn to sunset. The ill and travellers may make up the days later.",
+  "today": "Check in the app when the next Ramadan begins, and note it.",
+  "mentor": "whether you should fast if you have a health condition, are pregnant or breastfeeding, or have heavy physical work. These depend on your situation (Level C)."
+ },
+ {
+  "n": 40,
+  "title": "Zakat and everyday charity",
+  "stage": 5,
+  "minutes": 4,
+  "level": "Level A, with a Level D point",
+  "prereqs": [
+   7
+  ],
+  "body": "**Zakat** is the third pillar of Islam. In the Quran, it is often mentioned right next to prayer:\n\n[Quran 2:43]\n\nZakat is a set share of wealth that Muslims give each year to people in need, once their savings pass a certain amount and stay above it for a full year. It purifies your wealth and looks after the poor. Remember lesson 8: zakat was the next step the Prophet (peace be upon him) told Mu'adh to teach, right after prayer.\n\nBut giving in Islam is much wider than zakat. The Prophet (peace be upon him) said that every act of goodness is charity:\n\n[Hadith: Bukhari 6021, Muslim 1005]\n\nSo even if zakat does not apply to you yet, you can give every day:\n\n- A kind word, or a smile to someone.\n- Helping a colleague or neighbour.\n- Sharing food, or giving a little money to someone in need.\n\nEvery good deed, however small, counts with Allah.",
+  "key": "Zakat is a yearly share of savings given to people in need. Beyond zakat, every good deed is charity.",
+  "today": "Do one small act of goodness for someone, and do it for Allah.",
+  "mentor": "whether zakat applies to you, and how much. This depends on your own savings and situation (Level D)."
+ }
+]

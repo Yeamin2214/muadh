@@ -1,0 +1,23 @@
+/** Duas from authentic hadith. Arabic text and source are fixed here; audio files live in /public/audio/<id>.m4a. */
+export type Dua = { id: string; cat: string; ar: string; tr: string; m: { en: string; bn: string }; src: string };
+
+export const DUA_LIBRARY: Dua[] = [
+  { id: "bismillah", cat: "daily", ar: "بِسْمِ اللَّهِ", tr: "Bismillah", m: { en: "In the name of Allah.", bn: "আল্লাহর নামে।" }, src: "Bukhari 5376, Muslim 2022" },
+  { id: "after-eating", cat: "daily", ar: "الْحَمْدُ لِلَّهِ كَثِيرًا طَيِّبًا مُبَارَكًا فِيهِ، غَيْرَ مَكْفِيٍّ وَلَا مُوَدَّعٍ وَلَا مُسْتَغْنًى عَنْهُ رَبَّنَا", tr: "Alhamdu lillahi kathiran tayyiban mubarakan fih, ghayra makfiyyin wa la muwadda'in wa la mustaghnan 'anhu Rabbana",
+    m: { en: "All praise is for Allah, much good and blessed praise. Our Lord, we can never praise You enough, never leave it, and never do without it.", bn: "সব প্রশংসা আল্লাহর, অনেক পবিত্র ও বরকতময় প্রশংসা। হে আমাদের রব, এ প্রশংসা কখনো যথেষ্ট হয় না, কখনো ছাড়া যায় না, আর এর থেকে আমরা কখনো অমুখাপেক্ষী নই।" }, src: "Bukhari 5458" },
+  { id: "washroom", cat: "daily", ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ", tr: "Allahumma inni a'udhu bika minal-khubuthi wal-khaba'ith",
+    m: { en: "O Allah, I seek refuge in You from evil and evil beings.", bn: "হে আল্লাহ, আমি আপনার কাছে অনিষ্ট ও অনিষ্টকারী থেকে আশ্রয় চাই।" }, src: "Bukhari 142, Muslim 375" },
+  { id: "sleep", cat: "night", ar: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا", tr: "Bismika Allahumma amutu wa ahya",
+    m: { en: "In Your name, O Allah, I die and I live.", bn: "হে আল্লাহ, আপনার নামেই আমি মরি ও বাঁচি।" }, src: "Bukhari 6312" },
+  { id: "wake", cat: "night", ar: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", tr: "Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur",
+    m: { en: "All praise is for Allah, who gave us life after He caused us to die, and to Him is the return.", bn: "সব প্রশংসা আল্লাহর, যিনি আমাদের মৃত্যুর পর জীবিত করেছেন, আর তাঁর কাছেই ফিরে যেতে হবে।" }, src: "Bukhari 6312" },
+  { id: "distress", cat: "hard", ar: "لَا إِلَهَ إِلَّا اللَّهُ الْعَظِيمُ الْحَلِيمُ، لَا إِلَهَ إِلَّا اللَّهُ رَبُّ الْعَرْشِ الْعَظِيمِ، لَا إِلَهَ إِلَّا اللَّهُ رَبُّ السَّمَاوَاتِ وَرَبُّ الْأَرْضِ وَرَبُّ الْعَرْشِ الْكَرِيمِ", tr: "La ilaha illallahul-'Azimul-Halim...",
+    m: { en: "There is no god but Allah, the Almighty, the Forbearing. There is no god but Allah, Lord of the great Throne. There is no god but Allah, Lord of the heavens, Lord of the earth, and Lord of the noble Throne.", bn: "আল্লাহ ছাড়া কোনো ইলাহ নেই, তিনি মহান ও সহনশীল। আল্লাহ ছাড়া কোনো ইলাহ নেই, তিনি মহান আরশের রব। আল্লাহ ছাড়া কোনো ইলাহ নেই, তিনি আসমান, জমিন ও সম্মানিত আরশের রব।" }, src: "Bukhari 6346, Muslim 2730" },
+  { id: "durood", cat: "prayer", ar: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ", tr: "Allahumma salli 'ala Muhammadin wa 'ala ali Muhammad...",
+    m: { en: "O Allah, send prayers upon Muhammad and the family of Muhammad, as You sent prayers upon Ibrahim and the family of Ibrahim; You are Praiseworthy, Glorious. O Allah, bless Muhammad and the family of Muhammad, as You blessed Ibrahim and the family of Ibrahim; You are Praiseworthy, Glorious.", bn: "হে আল্লাহ, মুহাম্মাদ ও মুহাম্মাদের পরিবারের ওপর রহমত বর্ষণ করুন, যেমন আপনি ইবরাহীম ও ইবরাহীমের পরিবারের ওপর রহমত বর্ষণ করেছেন; নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত। হে আল্লাহ, মুহাম্মাদ ও মুহাম্মাদের পরিবারের ওপর বরকত দিন, যেমন আপনি ইবরাহীম ও ইবরাহীমের পরিবারের ওপর বরকত দিয়েছেন; নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত।" }, src: "Bukhari 3370, Muslim 406" },
+  { id: "before-salam", cat: "prayer", ar: "اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَثِيرًا، وَلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ، فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ، وَارْحَمْنِي، إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ", tr: "Allahumma inni zalamtu nafsi zulman kathiran...",
+    m: { en: "O Allah, I have wronged myself greatly, and no one forgives sins except You. So forgive me with forgiveness from You, and have mercy on me. You are the Forgiving, the Merciful.", bn: "হে আল্লাহ, আমি নিজের ওপর অনেক জুলুম করেছি, আর আপনি ছাড়া কেউ গুনাহ মাফ করতে পারে না। তাই আপনার পক্ষ থেকে আমাকে ক্ষমা করুন এবং আমার ওপর রহম করুন। নিশ্চয় আপনি ক্ষমাশীল, পরম দয়ালু।" }, src: "Bukhari 834, Muslim 2705" },
+];
+
+/** The three Quls: Quran, so their text is always loaded from the approved database. */
+export const QULS = ["Quran 112:1-4", "Quran 113:1-5", "Quran 114:1-6"];

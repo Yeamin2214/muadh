@@ -1,11 +1,12 @@
 import { adminClient } from "./supabase/admin";
 import { complete, completeJSON, MODELS } from "./llm";
-import { embed, cosine } from "./embed";
+import { embedTexts, cosine, wordOverlap } from "./embed";
 import { retrieve, passageText, type Passage } from "./retrieve";
 import { glossaryFor, translate } from "./translate";
 import { lookupDorar, type DorarResult } from "./dorar";
 import { CLASSIFY, DRAFT, VERIFY, MENTOR_DRAFT } from "./prompts";
 import { isCrisis, isPersonalRuling, isHadithCheck, needsCitation, normalise } from "./safety";
+import { lessonPassages } from "./lessonContext";
 
 export type Lang = "en" | "ar" | "bn";
 export type Level = "A" | "B" | "C" | "D";
@@ -34,10 +35,10 @@ const higher = (a: Level, b: Level) => (LEVELS.indexOf(a) >= LEVELS.indexOf(b) ?
 const asLevel = (v: unknown): Level => (LEVELS.includes(v as Level) ? (v as Level) : "C");
 
 /** The full answer pipeline. Any step can stop and hand the question to a human mentor. */
-export async function ask(text: string, lang: Lang, learner: Learner): Promise<AskResult> {
+export async function ask(text: string, lang: Lang, learner: Learner, lesson?: number): Promise<AskResult> {
   const db = adminClient();
   const question = text.trim().slice(0, 1000);
-  const norm = normalise(question);
+  const norm = normalise(lesson ? `lesson ${lesson} ${question}` : question);
   const trace: Trace = { started: new Date().toISOString() };
 
   // 0. Cache: the same question in the same language gets the stored, already verified answer.
@@ -59,12 +60,15 @@ export async function ask(text: string, lang: Lang, learner: Learner): Promise<A
   if (cls?.intent === "greeting" || cls?.intent === "off_topic") return save({ action: "other", level }, {});
 
   // 3. Retrieval from approved passages only.
-  const { passages, bestSimilarity } = await retrieve(question);
-  trace.retrieval = { ids: passages.map((p) => p.id), bestSimilarity };
+  const found = await retrieve(question);
+  const lessonCtx = lesson ? await lessonPassages(lesson) : [];
+  const passages = [...lessonCtx, ...found.passages.filter((p) => !lessonCtx.some((c) => c.id === p.id))].slice(0, 8);
+  const { bestSimilarity, keywordHits } = found;
+  trace.retrieval = { ids: passages.map((p) => p.id), bestSimilarity, keywordHits, lesson: lesson ?? null };
 
   // 4. "Is this a hadith?" questions: answer from our collection if it is clearly there; otherwise report Dorar.
   if (cls?.intent === "hadith_check" || isHadithCheck(question)) {
-    const strongHadith = passages[0]?.kind === "hadith" && bestSimilarity >= 0.8;
+    const strongHadith = passages[0]?.kind === "hadith" && bestSimilarity >= setting("STRONG_MATCH", 0.6);
     if (!strongHadith) {
       const quoted = question.match(/["“«](.+?)["”»]/)?.[1] ?? question;
       return save({ action: "not_found", level, dorar: await lookupDorar(quoted) }, { dorar: true });
@@ -73,7 +77,9 @@ export async function ask(text: string, lang: Lang, learner: Learner): Promise<A
 
   if (level === "C") return refer("level_c", level, passages, {});
   if (level === "D") return refer("level_d", level, passages, {});
-  if (!passages.length || bestSimilarity < setting("MIN_SIMILARITY", 0.55)) return refer("no_source", level, passages, {});
+  // Enough evidence to try: lesson context, a close meaning match, or solid keyword matches. The drafts and verifier still decide.
+  const evidence = lessonCtx.length > 0 || bestSimilarity >= setting("MIN_SIMILARITY", 0.4) || keywordHits >= 2 || (bestSimilarity === 0 && keywordHits > 0);
+  if (!passages.length || !evidence) return refer("no_source", level, passages, {});
 
   // 5. Three drafts from three different models, in parallel.
   const known = new Set(passages.map((p) => p.id));
@@ -97,13 +103,15 @@ export async function ask(text: string, lang: Lang, learner: Learner): Promise<A
   if (drafts.length < 2) return refer("low_confidence", level, passages, trace);
 
   // 6. Agreement on substance: overlap of cited sources plus similarity of the bottom-line answers.
-  const vectors = await embed(drafts.map((d) => d.bottom || d.sentences.map((s) => s.text).join(" ")));
+  const bottoms = drafts.map((d) => d.bottom || d.sentences.map((s) => s.text).join(" "));
+  const vectors = await embedTexts(bottoms).catch(() => null);
   const citedSets = drafts.map((d) => new Set(d.sentences.flatMap((s) => s.ids)));
   const pairScore = (i: number, j: number) => {
     const a = citedSets[i], b = citedSets[j];
     const union = new Set([...a, ...b]).size;
     const jaccard = union ? [...a].filter((x) => b.has(x)).length / union : 0;
-    return 0.5 * jaccard + 0.5 * cosine(vectors[i], vectors[j]);
+    const meaning = vectors ? cosine(vectors[i], vectors[j]) : wordOverlap(bottoms[i], bottoms[j]);
+    return 0.5 * jaccard + 0.5 * meaning;
   };
   const totals = drafts.map((_, i) => drafts.reduce((sum, __, j) => (i === j ? sum : sum + pairScore(i, j)), 0));
   const pairs = drafts.length * (drafts.length - 1);

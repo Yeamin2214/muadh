@@ -26,3 +26,19 @@ Every source, tool and license used in Mu'adh, as required by the challenge term
 | Groq API | Runtime AI: drafts and classifier | Free tier, synthetic data only |
 | Supabase | Database and vector search | Free tier |
 | Vercel | Hosting | Free (Hobby) tier |
+
+## Images
+All photos from Pexels (free to use under the Pexels License). Cropped, resized and compressed by Team Sabeel.
+
+| File | Source |
+|---|---|
+| hero-kaaba | https://www.pexels.com/photo/night-view-of-the-kaaba-at-al-masjid-al-haram-38789865/ |
+| hero-madinah | https://www.pexels.com/photo/people-at-mosque-illuminated-at-night-12597918/ |
+| stage-faith | https://www.pexels.com/photo/open-quran-in-sunlight-on-wooden-stand-36188885/ |
+| stage-purity | https://www.pexels.com/photo/a-person-washing-their-hands-16620395/ |
+| stage-prayer | https://www.pexels.com/photo/mihrab-niche-indicating-mecca-direction-5423013/ |
+| stage-daily | https://www.pexels.com/photo/traditional-turkish-breakfast-with-tea-in-ordu-36287932/ |
+| stage-practice | https://www.pexels.com/photo/photo-of-ramadan-light-on-top-of-table-2233416/ |
+| duas-hands | https://www.pexels.com/photo/close-up-of-hands-in-prayer-gesture-in-indonesia-37592529/ |
+| auth-bg | https://www.pexels.com/photo/mosque-in-istanbul-at-sunset-22121289/ |
+

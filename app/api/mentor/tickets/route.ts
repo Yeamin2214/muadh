@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   const view = new URL(req.url).searchParams.get("view") ?? "open";
   let query = adminClient()
     .from("tickets")
-    .select("id, reason, urgent, original, original_lang, question_ar, draft_ar, preferred_mentor, status, claimed_by, reply_ar, created_at, answered_at, profiles!tickets_learner_id_fkey(name, language, phone, phone_consent)")
+    .select("id, reason, urgent, original, original_lang, question_ar, draft_ar, preferred_mentor, status, claimed_by, reply_ar, reply_learner, created_at, answered_at, profiles!tickets_learner_id_fkey(name, language, phone, phone_consent)")
     .eq("gender", me.gender)
     .order("urgent", { ascending: false })
     .order("created_at", { ascending: true })
