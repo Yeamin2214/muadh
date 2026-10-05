@@ -139,3 +139,73 @@ const CODES: Record<Lang, Record<string, string>> = {
   },
 };
 (Object.keys(CODES) as Lang[]).forEach((l) => Object.assign(T[l], CODES[l]));
+
+const PRAY: Record<Lang, Record<string, string>> = {
+  en: {
+    navPrayer: "Prayer", prLearn: "Learn to pray", prRakTab: "Rak'ahs", prGuided: "Guided practice", prStop: "Stop",
+    prTimes: "{n} times", prOptional: "Recommended, not required", prDiffH: "Scholars differ here", prSource: "Source",
+    prPracticeNote: "For learning outside of prayer. Once you've memorized the words, pray without the phone.",
+    prFiqhRef: "Fiqh reference: Mukhtasar Fiqh al-Salah, Dorar.net. Hadith sources are shown under each step.",
+    prRakH: "How many rak'ahs?", prRakP: "Each daily prayer has a set number of rak'ahs. In the 3rd and 4th rak'ahs, recite only Al-Fatiha.",
+    prRakCount: "{n} rak'ahs", prAloud: "first two recited aloud", prSilent: "recited silently", prTashahhud: "Sit for tashahhud",
+    prSitLegend: "Sit for tashahhud here: after the 2nd rak'ah in longer prayers, and at the end of every prayer.", prLessons: "The prayer lessons explain each step in more detail",
+    fullSurah: "Full surah, recited by our hafiz", mClaimFirst: "First click \u201cI'll take this\u201d, then you can write and send your reply.",
+  },
+  ar: {
+    navPrayer: "الصلاة", prLearn: "تعلّم الصلاة", prRakTab: "الركعات", prGuided: "تدريب موجّه", prStop: "إيقاف",
+    prTimes: "{n} مرات", prOptional: "مستحب وليس واجبًا", prDiffH: "مسألة خلافية", prSource: "المصدر",
+    prPracticeNote: "للتعلم خارج الصلاة. بعد حفظ الأذكار صلِّ دون الجوال.",
+    prFiqhRef: "المرجع الفقهي: مختصر فقه الصلاة، الدرر السنية. ومصادر الأحاديث تحت كل خطوة.",
+    prRakH: "كم عدد الركعات؟", prRakP: "لكل صلاة مفروضة عدد محدد من الركعات. في الركعتين الثالثة والرابعة تُقرأ الفاتحة فقط.",
+    prRakCount: "{n} ركعات", prAloud: "جهرية في الركعتين الأوليين", prSilent: "سرية", prTashahhud: "الجلوس للتشهد",
+    prSitLegend: "اجلس للتشهد هنا: بعد الركعة الثانية في الصلاة الطويلة، وفي آخر كل صلاة.", prLessons: "دروس الصلاة تشرح كل خطوة بتفصيل أكثر",
+    fullSurah: "السورة كاملة بصوت حافظ الفريق", mClaimFirst: "اضغط أولًا على «سأتولى هذا السؤال»، ثم يمكنك كتابة ردك وإرساله.",
+  },
+  bn: {
+    navPrayer: "নামাজ", prLearn: "নামাজ শিখুন", prRakTab: "রাকাত", prGuided: "গাইডেড অনুশীলন", prStop: "থামুন",
+    prTimes: "{n} বার", prOptional: "মুস্তাহাব, বাধ্যতামূলক নয়", prDiffH: "এখানে আলেমদের মতভেদ আছে", prSource: "উৎস",
+    prPracticeNote: "নামাজের বাইরে শেখার জন্য। দোয়াগুলো মুখস্থ হলে ফোন ছাড়াই নামাজ পড়ুন।",
+    prFiqhRef: "ফিকহ রেফারেন্স: মুখতাসার ফিকহুস সালাহ, Dorar.net। প্রতিটি ধাপের নিচে হাদিসের উৎস দেওয়া আছে।",
+    prRakH: "কত রাকাত?", prRakP: "প্রতিটি ফরজ নামাজের নির্দিষ্ট রাকাত আছে। তৃতীয় ও চতুর্থ রাকাতে শুধু সূরা ফাতিহা পড়া হয়।",
+    prRakCount: "{n} রাকাত", prAloud: "প্রথম দুই রাকাত উচ্চস্বরে", prSilent: "নিচু স্বরে", prTashahhud: "তাশাহহুদের জন্য বসা",
+    prSitLegend: "এখানে তাশাহহুদের জন্য বসুন: দীর্ঘ নামাজে দ্বিতীয় রাকাতের পর, এবং প্রতিটি নামাজের শেষে।", prLessons: "নামাজের পাঠগুলোতে প্রতিটি ধাপ আরও বিস্তারিত বোঝানো আছে",
+    fullSurah: "পূর্ণ সূরা, আমাদের হাফেজের কণ্ঠে", mClaimFirst: "প্রথমে «আমি এটি নেব» চাপুন, তারপর উত্তর লিখে পাঠাতে পারবেন।",
+  },
+};
+(Object.keys(PRAY) as Lang[]).forEach((l) => Object.assign(T[l], PRAY[l]));
+
+const QULS: Record<Lang, Record<string, string>> = {
+  en: { qul112: "Surah Al-Ikhlas (112)", qul113: "Surah Al-Falaq (113)", qul114: "Surah An-Nas (114)" },
+  ar: { qul112: "سورة الإخلاص", qul113: "سورة الفلق", qul114: "سورة الناس" },
+  bn: { qul112: "সূরা আল-ইখলাস (১১২)", qul113: "সূরা আল-ফালাক (১১৩)", qul114: "সূরা আন-নাস (১১৪)" },
+};
+(Object.keys(QULS) as Lang[]).forEach((l) => Object.assign(T[l], QULS[l]));
+
+const PRACTICE: Record<Lang, Record<string, string>> = {
+  en: {
+    ppTab: "Practice (demo)", ppWarn: "Demonstration for learning only. Watch and listen to learn the order and the words. Do not use this inside your real prayer; in your prayer, recite yourself.",
+    ppRakah: "Rak'ah {r} of {n}", ppStart: "Start demonstration", ppResume: "Resume", ppPause: "Pause", ppRestart: "Restart",
+    ppDone: "The prayer is complete", ppDoneP: "That is the full prayer from beginning to end. Practise it a few times, then pray on your own. Alhamdulillah!",
+    ppNewH: "Still learning Al-Fatiha?", ppNewP: "The Prophet (peace be upon him) taught a man who could not yet memorize any Quran to say instead: SubhanAllah, walhamdulillah, wa la ilaha illallah, wallahu akbar, wa la hawla wa la quwwata illa billah (Sunan Abi Dawud; its chain was judged acceptable by Sh. Ibn Baz). This was until he could learn. Ask your mentor how to apply this while you learn.",
+  },
+  ar: {
+    ppTab: "تدريب (عرض)", ppWarn: "عرض تعليمي فقط: شاهد واستمع لتتعلم الترتيب والأذكار. لا تستخدمه داخل صلاتك الحقيقية، بل اقرأ بنفسك في صلاتك.",
+    ppRakah: "الركعة {r} من {n}", ppStart: "ابدأ العرض", ppResume: "متابعة", ppPause: "إيقاف مؤقت", ppRestart: "من البداية",
+    ppDone: "اكتملت الصلاة", ppDoneP: "هذه الصلاة كاملة من أولها إلى آخرها. تدرّب عليها مرات، ثم صلِّ بنفسك. الحمد لله!",
+    ppNewH: "ما زلت تتعلم الفاتحة؟", ppNewP: "علّم النبي صلى الله عليه وسلم رجلًا لم يستطع أن يأخذ من القرآن شيئًا أن يقول: سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر، ولا حول ولا قوة إلا بالله (سنن أبي داود، وقال الشيخ ابن باز: إسناده لا بأس به). وذلك حتى يتعلم. اسأل مرشدك كيف تطبق ذلك وأنت تتعلم.",
+  },
+  bn: {
+    ppTab: "অনুশীলন (ডেমো)", ppWarn: "শুধু শেখার জন্য প্রদর্শন। দেখে ও শুনে ক্রম ও দোয়াগুলো শিখুন। আসল নামাজের ভেতরে এটি ব্যবহার করবেন না; নামাজে নিজে পড়ুন।",
+    ppRakah: "{n} রাকাতের {r} নম্বর রাকাত", ppStart: "প্রদর্শন শুরু করুন", ppResume: "চালিয়ে যান", ppPause: "বিরতি", ppRestart: "আবার শুরু",
+    ppDone: "নামাজ সম্পূর্ণ হয়েছে", ppDoneP: "শুরু থেকে শেষ পর্যন্ত এটাই পুরো নামাজ। কয়েকবার অনুশীলন করুন, তারপর নিজে নামাজ পড়ুন। আলহামদুলিল্লাহ!",
+    ppNewH: "এখনো সূরা ফাতিহা শিখছেন?", ppNewP: "যে ব্যক্তি তখনো কুরআনের কিছুই মুখস্থ করতে পারেননি, নবী (সা.) তাকে এর বদলে বলতে শিখিয়েছিলেন: সুবহানাল্লাহ, ওয়ালহামদুলিল্লাহ, ওয়া লা ইলাহা ইল্লাল্লাহ, ওয়াল্লাহু আকবার, ওয়া লা হাওলা ওয়া লা কুওয়াতা ইল্লা বিল্লাহ (সুনানে আবু দাউদ; শায়খ ইবনে বায সনদটিকে গ্রহণযোগ্য বলেছেন)। এটা শেখা পর্যন্ত। শেখার সময় কীভাবে করবেন তা আপনার মেন্টরকে জিজ্ঞেস করুন।",
+  },
+};
+(Object.keys(PRACTICE) as Lang[]).forEach((l) => Object.assign(T[l], PRACTICE[l]));
+
+const PRACTICE2: Record<Lang, Record<string, string>> = {
+  en: { ppNext: "Stand for the next rak'ah", ppNextP: "Say Allahu Akbar and stand up for the next rak'ah.", ppFatihaOnly: "In this rak'ah, recite only Surah Al-Fatiha." },
+  ar: { ppNext: "القيام للركعة التالية", ppNextP: "كبّر وقم إلى الركعة التالية.", ppFatihaOnly: "في هذه الركعة تُقرأ الفاتحة فقط." },
+  bn: { ppNext: "পরের রাকাতের জন্য দাঁড়ান", ppNextP: "আল্লাহু আকবার বলে পরের রাকাতের জন্য দাঁড়ান।", ppFatihaOnly: "এই রাকাতে শুধু সূরা ফাতিহা পড়া হয়।" },
+};
+(Object.keys(PRACTICE2) as Lang[]).forEach((l) => Object.assign(T[l], PRACTICE2[l]));

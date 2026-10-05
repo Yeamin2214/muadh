@@ -101,9 +101,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       list: (key) => (Array.isArray(dict[key]) ? dict[key] : T.en[key]) as string[],
       num: (n) => n.toLocaleString(locale),
       signOut: async () => {
+        const role = profile?.role;
+        const to = role === "admin" ? "/admin" : role === "mentor" || role === "applicant" ? "/mentors/login" : "/login";
         await supabase.auth.signOut();
+        router.replace(to);
         setProfile(null);
-        router.replace("/");
       },
     };
   }, [lang, setLang, profile, loading, refresh, supabase, router]);

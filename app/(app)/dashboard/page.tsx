@@ -166,7 +166,7 @@ export default function Home() {
             <Link className="btn" href={`/lessons/${lesson.n}`} style={{ marginTop: 18 }}>{t("cont")}</Link>
           </div>
         </article>
-        <Link className="card mini b-qibla" href="/qibla">
+        <Link className="card mini b-qibla" href="/prayer?tab=qibla">
           <div className="ttl">{t("qibla")}<span style={{ color: "var(--gold)" }}>{lang === "ar" ? "←" : "→"}</span></div>
           <div className="mq">
             <svg width="78" height="78" viewBox="0 0 400 400" aria-hidden="true">

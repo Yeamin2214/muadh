@@ -27,4 +27,4 @@ export const DUA_LIBRARY: Dua[] = [
 ];
 
 /** The three Quls: Quran, so their text is always loaded from the approved database. */
-export const QULS = ["Quran 112:1-4", "Quran 113:1-5", "Quran 114:1-6"];
+export const QULS: [number, number][] = [[112, 4], [113, 5], [114, 6]];

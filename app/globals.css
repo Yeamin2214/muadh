@@ -537,3 +537,43 @@ main.wrap{padding-top:24px}
 .admin-msg{display:flex;flex-direction:column;gap:4px;margin-top:10px}
 .admin-msg .bub{max-width:100%}
 .code-input{font-size:26px!important;letter-spacing:10px;text-align:center;font-variant-numeric:tabular-nums}
+
+/* ===== Prayer ===== */
+.pray-wrap{display:flex;flex-direction:column;gap:10px}
+.pray-card{display:grid;grid-template-columns:320px 1fr;padding:0;overflow:hidden}
+.pray-art{background:radial-gradient(120% 90% at 50% 0%,#0f3a2c 0%,#0a1914 75%);display:grid;place-items:center;padding:24px;border-inline-end:1px solid var(--s3)}
+.prayer-figure{width:100%;max-width:260px}
+.pray-body{padding:24px 26px}
+.pray-body h2{margin:6px 0 8px}
+.pray-do{font-family:var(--read);font-size:17px;line-height:1.7;margin:0 0 12px}
+.phrase{padding:12px 14px;border-radius:14px;background:var(--s1);border:1px solid var(--s3);margin-top:10px;display:flex;flex-direction:column;gap:4px}
+.phrase.opt{opacity:.85;border-style:dashed}
+.phrase-top{display:flex;gap:12px;align-items:flex-start}
+.phrase .ar-text{flex:1;margin:0;text-align:right;font-size:24px;line-height:1.9}
+.phrase .tr{font-style:italic;color:var(--mid);font-size:14px}
+.phrase .mean{font-family:var(--read);font-size:15px}
+.diff-note{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.35);font-size:14px;line-height:1.6}
+.diff-note b{display:block;color:var(--gold);margin-bottom:4px}
+.rak-list{display:flex;flex-direction:column;gap:12px}
+.rak-row{display:grid;grid-template-columns:200px 1fr;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--s3)}
+.rak-name{display:flex;flex-direction:column}
+.rak-dots{display:flex;gap:10px;flex-wrap:wrap}
+.rak-wrap{display:flex;align-items:center;gap:6px}
+.rak{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--emerald-tint);border:1px solid var(--emerald-hi);font-style:normal;font-weight:700}
+.rak-sit{font-style:normal}
+.claim-first{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:var(--gold-tint);color:var(--gold);font-weight:600;font-size:14px}
+textarea:disabled{opacity:.5;cursor:not-allowed}
+@media (max-width:900px){.pray-card{grid-template-columns:1fr}.pray-art{border-inline-end:0;border-bottom:1px solid var(--s3);padding:16px}.prayer-figure{max-width:180px}.rak-row{grid-template-columns:1fr}}
+.pray-card{grid-template-columns:320px minmax(0,1fr)}
+.pray-body{min-width:0}
+.pray-body .row{flex-wrap:wrap;gap:10px}
+.phrase-top .ar-text{min-width:0;overflow-wrap:anywhere}
+@media (max-width:900px){.pray-card{grid-template-columns:minmax(0,1fr)}.pray-body{padding:18px 16px}}
+.surah{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.surah-ar{font-size:24px;line-height:2.1;text-align:right;margin:0}
+.ayah-no{color:var(--gold);font-size:18px}
+.surah-tr{font-family:var(--read);font-size:15px;line-height:1.7;margin:0}
+.surah-tr sup{color:var(--gold);font-family:var(--ui);margin-inline-end:2px}
+.demo-warning{padding:14px 16px;border-radius:14px;background:rgba(207,102,121,.12);border:1px solid rgba(207,102,121,.45);color:#f2c6cf;font-weight:600;line-height:1.6}
+.pp-bar{height:8px;border-radius:4px;background:var(--s3);overflow:hidden;margin-top:14px}
+.pp-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--emerald-hi),var(--gold));transition:width .4s}

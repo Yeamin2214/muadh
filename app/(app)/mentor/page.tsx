@@ -53,7 +53,7 @@ export default function MentorPortal() {
     const body = res ? await res.json().catch(() => ({})) : {};
     setBusy("");
     if (!res?.ok) {
-      setError(body.error === "translation_failed" ? t("mErrTranslate") : body.error === "already_claimed" || body.error === "claimed_by_other" ? t("mOther") : t("mErr"));
+      setError(body.error === "translation_failed" ? t("mErrTranslate") : body.error === "claim_first" ? t("mClaimFirst") : body.error === "already_claimed" || body.error === "claimed_by_other" ? t("mOther") : t("mErr"));
       return load();
     }
     if (action === "backtranslate") return setBack(body.text);
@@ -117,13 +117,14 @@ export default function MentorPortal() {
                     <div className="row"><span className="chip" style={{ marginTop: 0 }}>✓ {t("mTakenYou")}</span>
                       <button className="btn sec" onClick={() => act("release")} disabled={!!busy}>{t("mRelease")}</button></div>
                   )}
+                  {ticket.status === "new" && <p className="claim-first">👆 {t("mClaimFirst")}</p>}
                   <label htmlFor="reply" style={{ display: "block", fontWeight: 600, marginTop: 16 }}>{t("mReply")}</label>
                   {ticket.draft_ar && <p className="b2" style={{ color: "var(--gold)", margin: "4px 0" }}>✦ {t("mDraft")}</p>}
                   <p className="b2 mid" style={{ margin: "2px 0 0" }}>{t("mReplyHint")}</p>
-                  <textarea id="reply" dir="auto" value={reply} onChange={(e) => { setReply(e.target.value); setBack(""); }} style={{ marginTop: 6 }} />
+                  <textarea id="reply" dir="auto" disabled={!ticket.mine} value={reply} onChange={(e) => { setReply(e.target.value); setBack(""); }} style={{ marginTop: 6 }} />
                   <div className="row" style={{ marginTop: 12 }}>
                     <button className="btn sec" onClick={() => act("backtranslate", reply)} disabled={!reply.trim() || !!busy}>{busy === "backtranslate" ? "…" : t("mCheck")}</button>
-                    <button className="btn" onClick={() => act("reply", reply)} disabled={!reply.trim() || !!busy}>{busy === "reply" ? "…" : t("mSend")}</button>
+                    <button className="btn" onClick={() => act("reply", reply)} disabled={!reply.trim() || !!busy || !ticket.mine}>{busy === "reply" ? "…" : t("mSend")}</button>
                   </div>
                   {back && <div className="box" dir="auto" lang={ticket.original_lang}><b>{t("mBack", { lang: t(`l_${ticket.original_lang}`) })}</b>{back}</div>}
                 </>

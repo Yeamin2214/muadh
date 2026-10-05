@@ -47,7 +47,7 @@ async function handle(req: Request, ctx: { params: Promise<{ id: string }> }) {
   if (action === "reply") {
     if (!text) return json({ error: "empty" }, 400);
     if (ticket.status === "answered") return json({ error: "already_answered" }, 409);
-    if (ticket.claimed_by && ticket.claimed_by !== me.id) return json({ error: "claimed_by_other" }, 409);
+    if (ticket.claimed_by !== me.id) return json({ error: ticket.claimed_by ? "claimed_by_other" : "claim_first" }, 409);
     const learnerText = ticket.original_lang === "ar" ? text : await translate(text, ticket.original_lang).catch(() => null);
     if (!learnerText) return json({ error: "translation_failed" }, 503);
     await db.from("tickets").update({

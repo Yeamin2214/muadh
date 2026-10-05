@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import SourceBox from "@/components/SourceBox";
+import SurahText from "@/components/SurahText";
 import { useApp, useProfile } from "@/components/AppProvider";
 import { DUA_LIBRARY, QULS } from "@/lib/content/duas";
 
@@ -46,7 +46,22 @@ export default function DuasPage() {
         ))}
         <section style={{ marginTop: 28 }}>
           <h2 style={{ fontSize: 20, color: "var(--gold)" }}>{cats[4]}</h2>
-          {QULS.map((q) => <SourceBox key={q} label={q} />)}
+          <div className="duas" style={{ marginTop: 14 }}>
+            {QULS.map((q) => {
+              const [surah, verses] = q;
+              const id = `qul-${surah}`;
+              return (
+                <article key={id} className="card dua">
+                  <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+                    <h3 className="dua-title" style={{ margin: 0 }}>{t(`qul${surah}`)}</h3>
+                    <button className="play" onClick={() => play(id)} aria-label={`${t("listen")}: ${t(`qul${surah}`)}`}>{playing === id ? "❚❚" : "▶"}</button>
+                  </div>
+                  <SurahText surah={surah} verses={verses} />
+                  <span className="b2 mid">{t("fullSurah")}</span>
+                </article>
+              );
+            })}
+          </div>
         </section>
         {note && <div className="toast" role="status">{note}</div>}
       </div>
