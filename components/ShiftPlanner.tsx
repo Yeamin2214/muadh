@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { prayerWindows, type Place } from "@/lib/client/prayer";
+import { formatTime, prayerWindows, type Place } from "@/lib/client/prayer";
 import { useApp } from "./AppProvider";
 
 const at = (base: Date, hhmm: string) => {
@@ -20,7 +20,7 @@ export default function ShiftPlanner({ place }: { place: Place }) {
   }, []);
   useEffect(() => { try { localStorage.setItem("muadh.shift", JSON.stringify({ start, end })); } catch { /* ignore */ } }, [start, end]);
 
-  const fmt = (d: Date) => d.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
+  const fmt = (d: Date) => formatTime(d, place, locale);
   const plan = useMemo(() => {
     const today = new Date();
     const s = at(today, start);

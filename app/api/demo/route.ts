@@ -16,5 +16,5 @@ export async function POST(req: Request) {
   const supabase = await userClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return json({ error: "demo_unavailable" }, 503);
-  return json({ ok: true, to: role === "learner" ? "/" : "/mentor" });
+  return json({ ok: true, to: role === "learner" ? "/dashboard" : "/mentor" });
 }

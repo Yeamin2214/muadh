@@ -1,4 +1,5 @@
 import { adminClient } from "./supabase/admin";
+import { recordUsage } from "./usage";
 
 /**
  * Two kinds of embeddings:
@@ -20,7 +21,9 @@ export async function embedQuery(text: string): Promise<number[]> {
     body: JSON.stringify({ model: COHERE_MODEL, texts: [text.slice(0, 2000)], input_type: "search_query", embedding_types: ["float"] }),
   });
   if (!res.ok) throw new Error(`cohere ${res.status}`);
-  const vector: number[] = (await res.json()).embeddings.float[0];
+  const body = await res.json();
+  recordUsage("cohere-embed", Number(body.meta?.billed_units?.input_tokens ?? 0));
+  const vector: number[] = body.embeddings.float[0];
   await db.from("embedding_cache").upsert({ key, embedding: vector });
   return vector;
 }
@@ -30,7 +33,7 @@ export async function embedTexts(texts: string[]): Promise<number[][]> {
   const res = await fetch(url, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    signal: AbortSignal.timeout(15_000),
+    signal: AbortSignal.timeout(5_000),
     body: JSON.stringify({
       requests: texts.map((text) => ({ model: "models/gemini-embedding-001", content: { parts: [{ text: text.slice(0, 2000) }] }, outputDimensionality: 768 })),
     }),

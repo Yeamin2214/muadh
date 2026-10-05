@@ -18,5 +18,5 @@ export async function glossaryFor(lang: string): Promise<string> {
 export async function translate(text: string, to: string): Promise<string> {
   if (!text.trim()) return text;
   const glossary = await glossaryFor(to);
-  return (await complete(MODELS.draftA, { system: TRANSLATE(to, glossary), user: text }, { temperature: 0.1 })).trim();
+  return (await complete(MODELS.main, { system: TRANSLATE(to, glossary), user: text }, { temperature: 0.1 })).trim();
 }

@@ -5,7 +5,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "evaluate": "tsx scripts/evaluate.ts",
+    "check-models": "node scripts/check-models.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
@@ -13,11 +15,13 @@
     "adhan": "^4.4.3",
     "next": "^15.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tz-lookup": "^6.1.25"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.6.0"
   }
 }

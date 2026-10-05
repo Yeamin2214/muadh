@@ -1,5 +1,5 @@
 import { adminClient } from "./supabase/admin";
-import { complete, completeJSON, MODELS } from "./llm";
+import { ALL_MODELS, callModel, complete, completeJSON, isAlive, MODELS, parseJSON, type ModelRef } from "./llm";
 import { embedTexts, cosine, wordOverlap } from "./embed";
 import { retrieve, passageText, type Passage } from "./retrieve";
 import { glossaryFor, translate } from "./translate";
@@ -22,6 +22,7 @@ export type AskResult = {
   dorar?: DorarResult;
   questionId?: string;
   ticketId?: string;
+  conversationId?: string;
   cached?: boolean;
 };
 
@@ -35,40 +36,41 @@ const higher = (a: Level, b: Level) => (LEVELS.indexOf(a) >= LEVELS.indexOf(b) ?
 const asLevel = (v: unknown): Level => (LEVELS.includes(v as Level) ? (v as Level) : "C");
 
 /** The full answer pipeline. Any step can stop and hand the question to a human mentor. */
-export async function ask(text: string, lang: Lang, learner: Learner, lesson?: number): Promise<AskResult> {
+export async function ask(text: string, lang: Lang, learner: Learner, opts: { lesson?: number; conversationId: string }): Promise<AskResult> {
+  const { lesson, conversationId } = opts;
   const db = adminClient();
   const question = text.trim().slice(0, 1000);
   const norm = normalise(lesson ? `lesson ${lesson} ${question}` : question);
   const trace: Trace = { started: new Date().toISOString() };
 
-  // 0. Cache: the same question in the same language gets the stored, already verified answer.
+  // 1. Safety first, before anything else: crisis messages go straight to a human.
+  if (isCrisis(question)) return refer("crisis", "D", [], { safety: "crisis" });
+
+  // 2. Cache: the same question in the same language gets the stored, already verified answer.
   const { data: hit } = await db
     .from("questions").select("answer").eq("norm", norm).eq("lang", lang).eq("action", "answer")
     .order("created_at", { ascending: false }).limit(1).maybeSingle();
-  if (hit?.answer) return save({ ...(hit.answer as AskResult), cached: true }, { cache: true });
+  if (hit?.answer && !isPersonalRuling(question)) return save({ ...(hit.answer as AskResult), cached: true }, { cache: true });
 
-  // 1. Safety first: crisis messages go straight to a human, with no religious answer generated.
-  if (isCrisis(question)) return refer("crisis", "D", [], { safety: "crisis" });
-
-  // 2. Level and intent. Rules can only raise the level, never lower it.
-  const cls = await completeJSON<{ level: string; intent: string; reason: string }>(
-    MODELS.small, { system: CLASSIFY, user: question }, { temperature: 0 },
-  ).catch(() => null);
+  // 2. Level, intent and retrieval run in parallel. Rules can only raise the level, never lower it.
+  const [cls, found, lessonCtx] = await Promise.all([
+    completeJSON<{ level: string; intent: string; reason: string }>(MODELS.small, { system: CLASSIFY, user: question }, { temperature: 0 }).catch(() => null),
+    retrieve(question),
+    lesson ? lessonPassages(lesson) : Promise.resolve([]),
+  ]);
   let level = asLevel(cls?.level);
   if (isPersonalRuling(question)) level = higher(level, "D");
   trace.classifier = cls ?? "failed";
   if (cls?.intent === "greeting" || cls?.intent === "off_topic") return save({ action: "other", level }, {});
 
-  // 3. Retrieval from approved passages only.
-  const found = await retrieve(question);
-  const lessonCtx = lesson ? await lessonPassages(lesson) : [];
+  // 3. Approved passages only: the lesson (if any) first, then search results.
   const passages = [...lessonCtx, ...found.passages.filter((p) => !lessonCtx.some((c) => c.id === p.id))].slice(0, 8);
   const { bestSimilarity, keywordHits } = found;
   trace.retrieval = { ids: passages.map((p) => p.id), bestSimilarity, keywordHits, lesson: lesson ?? null };
 
   // 4. "Is this a hadith?" questions: answer from our collection if it is clearly there; otherwise report Dorar.
   if (cls?.intent === "hadith_check" || isHadithCheck(question)) {
-    const strongHadith = passages[0]?.kind === "hadith" && bestSimilarity >= setting("STRONG_MATCH", 0.6);
+    const strongHadith = found.passages[0]?.kind === "hadith" && bestSimilarity >= setting("STRONG_MATCH", 0.6);
     if (!strongHadith) {
       const quoted = question.match(/["“«](.+?)["”»]/)?.[1] ?? question;
       return save({ action: "not_found", level, dorar: await lookupDorar(quoted) }, { dorar: true });
@@ -85,10 +87,19 @@ export async function ask(text: string, lang: Lang, learner: Learner, lesson?: n
   const known = new Set(passages.map((p) => p.id));
   const context = passages.map((p) => `[${p.id}] ${p.reference ?? ""}: ${passageText(p, "en")}`).join("\n");
   const prompt = { system: DRAFT(lang, await glossaryFor(lang)), user: `Passages:\n${context}\n\nQuestion: ${question}` };
-  const settled = await Promise.allSettled(
-    [MODELS.draftA, MODELS.draftB, MODELS.draftC].map((m) => completeJSON<Draft>(m, prompt, { temperature: 0.7 })),
-  );
-  const raw = settled.map((s) => (s.status === "fulfilled" ? s.value : null));
+  // Three drafts, each from a different model. Failed models are replaced by the next working one.
+  const errors: string[] = [];
+  const candidates = ALL_MODELS.filter(isAlive);
+  const tryModel = (m: ModelRef) =>
+    callModel(m, prompt, { json: true, temperature: 0.7 }).then(
+      (text) => { const d = parseJSON<Draft>(text); if (!d) errors.push(`${m.model}: invalid JSON`); return d; },
+      (e) => { errors.push((e as Error).message); return null; },
+    );
+  const raw: (Draft | null)[] = await Promise.all(candidates.slice(0, 3).map(tryModel));
+  for (const m of candidates.slice(3)) {
+    if (raw.filter((d) => d && !d.insufficient && d.sentences?.length).length >= 3) break;
+    raw.push(await tryModel(m));
+  }
   const insufficient = raw.filter((d) => d?.insufficient).length;
   const drafts = raw
     .filter((d): d is Draft => !!d && !d.insufficient && Array.isArray(d.sentences) && d.sentences.length > 0)
@@ -98,7 +109,7 @@ export async function ask(text: string, lang: Lang, learner: Learner, lesson?: n
         .filter((s) => typeof s?.text === "string")
         .map((s) => ({ text: s.text.trim(), ids: (s.ids ?? []).filter((id) => known.has(id)) })),
     }));
-  trace.drafts = { returned: drafts.length, insufficient };
+  trace.drafts = { returned: drafts.length, insufficient, errors };
   if (insufficient >= 2) return refer("no_source", level, passages, trace);
   if (drafts.length < 2) return refer("low_confidence", level, passages, trace);
 
@@ -117,8 +128,10 @@ export async function ask(text: string, lang: Lang, learner: Learner, lesson?: n
   const pairs = drafts.length * (drafts.length - 1);
   const agreement = totals.reduce((a, b) => a + b, 0) / pairs;
   const chosen = drafts[totals.indexOf(Math.max(...totals))];
-  trace.agreement = Number(agreement.toFixed(3));
-  if (agreement < setting("AGREEMENT_MIN", 0.55)) return refer("low_confidence", level, passages, trace);
+  // Word overlap scores lower than meaning similarity, so its threshold is lower when the embedding service is unavailable.
+  const minAgreement = vectors ? setting("AGREEMENT_MIN", 0.55) : setting("AGREEMENT_MIN_WORDS", 0.35);
+  trace.agreement = { score: Number(agreement.toFixed(3)), min: minAgreement, method: vectors ? "meaning" : "words" };
+  if (agreement < minAgreement) return refer("low_confidence", level, passages, trace);
 
   // 7. Hard rules: every sentence needs a valid source; attributions to Allah or the Prophet doubly so.
   const cited = chosen.sentences.filter((s) => s.ids.length > 0);
@@ -152,9 +165,10 @@ export async function ask(text: string, lang: Lang, learner: Learner, lesson?: n
   async function save(result: AskResult, extra: Trace): Promise<AskResult> {
     const { data } = await db
       .from("questions")
-      .insert({ learner_id: learner.id, text: question, lang, norm, level: result.level ?? null, action: result.action, answer: result, trace: { ...trace, ...extra } })
+      .insert({ learner_id: learner.id, conversation_id: conversationId, text: question, lang, norm, level: result.level ?? null, action: result.action, answer: result, trace: { ...trace, ...extra } })
       .select("id").single();
-    return { ...result, questionId: data?.id };
+    await db.from("conversations").update({ updated_at: new Date().toISOString() }).eq("id", conversationId);
+    return { ...result, questionId: data?.id, conversationId };
   }
 
   async function refer(reason: ReferReason, lvl: Level, found: Passage[], extra: Trace): Promise<AskResult> {
@@ -163,7 +177,7 @@ export async function ask(text: string, lang: Lang, learner: Learner, lesson?: n
       lang === "ar" ? question : translate(question, "ar").catch(() => question),
       reason === "crisis" || !found.length
         ? null
-        : complete(MODELS.draftA, {
+        : complete(MODELS.main, {
             system: MENTOR_DRAFT,
             user: `Question: ${question}\n\nPassages:\n${found.map((p) => `[${p.id}] ${passageText(p, "ar")}`).join("\n")}`,
           }).catch(() => null),

@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   const view = new URL(req.url).searchParams.get("view") ?? "open";
   let query = adminClient()
     .from("tickets")
-    .select("id, reason, urgent, original, original_lang, question_ar, draft_ar, preferred_mentor, status, claimed_by, reply_ar, reply_learner, created_at, answered_at, profiles!tickets_learner_id_fkey(name, language, phone, phone_consent)")
+    .select("id, reason, urgent, original, original_lang, question_ar, draft_ar, preferred_mentor, status, claimed_by, reply_ar, reply_learner, created_at, answered_at, profiles!tickets_learner_id_fkey(name, language, phone, phone_consent), claimer:profiles!tickets_claimed_by_fkey(name)")
     .eq("gender", me.gender)
     .order("urgent", { ascending: false })
     .order("created_at", { ascending: true })
@@ -31,6 +31,8 @@ export async function GET(req: Request) {
     return {
       ...t,
       profiles: undefined,
+      claimer: undefined,
+      claimed_by_name: (t.claimer as unknown as { name: string | null } | null)?.name ?? null,
       learner: learner && { name: learner.name, language: learner.language, phone: learner.phone_consent ? learner.phone : null },
       mine: t.claimed_by === me.id,
       preferred: t.preferred_mentor === me.id,

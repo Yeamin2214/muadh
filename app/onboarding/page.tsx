@@ -30,7 +30,7 @@ export default function Onboarding() {
       phone: contact === true ? phone.trim() : null,
     }).eq("id", profile.id);
     await refresh();
-    router.replace("/");
+    router.replace("/dashboard");
   }
 
   const steps = [

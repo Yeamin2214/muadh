@@ -2,10 +2,9 @@
 import Link from "next/link";
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
-import Shell from "@/components/Shell";
 import Markdown from "@/components/Markdown";
 import WaterArt from "@/components/WaterArt";
-import { useApp, useRequireProfile } from "@/components/AppProvider";
+import { useApp, useProfile } from "@/components/AppProvider";
 import { browserClient } from "@/lib/supabase/browser";
 import { LESSONS, STAGE_IMAGES, isDone, isOpen, nextLesson } from "@/lib/client/lessons";
 
@@ -33,17 +32,15 @@ function WuduStepper({ steps }: { steps: string[] }) {
 
 export default function LessonPage({ params }: { params: Promise<{ n: string }> }) {
   const { n } = use(params);
-  const profile = useRequireProfile();
+  const profile = useProfile();
   const { t, num, lang, refresh } = useApp();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const lesson = LESSONS.find((l) => l.n === Number(n));
-
-  if (!profile) return <Shell><p className="mid">{t("loading")}</p></Shell>;
-  if (!lesson) return <Shell><p className="mid">404</p></Shell>;
+  if (!lesson) return <><p className="mid">404</p></>;
   const done = profile.lessons_done ?? [];
   if (!isOpen(done, lesson) && !isDone(done, lesson.n)) {
-    return <Shell><div className="page"><p className="lead">{t("locked")}</p><Link className="btn" href="/lessons">{t("back")}</Link></div></Shell>;
+    return <><div className="page"><p className="lead">{t("locked")}</p><Link className="btn" href="/lessons">{t("back")}</Link></div></>;
   }
 
   // The wudu lesson's numbered steps become the interactive stepper.
@@ -63,7 +60,7 @@ export default function LessonPage({ params }: { params: Promise<{ n: string }> 
   }
 
   return (
-    <Shell>
+    <>
       <article className="page lesson-page">
         <Link className="back" href="/lessons">{lang === "ar" ? "→" : "←"} {t("back")}</Link>
         <div className="lesson-cover" style={{ backgroundImage: `linear-gradient(180deg,rgba(18,18,18,.1),rgba(18,18,18,.95)),url(/images/${STAGE_IMAGES[lesson.stage - 1]}.webp)` }}>
@@ -85,6 +82,6 @@ export default function LessonPage({ params }: { params: Promise<{ n: string }> 
             : <button className="btn" onClick={complete} disabled={busy}>{busy ? t("saving") : t("done")}</button>}
         </div>
       </article>
-    </Shell>
+    </>
   );
 }

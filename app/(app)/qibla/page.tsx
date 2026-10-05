@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Shell from "@/components/Shell";
 import CompassDial from "@/components/Compass";
 import LocationBar from "@/components/LocationBar";
 import Countdown from "@/components/Countdown";
-import { useApp, useRequireProfile } from "@/components/AppProvider";
+import { useApp, useProfile } from "@/components/AppProvider";
 import { useNow, usePlace } from "@/components/usePlace";
-import { distanceToKaabaKm, nextPrayer, qiblaDegrees } from "@/lib/client/prayer";
+import { distanceToKaabaKm, formatTime, nextPrayer, qiblaDegrees } from "@/lib/client/prayer";
 
 type OrientationEvent = DeviceOrientationEvent & { webkitCompassHeading?: number; webkitCompassAccuracy?: number };
 
 export default function QiblaPage() {
-  const profile = useRequireProfile();
+  const profile = useProfile();
   const { t, list, num, lang, locale } = useApp();
   const loc = usePlace();
   const { place, ask, status: locStatus } = loc;
@@ -62,13 +61,11 @@ export default function QiblaPage() {
     if (aligned && !buzzed.current) { navigator.vibrate?.(80); buzzed.current = true; }
     if (!aligned) buzzed.current = false;
   }, [aligned]);
-
-  if (!profile) return <Shell><p className="mid">{t("loading")}</p></Shell>;
   const np = nextPrayer(place, now);
   const status = diff == null ? t("noComp") : aligned ? t("facing") : `${diff > 0 ? t("turnR") : t("turnL")} ${num(Math.round(Math.abs(diff)))}°`;
 
   return (
-    <Shell>
+    <>
       <h1 style={{ textAlign: "center" }}>{t("qH")}</h1>
       <p className="b2 mid" style={{ textAlign: "center", margin: "8px 0 26px" }}>{t("qP")}</p>
       <div className="q2">
@@ -91,10 +88,10 @@ export default function QiblaPage() {
           <div className="card qcard"><div className="k">{t("heading")}</div><div className="v">{heading == null ? "--" : `${num(Math.round(heading))}°`}</div>
             {heading == null && <button className="btn sec" style={{ marginTop: 12 }} onClick={enableCompass}>{t("enable")}</button>}
           </div>
-          <div className="card qcard"><div className="k">{t("nextAt")}</div><div className="v" style={{ fontSize: 19 }}>{list("prayers")[np.index]} · {np.at.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" })}</div>
+          <div className="card qcard"><div className="k">{t("nextAt")}</div><div className="v" style={{ fontSize: 19 }}>{list("prayers")[np.index]} · {formatTime(np.at, place, locale)}</div>
             <div className="b2" style={{ color: "var(--gold)", marginTop: 4 }}><Countdown to={np.at} format={num} /></div></div>
         </div>
       </div>
-    </Shell>
+    </>
   );
 }

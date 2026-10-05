@@ -13,6 +13,15 @@ export type Passage = {
 
 const COLUMNS = "id, kind, arabic, translations, reference, grade, grade_source";
 
+const STOP = new Set(["how", "what", "why", "when", "where", "who", "which", "does", "did", "can", "could", "should", "would",
+  "the", "and", "for", "are", "was", "is", "do", "you", "your", "make", "with", "that", "this", "have", "has", "about", "tell"]);
+
+/** Meaningful words joined with OR, so "How do I make wudu?" searches for "wudu", not every word. */
+export function keywordQuery(question: string): string | null {
+  const words = question.toLowerCase().split(/[^\p{L}\p{M}\p{N}]+/u).filter((w) => w.length > 2 && !STOP.has(w));
+  return words.length ? [...new Set(words)].slice(0, 8).join(" | ") : null;
+}
+
 /**
  * Hybrid search over approved passages only: vector search plus keyword search,
  * merged with reciprocal rank fusion. Returns the top passages and the best vector similarity.
@@ -23,7 +32,9 @@ export async function retrieve(question: string, k = 6): Promise<{ passages: Pas
 
   const [byVector, byKeyword] = await Promise.all([
     vector ? db.rpc("match_passages", { query_embedding: vector, match_count: 12 }) : Promise.resolve({ data: [] }),
-    db.from("passages").select("id").textSearch("fts", question, { type: "websearch", config: "simple" }).limit(12),
+    keywordQuery(question)
+      ? db.from("passages").select("id").textSearch("fts", keywordQuery(question)!, { config: "simple" }).limit(12)
+      : Promise.resolve({ data: [] }),
   ]);
 
   const scores = new Map<string, number>();

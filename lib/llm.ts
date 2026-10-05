@@ -1,36 +1,58 @@
-/** One wrapper for every LLM call. Providers are a config change, not a rewrite. */
+/**
+ * One wrapper for every LLM call, with automatic fallback across providers.
+ * Models that no longer exist are remembered and skipped for the rest of the process.
+ */
+import { recordUsage } from "./usage";
+
 type Provider = "gemini" | "groq" | "openrouter";
 export type ModelRef = { provider: Provider; model: string };
 type Prompt = { system: string; user: string };
 type Options = { json?: boolean; temperature?: number };
 
 const env = process.env;
-export const MODELS = {
-  draftA: { provider: "gemini", model: env.GEMINI_MODEL ?? "gemini-2.5-flash" },
-  draftB: { provider: "groq", model: env.GROQ_MODEL_LARGE ?? "openai/gpt-oss-120b" },
-  draftC: { provider: "groq", model: env.GROQ_MODEL_ALT ?? "qwen/qwen3-32b" },
-  small: { provider: "groq", model: env.GROQ_MODEL_SMALL ?? "openai/gpt-oss-20b" },
-  verifier: { provider: "gemini", model: env.GEMINI_MODEL_LITE ?? "gemini-2.5-flash-lite" },
-  backup: { provider: "openrouter", model: env.OPENROUTER_MODEL ?? "meta-llama/llama-3.3-70b-instruct:free" },
-} satisfies Record<string, ModelRef>;
-
 const TIMEOUT_MS = 25_000;
 
+/** Every model we may use, in order of preference. Names come from .env.local when set. */
+export const ALL_MODELS: ModelRef[] = [
+  { provider: "gemini" as const, model: env.GEMINI_MODEL || "gemini-flash-latest" },
+  { provider: "groq" as const, model: env.GROQ_MODEL_LARGE || "openai/gpt-oss-120b" },
+  { provider: "groq" as const, model: env.GROQ_MODEL_SMALL || "openai/gpt-oss-20b" },
+  { provider: "gemini" as const, model: env.GEMINI_MODEL_ALT || "gemini-2.5-flash" },
+  { provider: "gemini" as const, model: env.GEMINI_MODEL_LITE || "gemini-flash-lite-latest" },
+  ...(env.OPENROUTER_MODEL && env.OPENROUTER_API_KEY ? [{ provider: "openrouter" as const, model: env.OPENROUTER_MODEL }] : []),
+].filter((m, i, list) => m.model && list.findIndex((x) => x.provider === m.provider && x.model === m.model) === i);
+
+export const MODELS = {
+  main: ALL_MODELS[0],
+  small: ALL_MODELS.find((m) => m.model.includes("20b")) ?? ALL_MODELS[0],
+  verifier: ALL_MODELS.find((m) => m.provider === "gemini") ?? ALL_MODELS[0],
+};
+
+const dead = new Set<string>();
+const keyOf = (m: ModelRef) => `${m.provider}/${m.model}`;
+export const isAlive = (m: ModelRef) => !dead.has(keyOf(m));
+
+class ModelError extends Error {
+  constructor(message: string, public gone: boolean) { super(message); }
+}
+
 async function callGemini(model: string, p: Prompt, o: Options): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
-  const res = await fetch(url, {
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     signal: AbortSignal.timeout(TIMEOUT_MS),
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: p.system }] },
       contents: [{ role: "user", parts: [{ text: p.user }] }],
-      generationConfig: { temperature: o.temperature ?? 0.3, ...(o.json ? { responseMimeType: "application/json" } : {}) },
+      generationConfig: o.json ? { responseMimeType: "application/json" } : {},
     }),
   });
-  if (!res.ok) throw new Error(`gemini ${res.status}`);
+  if (!res.ok) throw new ModelError(`gemini ${model} ${res.status}`, res.status === 404);
   const data = await res.json();
-  return (data.candidates?.[0]?.content?.parts ?? []).map((x: { text?: string }) => x.text ?? "").join("");
+  recordUsage(model, Number(data.usageMetadata?.totalTokenCount ?? 0));
+  const text = (data.candidates?.[0]?.content?.parts ?? []).map((x: { text?: string }) => x.text ?? "").join("");
+  if (!text) throw new ModelError(`gemini ${model} empty reply`, false);
+  return text;
 }
 
 async function callOpenAICompatible(base: string, key: string | undefined, model: string, p: Prompt, o: Options) {
@@ -41,38 +63,45 @@ async function callOpenAICompatible(base: string, key: string | undefined, model
     body: JSON.stringify({
       model,
       temperature: o.temperature ?? 0.3,
-      messages: [
-        { role: "system", content: p.system },
-        { role: "user", content: p.user },
-      ],
+      messages: [{ role: "system", content: p.system }, { role: "user", content: p.user }],
       ...(o.json ? { response_format: { type: "json_object" } } : {}),
     }),
   });
-  if (!res.ok) throw new Error(`${base} ${res.status}`);
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    const gone = res.status === 404 || /model_not_found|decommissioned|does not exist/i.test(body);
+    throw new ModelError(`${model} ${res.status}`, gone);
+  }
   const data = await res.json();
+  recordUsage(model, Number(data.usage?.total_tokens ?? 0));
   return String(data.choices?.[0]?.message?.content ?? "");
 }
 
-function call(ref: ModelRef, p: Prompt, o: Options) {
-  if (ref.provider === "gemini") return callGemini(ref.model, p, o);
-  if (ref.provider === "groq") return callOpenAICompatible("https://api.groq.com/openai/v1", env.GROQ_API_KEY, ref.model, p, o);
-  return callOpenAICompatible("https://openrouter.ai/api/v1", env.OPENROUTER_API_KEY, ref.model, p, o);
-}
-
-/** Calls the chosen model; on a rate limit or outage, falls back to the backup provider. */
-export async function complete(ref: ModelRef, p: Prompt, o: Options = {}): Promise<string> {
+/** Calls exactly one model, with no fallback. Used where each answer must come from a different model. */
+export async function callModel(m: ModelRef, p: Prompt, o: Options = {}): Promise<string> {
   try {
-    return await call(ref, p, o);
+    if (m.provider === "gemini") return await callGemini(m.model, p, o);
+    if (m.provider === "groq") return await callOpenAICompatible("https://api.groq.com/openai/v1", env.GROQ_API_KEY, m.model, p, o);
+    return await callOpenAICompatible("https://openrouter.ai/api/v1", env.OPENROUTER_API_KEY, m.model, p, o);
   } catch (err) {
-    if (ref.provider === MODELS.backup.provider) throw err;
-    return call(MODELS.backup, p, o);
+    if (err instanceof ModelError && err.gone) dead.add(keyOf(m));
+    console.error(`[llm] ${keyOf(m)} failed: ${(err as Error).message}`);
+    throw err;
   }
 }
 
-/** Same as complete, but parses the reply as JSON. Returns null if the model did not return valid JSON. */
-export async function completeJSON<T>(ref: ModelRef, p: Prompt, o: Options = {}): Promise<T | null> {
-  const text = await complete(ref, p, { ...o, json: true });
-  return parseJSON<T>(text);
+/** Tries the preferred model, then every other working model, until one answers. */
+export async function complete(preferred: ModelRef, p: Prompt, o: Options = {}): Promise<string> {
+  const order = [preferred, ...ALL_MODELS.filter((m) => keyOf(m) !== keyOf(preferred))].filter(isAlive);
+  const errors: string[] = [];
+  for (const m of order) {
+    try { return await callModel(m, p, o); } catch (err) { errors.push((err as Error).message); }
+  }
+  throw new Error(`all models failed: ${errors.join("; ")}`);
+}
+
+export async function completeJSON<T>(preferred: ModelRef, p: Prompt, o: Options = {}): Promise<T | null> {
+  return parseJSON<T>(await complete(preferred, p, { ...o, json: true }));
 }
 
 export function parseJSON<T>(text: string): T | null {
@@ -80,13 +109,8 @@ export function parseJSON<T>(text: string): T | null {
   try {
     return JSON.parse(cleaned) as T;
   } catch {
-    const start = cleaned.indexOf("{");
-    const end = cleaned.lastIndexOf("}");
+    const start = cleaned.indexOf("{"), end = cleaned.lastIndexOf("}");
     if (start < 0 || end <= start) return null;
-    try {
-      return JSON.parse(cleaned.slice(start, end + 1)) as T;
-    } catch {
-      return null;
-    }
+    try { return JSON.parse(cleaned.slice(start, end + 1)) as T; } catch { return null; }
   }
 }

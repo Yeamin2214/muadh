@@ -7,10 +7,13 @@ import "@/lib/client/text-part2";
 import "@/lib/client/text-part3";
 import "@/lib/client/text-fixes";
 import "@/lib/client/text-mentor";
+import "@/lib/client/text-v2";
+import "@/lib/client/text-mentors";
+import "@/lib/client/text-admin";
 
 export type Profile = {
   id: string;
-  role: "learner" | "mentor" | "admin";
+  role: "learner" | "applicant" | "mentor" | "admin";
   name: string | null;
   gender: "male" | "female" | null;
   language: Lang;
@@ -100,7 +103,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       signOut: async () => {
         await supabase.auth.signOut();
         setProfile(null);
-        router.replace("/login");
+        router.replace("/");
       },
     };
   }, [lang, setLang, profile, loading, refresh, supabase, router]);
@@ -114,14 +117,9 @@ export function useApp() {
   return ctx;
 }
 
-/** Sends visitors to login, and new accounts to onboarding, before showing a page. */
-export function useRequireProfile() {
-  const app = useApp();
-  const router = useRouter();
-  useEffect(() => {
-    if (app.loading) return;
-    if (!app.profile) router.replace("/login");
-    else if (app.profile.reads_arabic === null) router.replace("/onboarding");
-  }, [app.loading, app.profile, router]);
-  return app.profile && app.profile.reads_arabic !== null ? app.profile : null;
+/** The signed-in profile. Only used inside the app layout, which renders pages only once a profile is loaded. */
+export function useProfile(): Profile {
+  const { profile } = useApp();
+  if (!profile) throw new Error("useProfile is only available inside the signed-in app");
+  return profile;
 }

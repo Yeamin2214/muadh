@@ -41,12 +41,14 @@ async function account(a) {
 const ids = {};
 for (const a of ACCOUNTS) ids[a.name] = await account(a);
 
-// Fresh sample data: remove old demo questions (tickets go with them).
+// Fresh sample data: remove old demo chats and questions (tickets go with them).
+await db.from("conversations").delete().in("learner_id", Object.values(ids));
 await db.from("questions").delete().in("learner_id", Object.values(ids));
 
 async function referred(learner, lang, text, questionAr, reason, opts = {}) {
+  const { data: chat } = await db.from("conversations").insert({ learner_id: ids[learner], title: text.slice(0, 60) }).select("id").single();
   const { data: q } = await db.from("questions").insert({
-    learner_id: ids[learner], text, lang, norm: text.toLowerCase(), level: reason === "level_c" ? "C" : "D",
+    learner_id: ids[learner], conversation_id: chat.id, text, lang, norm: text.toLowerCase(), level: reason === "level_c" ? "C" : "D",
     action: reason === "crisis" ? "crisis" : "refer", answer: { action: "refer", level: "D", reason }, trace: { demo: true },
   }).select("id").single();
   await db.from("tickets").insert({

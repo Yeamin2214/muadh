@@ -1,18 +1,16 @@
 "use client";
 import Link from "next/link";
-import Shell from "@/components/Shell";
-import { useApp, useRequireProfile } from "@/components/AppProvider";
+import { useApp, useProfile } from "@/components/AppProvider";
 import { LESSONS, STAGE_IMAGES, STAGE_RANGES, isDone, isOpen, nextLesson } from "@/lib/client/lessons";
 
 export default function Lessons() {
-  const profile = useRequireProfile();
+  const profile = useProfile();
   const { t, list, num, lang } = useApp();
-  if (!profile) return <Shell><p className="mid">{t("loading")}</p></Shell>;
   const done = profile.lessons_done ?? [];
   const current = nextLesson(done);
 
   return (
-    <Shell>
+    <>
       <div className="page" style={{ maxWidth: 900 }}>
         <h1>{t("lessonsH")}</h1>
         <p className="lead">{t("lessonsP")}</p>
@@ -46,6 +44,6 @@ export default function Lessons() {
           })}
         </div>
       </div>
-    </Shell>
+    </>
   );
 }
