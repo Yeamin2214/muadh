@@ -280,3 +280,10 @@ const AFTER: Record<Lang, Record<string, string>> = {
   },
 };
 (Object.keys(AFTER) as Lang[]).forEach((l) => Object.assign(T[l], AFTER[l]));
+
+const FIX7: Record<Lang, Record<string, string>> = {
+  en: { nameL: "Full name", setName: "Full name", stMin: "{n} more characters needed", stShort: "Please write a little more: a title and at least 30 characters.", stNotReady: "Stories aren't switched on yet. Please try again later." },
+  ar: { nameL: "الاسم الكامل", setName: "الاسم الكامل", stMin: "تحتاج {n} حرفًا إضافيًا", stShort: "اكتب قليلًا أكثر: عنوانًا و٣٠ حرفًا على الأقل.", stNotReady: "خاصية القصص غير مفعّلة بعد. حاول لاحقًا." },
+  bn: { nameL: "পূর্ণ নাম", setName: "পূর্ণ নাম", stMin: "আরও {n}টি অক্ষর লাগবে", stShort: "আরেকটু লিখুন: একটি শিরোনাম ও কমপক্ষে ৩০টি অক্ষর।", stNotReady: "গল্পের অংশটি এখনো চালু হয়নি। পরে চেষ্টা করুন।" },
+};
+(Object.keys(FIX7) as Lang[]).forEach((l) => Object.assign(T[l], FIX7[l]));

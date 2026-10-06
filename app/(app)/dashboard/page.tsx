@@ -32,7 +32,12 @@ export default function Home() {
   // Rating prompt, shown until this account has rated Mu'adh.
   const [rated, setRated] = useState(true);
   const [rateOpen, setRateOpen] = useState(false);
-  useEffect(() => { fetch("/api/rating").then((r) => (r.ok ? r.json() : null)).then((d) => d && setRated(d.rated)).catch(() => {}); }, []);
+  useEffect(() => {
+    fetch("/api/rating").then((r) => (r.ok ? r.json() : null)).then((d) => d && setRated(d.rated)).catch(() => {});
+    const done = () => setRated(true);
+    window.addEventListener("muadh:rated", done);
+    return () => window.removeEventListener("muadh:rated", done);
+  }, []);
 
   // Prayer tracker, kept per day on this device.
   const [prayed, setPrayed] = useState<boolean[]>([false, false, false, false, false]);
@@ -70,8 +75,10 @@ export default function Home() {
 
   const fraction = Math.min(1, Math.max(0, (now.getTime() - np.previous.getTime()) / (np.at.getTime() - np.previous.getTime())));
   const C = 2 * Math.PI * 58;
-  const daySpan = np.today[4].getTime() - np.today[0].getTime();
-  const sun = Math.min(100, Math.max(0, ((now.getTime() - np.today[0].getTime()) / daySpan) * 100));
+  // Dots are evenly spaced, so the sun moves between dots: halfway between Dhuhr and Asr sits halfway between their dots.
+  const passed = np.today.filter((d) => d <= now).length; // prayers already started today
+  const sun = passed === 0 ? 0 : passed >= 5 ? 100
+    : ((passed - 1 + (now.getTime() - np.today[passed - 1].getTime()) / (np.today[passed].getTime() - np.today[passed - 1].getTime())) / 4) * 100;
   const hijri = new Intl.DateTimeFormat(`${locale}-u-ca-islamic-umalqura`, { day: "numeric", month: "long", year: "numeric" }).format(now);
   const toFriday = (5 - now.getDay() + 7) % 7;
   const jumuah = toFriday === 0 ? t("jumuahToday") : toFriday === 1 ? t("jumuahTomorrow") : t("jumuahIn", { d: num(toFriday) });
@@ -83,7 +90,7 @@ export default function Home() {
   return (
     <>
       <DailyPopups times={np.today} />
-      {rateOpen && <RateDialog onClose={() => setRateOpen(false)} onDone={() => setRated(true)} />}
+      {rateOpen && <RateDialog onClose={() => setRateOpen(false)} onDone={() => { setRated(true); window.dispatchEvent(new Event("muadh:rated")); }} />}
       {!rated && (
         <div className="card rate-card">
           <span><Star className="ic" aria-hidden="true" /> {t("rtPrompt")}</span>

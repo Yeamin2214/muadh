@@ -10,7 +10,11 @@ export type Pose = "stand" | "takbir" | "ruku" | "sujood" | "sit";
 export type Phrase = { audio?: string[]; ar: string; tr: string; en: string; bn: string; times?: number; optional?: boolean; surah?: [number, number] };
 export type PrayerStep = { id: string; pose: Pose; title: T3; do: T3; say?: Phrase[]; src?: string; diff?: "hands" | "raise" };
 
-const FATIHA = Array.from({ length: 7 }, (_, i) => `https://everyayah.com/data/Alafasy_128kbps/00100${i + 1}.mp3`);
+/**
+ * Al-Fatiha audio. When our hafiz's recording is ready, save it as public/audio/fatiha.m4a
+ * and replace this line with: export const FATIHA = ["/audio/fatiha.m4a"];
+ */
+export const FATIHA = Array.from({ length: 7 }, (_, i) => `https://everyayah.com/data/Alafasy_128kbps/00100${i + 1}.mp3`);
 const TAKBIR: Phrase = { audio: ["/audio/takbir.m4a"], ar: "اللَّهُ أَكْبَرُ", tr: "Allahu Akbar", en: "Allah is the Greatest.", bn: "আল্লাহ সবচেয়ে মহান।" };
 
 export const PRAYER_STEPS: PrayerStep[] = [

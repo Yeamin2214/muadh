@@ -1,4 +1,5 @@
 "use client";
+import OtpInput from "@/components/OtpInput";
 import PasswordInput from "@/components/PasswordInput";
 import { GraduationCap, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
@@ -96,7 +97,7 @@ export default function AuthForm({ mode, audience = "learner" }: { mode: "signup
           <form className="auth-form" onSubmit={verify}>
             <h1>{t("vH")}</h1>
             <p className="mid">{t("vP", { email })}</p>
-            <label>{t("vCode")}<input className="field code-input" inputMode="numeric" autoComplete="one-time-code" maxLength={10} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} autoFocus /></label>
+            <OtpInput value={code} onChange={setCode} />
             {error && <p className="err" role="alert">{error}</p>}
             {info && <p className="b2" style={{ color: "var(--gold)", margin: 0 }}>{info}</p>}
             <button className="btn" disabled={busy || code.length < 6} style={{ width: "100%" }}>{busy ? t("loading") : t("vBtn")}</button>

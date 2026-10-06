@@ -51,6 +51,8 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
   const [menu, setMenu] = useState<"" | "bell" | "user">("");
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [rating, setRating] = useState(false);
+  const [rated, setRated] = useState(true);
+  useEffect(() => { if (profile && profile.role !== "admin") fetch("/api/rating").then((r) => (r.ok ? r.json() : null)).then((d) => d && setRated(d.rated)).catch(() => {}); }, [profile]);
   const close = () => setMenu("");
   const bellRef = useClickOutside(menu === "bell", close);
   const userRef = useClickOutside(menu === "user", close);
@@ -132,7 +134,7 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
         <div className="af-top">
           <h1 className="af-title">{current ? t(current[2]) : ""}</h1>
           <div className="af-actions">
-            {!admin && <button className="btn sec ratebtn" onClick={() => setRating(true)}><Star className="ic" aria-hidden="true" /> <span>{t("rtButton")}</span></button>}
+            {!admin && !rated && <button className="btn sec ratebtn" onClick={() => setRating(true)}><Star className="ic" aria-hidden="true" /> <span>{t("rtButton")}</span></button>}
             <div className="af-pop" ref={bellRef}>
               <button className="af-icon" aria-label={t("bellH")} onClick={() => setMenu(menu === "bell" ? "" : "bell")}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0" /></svg>
@@ -161,7 +163,7 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <main className="af-content">{children}</main>
-        {rating && <RateDialog onClose={() => setRating(false)} />}
+        {rating && <RateDialog onClose={() => setRating(false)} onDone={() => { setRated(true); window.dispatchEvent(new Event("muadh:rated")); }} />}
       </div>
 
       <nav className="af-tabs" aria-label="Main" style={{ gridTemplateColumns: `repeat(${nav.length}, 1fr)` }}>

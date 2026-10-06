@@ -8,7 +8,7 @@ import { useApp } from "@/components/AppProvider";
 import PrayerFigure from "@/components/PrayerFigure";
 import SurahText from "@/components/SurahText";
 import QiblaPage from "../qibla/page";
-import { DIFFERENCES, PRAYER_STEPS, RAKAHS, type Phrase } from "@/lib/content/prayer";
+import { DIFFERENCES, FATIHA, PRAYER_STEPS, RAKAHS, type Phrase } from "@/lib/content/prayer";
 
 /** Plays a list of audio files one after another; returns a stop function. */
 function playQueue(urls: string[], onDone: () => void) {
@@ -106,7 +106,6 @@ function Learn() {
 
 type Ev = { pose: "stand" | "takbir" | "ruku" | "sujood" | "sit"; step: string; audio: string[]; wait?: number; rakah: number };
 const A = (id: string, times = 1) => Array.from({ length: times }, () => `/audio/${id}.m4a`);
-const FATIHA_AUDIO = Array.from({ length: 7 }, (_, i) => `https://everyayah.com/data/Alafasy_128kbps/00100${i + 1}.mp3`);
 
 /** The whole prayer as one ordered timeline, built from the number of rak'ahs. */
 function buildPrayer(n: number): Ev[] {
@@ -116,7 +115,7 @@ function buildPrayer(n: number): Ev[] {
       ev.push({ pose: "stand", step: "intention", audio: [], wait: 3000, rakah: r });
       ev.push({ pose: "takbir", step: "takbir", audio: A("takbir"), rakah: r });
     }
-    ev.push({ pose: "stand", step: "recite", audio: r <= 2 ? [...FATIHA_AUDIO, ...A("qul-112")] : FATIHA_AUDIO, rakah: r });
+    ev.push({ pose: "stand", step: "recite", audio: r <= 2 ? [...FATIHA, ...A("qul-112")] : FATIHA, rakah: r });
     ev.push({ pose: "ruku", step: "ruku", audio: [...A("takbir"), ...A("ruku", 3)], rakah: r });
     ev.push({ pose: "stand", step: "rise", audio: [...A("sami"), ...A("rabbana")], rakah: r });
     ev.push({ pose: "sujood", step: "sujood", audio: [...A("takbir"), ...A("sujood", 3)], rakah: r });

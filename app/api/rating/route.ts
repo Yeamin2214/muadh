@@ -25,7 +25,10 @@ export async function POST(req: Request) {
   const db = adminClient();
   const { data: user } = await db.auth.admin.getUserById(me.id);
   const demo = /\.demo@muadh\.app$/i.test(user.user?.email ?? "");
-  if (!demo) await db.from("app_ratings").delete().eq("user_id", me.id);
+  if (!demo) {
+    const { data: already } = await db.from("app_ratings").select("id").eq("user_id", me.id).limit(1).maybeSingle();
+    if (already) return json({ error: "already_rated" }, 409);
+  }
   const { error } = await db.from("app_ratings").insert({
     user_id: me.id, role: me.role, demo, overall, ease: score(b.ease), trust: score(b.trust), useful: score(b.useful),
     comment: typeof b.comment === "string" ? b.comment.trim().slice(0, 1000) || null : null,

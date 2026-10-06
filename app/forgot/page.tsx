@@ -1,4 +1,5 @@
 "use client";
+import OtpInput from "@/components/OtpInput";
 import PasswordInput from "@/components/PasswordInput";
 import Link from "next/link";
 import { useState } from "react";
@@ -59,7 +60,7 @@ export default function Forgot() {
         <form className="card apply" onSubmit={reset}>
           <h1>{t("rpH")}</h1>
           <p className="mid" style={{ margin: 0 }}>{t("fpCodeP", { email })}</p>
-          <label>{t("vCode")}<input className="field code-input" inputMode="numeric" autoComplete="one-time-code" maxLength={10} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} autoFocus /></label>
+          <OtpInput value={code} onChange={setCode} />
           <label>{t("rpNew")}<PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("passHint")} autoComplete="new-password" /></label>
           {error && <p className="err">{error}</p>}
           <button className="btn" disabled={busy || code.length < 6}>{busy ? t("saving") : t("rpSave")}</button>

@@ -645,3 +645,7 @@ textarea:disabled{opacity:.5;cursor:not-allowed}
   .auth{align-items:start}
   .auth-art{position:sticky;top:0;height:100vh;min-height:0;background-size:cover;background-position:center 60%}
 }
+.otp{display:flex;gap:10px;justify-content:center}
+.otp-box{width:48px;height:56px;text-align:center;font-size:24px;font-weight:700;border-radius:12px;border:1px solid var(--s3);background:var(--s1);color:var(--hi);font-variant-numeric:tabular-nums}
+.otp-box:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-tint)}
+@media (max-width:380px){.otp{gap:6px}.otp-box{width:42px;height:50px}}
