@@ -1,9 +1,10 @@
 import type { Pose } from "@/lib/content/prayer";
 
 /** Simple, faceless figures for each prayer position: a solid head, a full torso and limbs. */
-const POSES: Record<Pose, { head: [number, number]; torso: string; limbs: string }> = {
-  stand: { head: [100, 34], torso: "M100 50 L100 108", limbs: "M100 108 L94 170 M100 108 L106 170 M100 64 L88 82 L110 86" },
-  takbir: { head: [100, 34], torso: "M100 50 L100 108", limbs: "M100 108 L94 170 M100 108 L106 170 M98 62 L82 58 L78 38 M102 62 L118 58 L122 38" },
+/** All positions are side views facing left (towards the qibla), so the figures read as one person moving. */
+const POSES: Record<Pose, { head: [number, number]; torso: string; limbs: string; hands?: [number, number] }> = {
+  stand: { head: [100, 34], torso: "M100 50 L100 108", limbs: "M100 108 L96 170 M100 108 L104 170 M100 60 L106 86 L80 82", hands: [78, 81] },
+  takbir: { head: [100, 34], torso: "M100 50 L100 108", limbs: "M100 108 L96 170 M100 108 L104 170 M100 62 L92 52 L86 36", hands: [85, 33] },
   ruku: { head: [58, 96], torso: "M74 98 L130 102", limbs: "M130 102 L126 170 M130 102 L134 170 M82 100 L122 136" },
   sujood: { head: [62, 160], torso: "M76 156 L122 130", limbs: "M122 130 L128 170 L160 170 M88 150 L82 170 L100 170" },
   sit: { head: [112, 74], torso: "M112 90 L114 148", limbs: "M114 148 L76 160 L122 170 M112 104 L86 150" },
@@ -19,6 +20,7 @@ export default function PrayerFigure({ pose }: { pose: Pose }) {
         <path d={p.limbs} strokeWidth="9" />
       </g>
       <circle cx={p.head[0]} cy={p.head[1]} r="13" fill="#D4AF37" />
+      {p.hands && <circle cx={p.hands[0]} cy={p.hands[1]} r="7" fill="#D4AF37" />}
     </svg>
   );
 }
