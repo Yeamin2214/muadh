@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { browserClient } from "@/lib/supabase/browser";
 import { useApp } from "@/components/AppProvider";
 import { LangSwitch } from "@/components/Shell";
+import PhoneInput from "@/components/PhoneInput";
 
 /** Three short questions after sign-up. Everything is self-reported; nothing is guessed. */
 export default function Onboarding() {
@@ -17,7 +18,7 @@ export default function Onboarding() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (!loading && !profile) router.replace("/login");
+    if (!loading && !profile) router.replace("/user/login");
   }, [loading, profile, router]);
 
   async function finish() {
@@ -47,7 +48,7 @@ export default function Onboarding() {
         <button className="opt" aria-pressed={contact === true} onClick={() => setContact(true)}>{t("phoneYes")}</button>
         <button className="opt" aria-pressed={contact === false} onClick={() => setContact(false)}>{t("phoneNo")}</button>
       </div>
-      {contact && <><input className="field" type="tel" inputMode="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t("phoneL")} autoComplete="tel" /><p className="b2 mid">{t("phoneNote")}</p></>}
+      {contact && <><PhoneInput value={phone} onChange={setPhone} placeholder={t("phoneL")} /><p className="b2 mid">{t("phoneNote")}</p></>}
     </div>,
     <div key="done"><h2>{t("ob4H")}</h2><p className="mid">{t("ob4P")}</p></div>,
   ];
@@ -62,7 +63,7 @@ export default function Onboarding() {
         <div className="row" style={{ justifyContent: "space-between", marginTop: 8 }}>
           {step > 0 ? <button className="btn sec" onClick={() => setStep(step - 1)}>{t("prev")}</button> : <span />}
           {step < steps.length - 1
-            ? <button className="btn" onClick={() => setStep(step + 1)}>{t("next")}</button>
+            ? <div className="row"><button className="link b2" onClick={() => setStep(step + 1)}>{t("skip")}</button><button className="btn" onClick={() => setStep(step + 1)}>{t("next")}</button></div>
             : <button className="btn" onClick={finish} disabled={busy}>{busy ? t("saving") : t("start")}</button>}
         </div>
       </div>

@@ -1,4 +1,6 @@
 "use client";
+import PasswordInput from "@/components/PasswordInput";
+import { GraduationCap, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -118,7 +120,7 @@ export default function AuthForm({ mode, audience = "learner" }: { mode: "signup
             <label>{t("nameL")}<input className="field" value={name} onChange={(e) => setName(e.target.value)} autoComplete="given-name" required /></label>
           )}
           <label>{t("emailL")}<input className="field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required /></label>
-          <label>{t("passL")}<input className="field" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={signup ? "new-password" : "current-password"} placeholder={t("passHint")} required /></label>
+          <label>{t("passL")}<PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={signup ? "new-password" : "current-password"} placeholder={t("passHint")} required /></label>
           {signup && (
             <fieldset className="gender">
               <legend>{t("genderQ")}</legend>
@@ -133,24 +135,25 @@ export default function AuthForm({ mode, audience = "learner" }: { mode: "signup
           {error && <p className="err" role="alert">{error}</p>}
           <button className="btn" disabled={busy} style={{ width: "100%" }}>{busy ? t("loading") : t(signup ? "create" : "signIn")}</button>
           {admin ? null : mentor ? (
-            <p className="b2 mid" style={{ textAlign: "center" }}>{t("mlNoAcc")} <Link href="/mentors/apply" style={{ color: "var(--gold)" }}>{t("mlApply")}</Link></p>
+            <><p className="b2 mid" style={{ textAlign: "center" }}>{t("mlNoAcc")} <Link href="/mentors/apply" style={{ color: "var(--gold)" }}>{t("mlApply")}</Link></p>
+          <div className="mentor-link">{t("learnerQ")} <Link href="/user/login">{t("learnerLogin")}</Link></div></>
           ) : (
             <p className="b2 mid" style={{ textAlign: "center" }}>
               {t(signup ? "haveAcc" : "noAcc")}{" "}
-              <Link href={signup ? "/login" : "/signup"} style={{ color: "var(--gold)" }}>{t(signup ? "signIn" : "signUpLink")}</Link>
+              <Link href={signup ? "/user/login" : "/signup"} style={{ color: "var(--gold)" }}>{t(signup ? "signIn" : "signUpLink")}</Link>
             </p>
           )}
           {!admin && <div className="demo-box">
             <p className="b2 mid" style={{ margin: 0 }}>{t("demoH")}</p>
             <div className="row">
-              {!mentor && <button type="button" className="btn sec" onClick={() => demo("learner")} disabled={busy}>🎓 {t("demoLearner")}</button>}
-              <button type="button" className="btn sec" onClick={() => demo("mentor")} disabled={busy}>🧑‍🏫 {t("demoMentor")}</button>
+              {!mentor && <button type="button" className="btn sec" onClick={() => demo("learner")} disabled={busy}><GraduationCap className="ic" aria-hidden="true" /> {t("demoLearner")}</button>}
+              <button type="button" className="btn sec" onClick={() => demo("mentor")} disabled={busy}><UserRoundCheck className="ic" aria-hidden="true" /> {t("demoMentor")}</button>
             </div>
             <button type="button" className="link b2" onClick={() => demo("mentor_f")} disabled={busy}>{t("demoMentorF")}</button>
           </div>}
           {!mentor && !admin && (
             <div className="mentor-link">{t("authMentorQ")}{" "}
-              <Link href="/mentors/login">{t("mLoginBtn")}</Link> · <Link href="/mentors/apply">{t("mApplyBtn")}</Link>
+              <Link href="/mentor/login">{t("mLoginBtn")}</Link> · <Link href="/mentors/apply">{t("mApplyBtn")}</Link>
             </div>
           )}
         </form>

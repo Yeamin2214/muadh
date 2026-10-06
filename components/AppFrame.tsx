@@ -1,10 +1,12 @@
 "use client";
+import { LogOut, Star, Settings as SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useApp } from "./AppProvider";
-import { LangSwitch, Logo } from "./Shell";
+import { Logo } from "./Shell";
 import RateDialog from "./RateDialog";
+import { stopAllAudio } from "@/lib/client/audio";
 import AuthForm from "./AuthForm";
 
 const ICONS: Record<string, string> = {
@@ -57,16 +59,21 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
   // Each role stays on its own pages: mentors only see the portal and settings; learners never see the portal.
   const applicant = profile?.role === "applicant";
   const admin = profile?.role === "admin";
+  const loginArea = path.startsWith("/admin") ? "admin" : path.startsWith("/mentor") && !path.startsWith("/mentors") ? "mentor" : null;
+  const roleFits = loginArea === "admin" ? admin : loginArea === "mentor" ? profile?.role === "mentor" || profile?.role === "applicant" : true;
   const allowed = admin ? ADMIN_PAGES : isMentor ? MENTOR_PAGES : null;
-  const wrongPage = !!profile && (applicant || (allowed ? !allowed.some((p) => path.startsWith(p)) : path.startsWith("/mentor") || path.startsWith("/admin")));
+  const wrongPage = !!profile && roleFits && (applicant || (allowed ? !allowed.some((p) => path.startsWith(p)) : path.startsWith("/mentor") || path.startsWith("/admin")));
 
   useEffect(() => {
     if (loading) return;
-    if (!profile) { if (!path.startsWith("/admin")) router.replace("/login"); }
+    if (!profile) { if (!loginArea) router.replace("/user/login"); }
     else if (needsOnboarding) router.replace("/onboarding");
     else if (applicant) router.replace("/mentors/status");
     else if (wrongPage) router.replace(admin ? "/admin" : isMentor ? "/mentor" : "/dashboard");
   }, [loading, profile, needsOnboarding, wrongPage, applicant, isMentor, router]);
+
+  // Leaving a page stops any recitation or dua that was playing there.
+  useEffect(() => stopAllAudio, [path]);
 
   // Notifications: new mentor replies for learners, new questions for mentors.
   useEffect(() => {
@@ -77,7 +84,7 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
         const fresh = (r?.tickets ?? []).filter((x: { status: string }) => x.status === "new");
         setAlerts(fresh.slice(0, 6).map((x: { id: string; reason: string; urgent: boolean; learner: { name: string | null } | null }) => ({
           href: `/mentor?t=${(x as unknown as { id: string }).id}`,
-          text: `${x.urgent ? "🔴 " : ""}${t("bellNewQ", { name: x.learner?.name ?? "—" })} · ${t(`r_${x.reason}`)}`,
+          text: `${t("bellNewQ", { name: x.learner?.name ?? "—" })} · ${t(`r_${x.reason}`)}`,
         })));
       } else {
         const r = await fetch("/api/conversations").then((x) => (x.ok ? x.json() : null)).catch(() => null);
@@ -91,7 +98,7 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
     return () => { clearInterval(id); window.removeEventListener("muadh:alerts", load); };
   }, [profile, needsOnboarding, isMentor, t, path]);
 
-  if (!loading && !profile && path.startsWith("/admin")) return <AuthForm mode="login" audience="admin" />;
+  if (!loading && loginArea && (!profile || !roleFits)) return <AuthForm mode="login" audience={loginArea} />;
   if (loading || !profile || needsOnboarding || wrongPage) {
     return <div className="af-splash" aria-busy="true"><div className="af-mark"><Logo /></div></div>;
   }
@@ -125,8 +132,7 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
         <div className="af-top">
           <h1 className="af-title">{current ? t(current[2]) : ""}</h1>
           <div className="af-actions">
-            {!admin && <button className="btn sec ratebtn" onClick={() => setRating(true)}>⭐ <span>{t("rtButton")}</span></button>}
-            <LangSwitch />
+            {!admin && <button className="btn sec ratebtn" onClick={() => setRating(true)}><Star className="ic" aria-hidden="true" /> <span>{t("rtButton")}</span></button>}
             <div className="af-pop" ref={bellRef}>
               <button className="af-icon" aria-label={t("bellH")} onClick={() => setMenu(menu === "bell" ? "" : "bell")}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0" /></svg>
@@ -147,8 +153,8 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
                 <div className="af-menu" role="menu">
                   <b>{profile.name}</b>
                   <span className="b2 mid">{isMentor ? t("roleMentor") : profile.gender === "female" ? t("sister") : t("brother")}</span>
-                  <Link href="/settings" onClick={close} role="menuitem">⚙️ {t("navSettings")}</Link>
-                  <button onClick={signOut} role="menuitem">↩ {t("signOut")}</button>
+                  <Link href="/settings" onClick={close} role="menuitem"><SettingsIcon className="ic" aria-hidden="true" /> {t("navSettings")}</Link>
+                  <button onClick={signOut} role="menuitem"><LogOut className="ic" aria-hidden="true" /> {t("signOut")}</button>
                 </div>
               )}
             </div>

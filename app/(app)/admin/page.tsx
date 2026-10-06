@@ -1,9 +1,11 @@
 "use client";
+import { Check, Mail, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import EvalView from "@/components/EvalView";
 import RatingsView from "@/components/RatingsView";
 import UsersView from "@/components/UsersView";
+import StoriesView from "@/components/StoriesView";
 
 type Stats = {
   learners: number; learners_week: number; active_week: number; mentors: number; applicants: number;
@@ -14,7 +16,7 @@ type Stats = {
   ai: { calls: number; tokens: number }; ai_models: Record<string, number>;
 };
 type Details = { full_name?: string; phone?: string; location?: string; organisation?: string; position?: string; languages?: string[]; qualifications?: string; experience_years?: number };
-type Application = { user_id: string; email: string; details: Details; status: "pending" | "approved" | "rejected"; note: string | null; created_at: string; profiles: { name: string | null; gender: string | null; role: string } | null };
+type Application = { docLinks?: { name: string; url: string }[]; user_id: string; email: string; details: Details; status: "pending" | "approved" | "rejected"; note: string | null; created_at: string; profiles: { name: string | null; gender: string | null; role: string } | null };
 type Mentor = { id: string; name: string | null; gender: string | null; email: string; answered: number };
 
 function Bars({ data, label }: { data: Record<string, number>; label: (k: string) => string }) {
@@ -34,7 +36,7 @@ function Bars({ data, label }: { data: Record<string, number>; label: (k: string
 /** Admin panel: platform statistics and mentor verification. */
 export default function AdminPage() {
   const { t, num, locale, profile } = useApp();
-  const [tab, setTab] = useState<"overview" | "users" | "mentors" | "eval" | "ratings">("overview");
+  const [tab, setTab] = useState<"overview" | "users" | "mentors" | "stories" | "eval" | "ratings">("overview");
   const [stats, setStats] = useState<Stats | null>(null);
   const [apps, setApps] = useState<Application[]>([]);
   const [mentors, setMentors] = useState<Mentor[]>([]);
@@ -77,12 +79,14 @@ export default function AdminPage() {
         <button aria-pressed={tab === "overview"} onClick={() => setTab("overview")}>{t("adOverview")}</button>
         <button aria-pressed={tab === "users"} onClick={() => setTab("users")}>{t("usTab")}</button>
         <button aria-pressed={tab === "mentors"} onClick={() => setTab("mentors")}>{t("adMentors")}{pending.length ? ` (${num(pending.length)})` : ""}</button>
+        <button aria-pressed={tab === "stories"} onClick={() => setTab("stories")}>{t("stTab")}</button>
         <button aria-pressed={tab === "eval"} onClick={() => setTab("eval")}>{t("evTab")}</button>
         <button aria-pressed={tab === "ratings"} onClick={() => setTab("ratings")}>{t("rtTab")}</button>
       </div>
 
       {tab === "ratings" && <RatingsView />}
       {tab === "users" && <UsersView />}
+      {tab === "stories" && <StoriesView />}
 
       {tab === "eval" && <EvalView />}
 
@@ -148,19 +152,20 @@ export default function AdminPage() {
                   {!!d.languages?.length && <><dt>{t("adLangsW")}</dt><dd>{d.languages.join(", ")}</dd></>}
                   {d.qualifications && <><dt>{t("adQual")}</dt><dd>{d.qualifications}</dd></>}
                   {d.experience_years != null && <><dt>{t("adExp")}</dt><dd>{t("adYears", { n: num(d.experience_years) })}</dd></>}
+                  {!!a.docLinks?.length && <><dt>{t("docsTab")}</dt><dd>{a.docLinks.map((l) => <a key={l.url} href={l.url} target="_blank" rel="noreferrer" style={{ color: "var(--gold)", display: "block" }}>{l.name}</a>)}</dd></>}
                 </dl>
                 <p className="b2 mid" style={{ margin: 0 }}>{t("adSentDate", { d: date(a.created_at) })}{a.note ? ` · ${a.note}` : ""}</p>
                 {a.status === "approved" && a.email && (
                   <a className="btn sec" style={{ alignSelf: "flex-start" }}
                     href={`mailto:${a.email}?subject=${encodeURIComponent(t("mailSubject"))}&body=${encodeURIComponent(t("mailBody", { name: d.full_name || a.profiles?.name || "" }))}`}>
-                    ✉ {t("mailBtn")}
+                    <Mail className="ic" aria-hidden="true" /> {t("mailBtn")}
                   </a>
                 )}
                 {a.status === "pending" && (
                   <div className="row" style={{ marginTop: 10 }}>
                     <input className="field" style={{ flex: 1, minWidth: 200, margin: 0 }} placeholder={t("adNote")} value={notes[a.user_id] ?? ""} onChange={(e) => setNotes({ ...notes, [a.user_id]: e.target.value })} />
-                    <button className="btn" disabled={!!busy} onClick={() => act(a.user_id, "approve")}>✓ {t("adApprove")}</button>
-                    <button className="btn sec" disabled={!!busy} onClick={() => act(a.user_id, "reject")}>✕ {t("adReject")}</button>
+                    <button className="btn" disabled={!!busy} onClick={() => act(a.user_id, "approve")}><Check className="ic" aria-hidden="true" /> {t("adApprove")}</button>
+                    <button className="btn sec" disabled={!!busy} onClick={() => act(a.user_id, "reject")}><X className="ic" aria-hidden="true" /> {t("adReject")}</button>
                   </div>
                 )}
               </article>

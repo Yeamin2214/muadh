@@ -1,5 +1,5 @@
 import { adminClient } from "./supabase/admin";
-import { ALL_MODELS, callModel, complete, completeJSON, isAlive, MODELS, parseJSON, type ModelRef } from "./llm";
+import { callModel, candidateModels, complete, completeJSON, MODELS, parseJSON, type ModelRef } from "./llm";
 import { embedTexts, cosine, wordOverlap } from "./embed";
 import { retrieve, passageText, type Passage } from "./retrieve";
 import { glossaryFor, translate } from "./translate";
@@ -24,6 +24,7 @@ export type AskResult = {
   ticketId?: string;
   conversationId?: string;
   cached?: boolean;
+  busy?: boolean; // every AI model was unavailable: the learner is asked to try again shortly
 };
 
 type Learner = { id: string; gender: "male" | "female" };
@@ -54,10 +55,11 @@ export async function ask(text: string, lang: Lang, learner: Learner, opts: { le
 
   // 2. Level, intent and retrieval run in parallel. Rules can only raise the level, never lower it.
   const [cls, found, lessonCtx] = await Promise.all([
-    completeJSON<{ level: string; intent: string; reason: string }>(MODELS.small, { system: CLASSIFY, user: question }, { temperature: 0 }).catch(() => null),
+    completeJSON<{ level: string; intent: string; reason: string }>(MODELS.small, { system: CLASSIFY, user: question }, { temperature: 0 }).catch(() => undefined),
     retrieve(question),
     lesson ? lessonPassages(lesson) : Promise.resolve([]),
   ]);
+  if (cls === undefined) return save({ action: "other", busy: true }, { busy: "classifier" }); // every model was down
   let level = asLevel(cls?.level);
   if (isPersonalRuling(question)) level = higher(level, "D");
   trace.classifier = cls ?? "failed";
@@ -89,7 +91,7 @@ export async function ask(text: string, lang: Lang, learner: Learner, opts: { le
   const prompt = { system: DRAFT(lang, await glossaryFor(lang)), user: `Passages:\n${context}\n\nQuestion: ${question}` };
   // Three drafts, each from a different model. Failed models are replaced by the next working one.
   const errors: string[] = [];
-  const candidates = ALL_MODELS.filter(isAlive);
+  const candidates = await candidateModels();
   const tryModel = (m: ModelRef) =>
     callModel(m, prompt, { json: true, temperature: 0.7 }).then(
       (text) => { const d = parseJSON<Draft>(text); if (!d) errors.push(`${m.model}: invalid JSON`); return d; },
@@ -111,9 +113,14 @@ export async function ask(text: string, lang: Lang, learner: Learner, opts: { le
     }));
   trace.drafts = { returned: drafts.length, insufficient, errors };
   if (insufficient >= 2) return refer("no_source", level, passages, trace);
-  if (drafts.length < 2) return refer("low_confidence", level, passages, trace);
+  if (!drafts.length) return insufficient ? refer("no_source", level, passages, trace) : save({ action: "other", busy: true }, { ...trace, busy: "drafts" });
+  // Only one model available: answer only if every single sentence passes the source check below.
+  const single = drafts.length === 1;
+  trace.mode = single ? "single" : "agreement";
 
   // 6. Agreement on substance: overlap of cited sources plus similarity of the bottom-line answers.
+  let chosen = drafts[0];
+  if (!single) {
   const bottoms = drafts.map((d) => d.bottom || d.sentences.map((s) => s.text).join(" "));
   const vectors = await embedTexts(bottoms).catch(() => null);
   const citedSets = drafts.map((d) => new Set(d.sentences.flatMap((s) => s.ids)));
@@ -127,11 +134,12 @@ export async function ask(text: string, lang: Lang, learner: Learner, opts: { le
   const totals = drafts.map((_, i) => drafts.reduce((sum, __, j) => (i === j ? sum : sum + pairScore(i, j)), 0));
   const pairs = drafts.length * (drafts.length - 1);
   const agreement = totals.reduce((a, b) => a + b, 0) / pairs;
-  const chosen = drafts[totals.indexOf(Math.max(...totals))];
+  chosen = drafts[totals.indexOf(Math.max(...totals))];
   // Word overlap scores lower than meaning similarity, so its threshold is lower when the embedding service is unavailable.
   const minAgreement = vectors ? setting("AGREEMENT_MIN", 0.55) : setting("AGREEMENT_MIN_WORDS", 0.35);
   trace.agreement = { score: Number(agreement.toFixed(3)), min: minAgreement, method: vectors ? "meaning" : "words" };
   if (agreement < minAgreement) return refer("low_confidence", level, passages, trace);
+  }
 
   // 7. Hard rules: every sentence needs a valid source; attributions to Allah or the Prophet doubly so.
   const cited = chosen.sentences.filter((s) => s.ids.length > 0);
@@ -150,12 +158,13 @@ export async function ask(text: string, lang: Lang, learner: Learner, opts: { le
     },
     { temperature: 0 },
   ).catch(() => null);
-  if (!check?.results) return refer("low_confidence", level, passages, { ...trace, verifier: "failed" });
+  if (!check?.results) return save({ action: "other", busy: true }, { ...trace, busy: "verifier" });
   const supported = new Set(check.results.filter((r) => r.supported).map((r) => r.i));
   const final = cited.filter((_, i) => supported.has(i));
   const unsupportedShare = 1 - final.length / Math.max(1, chosen.sentences.length);
   trace.verifier = { kept: final.length, droppedByRule, attributionsWithoutSource, unsupportedShare: Number(unsupportedShare.toFixed(2)) };
-  if (!final.length || unsupportedShare > setting("MAX_UNSUPPORTED", 0.25)) return refer("low_confidence", level, passages, trace);
+  const maxUnsupported = single ? 0 : setting("MAX_UNSUPPORTED", 0.25); // single-model answers must be fully supported
+  if (!final.length || unsupportedShare > maxUnsupported) return refer("low_confidence", level, passages, trace);
 
   // 9. Answer: the app renders the cited passages word for word from the database.
   const sourceIds = new Set(final.flatMap((s) => s.ids));

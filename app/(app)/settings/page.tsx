@@ -1,8 +1,11 @@
 "use client";
+import { Check, Clock, LogOut } from "lucide-react";
 import { useState } from "react";
 import { browserClient } from "@/lib/supabase/browser";
 import { useApp, useProfile } from "@/components/AppProvider";
 import { LangSwitch } from "@/components/Shell";
+import PhoneInput from "@/components/PhoneInput";
+import StoryShare from "@/components/StoryShare";
 import { METHODS, activeMethod, prayerSettings, savedPlace, type MethodKey } from "@/lib/client/prayer";
 
 /** Profile and preferences. Learners can change everything they told us during onboarding. */
@@ -41,7 +44,7 @@ export default function Settings() {
       <section className="card tl" style={{ marginTop: 0 }}>
         <b>{t("setProfile")}</b>
         <label className="setrow">{t("setName")}<input className="field" value={name} onChange={(e) => setName(e.target.value)} /></label>
-        <div className="setrow">{t("setLang")}<LangSwitch /></div>
+        <div className="setrow">{t("setLang")}<LangSwitch /><span className="b2 mid" style={{ fontWeight: 400 }}>{t("setLangNote")}</span></div>
         {learner && (
           <>
             <div className="setrow">{t("setRead")}
@@ -50,13 +53,16 @@ export default function Settings() {
             <div className="setrow">{t("setWork")}
               <div className="opts inline">{list("workA").map((a, i) => <button key={a} className="opt" aria-pressed={work === i} onClick={() => setWork(i)}>{a}</button>)}</div>
             </div>
-            <label className="setrow check"><input type="checkbox" checked={contact} onChange={(e) => setContact(e.target.checked)} /> {t("setPhone")}</label>
-            {contact && <input className="field" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t("setPhoneNum")} />}
+            <div className="agree" style={{ marginTop: 16 }}>
+              <input id="contact" type="checkbox" checked={contact} onChange={(e) => setContact(e.target.checked)} />
+              <label htmlFor="contact">{t("setPhone")}</label>
+            </div>
+            {contact && <PhoneInput value={phone} onChange={setPhone} placeholder={t("setPhoneNum")} />}
           </>
         )}
         <div className="row" style={{ marginTop: 16 }}>
           <button className="btn" onClick={save} disabled={busy}>{busy ? t("saving") : t("setSave")}</button>
-          {saved && <span className="chip" style={{ marginTop: 0 }}>✓ {t("setSaved")}</span>}
+          {saved && <span className="chip" style={{ marginTop: 0 }}><Check className="ic" aria-hidden="true" /> {t("setSaved")}</span>}
         </div>
       </section>
       {learner && (
@@ -76,13 +82,14 @@ export default function Settings() {
               <option value="hanafi">Hanafi</option>
             </select>
           </label>
-          {auto && <p className="b2 mid" style={{ margin: "8px 0 0" }}>🕒 {auto.tz}</p>}
+          {auto && <p className="b2 mid" style={{ margin: "8px 0 0" }}><Clock className="ic" aria-hidden="true" /> {auto.tz}</p>}
         </section>
       )}
+      {learner && <StoryShare />}
       <section className="card tl">
         <b>{t("setAccount")}</b>
         <p className="b2 mid">{profile.name} · {learner ? (profile.gender === "female" ? t("sister") : t("brother")) : t("roleMentor")}</p>
-        <button className="btn sec" onClick={signOut}>↩ {t("signOut")}</button>
+        <button className="btn sec" onClick={signOut}><LogOut className="ic" aria-hidden="true" /> {t("signOut")}</button>
       </section>
     </div>
   );

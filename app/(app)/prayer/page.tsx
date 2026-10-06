@@ -1,4 +1,6 @@
 "use client";
+import { newAudio } from "@/lib/client/audio";
+import { Armchair, BookOpen, Compass, GraduationCap, Headphones, ListOrdered, Pause, Play, RotateCcw, Scale, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -11,7 +13,7 @@ import { DIFFERENCES, PRAYER_STEPS, RAKAHS, type Phrase } from "@/lib/content/pr
 /** Plays a list of audio files one after another; returns a stop function. */
 function playQueue(urls: string[], onDone: () => void) {
   let i = 0, stopped = false;
-  const audio = new Audio();
+  const audio = newAudio();
   const next = () => {
     if (stopped) return;
     if (i >= urls.length) return onDone();
@@ -73,7 +75,7 @@ function Learn() {
               <div className="phrase-top">
                 {p.audio && (
                   <button className="play" onClick={() => (playing === `${step.id}-${k}` ? halt() : playPhrase(`${step.id}-${k}`, p))} aria-label={`${t("listen")}: ${p.tr}`}>
-                    {playing === `${step.id}-${k}` ? "❚❚" : "▶"}
+                    {playing === `${step.id}-${k}` ? <Pause className="ic" aria-hidden="true" /> : <Play className="ic" aria-hidden="true" />}
                   </button>
                 )}
                 <p className="ar-text" lang="ar">{p.ar}</p>
@@ -85,12 +87,12 @@ function Learn() {
               </div>
             </div>
           ))}
-          {step.diff && <div className="diff-note"><b>⚖️ {t("prDiffH")}</b>{text(DIFFERENCES[step.diff])}</div>}
+          {step.diff && <div className="diff-note"><b><Scale className="ic" aria-hidden="true" /> {t("prDiffH")}</b>{text(DIFFERENCES[step.diff])}</div>}
           {step.src && <p className="b2 mid" style={{ margin: "10px 0 0" }}>{t("prSource")}: {step.src}</p>}
           <div className="sdots">{PRAYER_STEPS.map((s, k) => <button key={s.id} className={k === i ? "on" : k < i ? "past" : ""} onClick={() => go(k)} aria-label={`${t("stepW")} ${k + 1}`} />)}</div>
           <div className="row" style={{ justifyContent: "space-between" }}>
             <button className="btn sec" onClick={() => go(i - 1)} disabled={i === 0}>{t("prev")}</button>
-            <button className={`btn ${guided ? "" : "sec"}`} onClick={() => (guided ? (setGuided(false), halt()) : setGuided(true))}>{guided ? `⏸ ${t("prStop")}` : `▶ ${t("prGuided")}`}</button>
+            <button className={`btn ${guided ? "" : "sec"}`} onClick={() => (guided ? (setGuided(false), halt()) : setGuided(true))}>{guided ? <><Pause className="ic" aria-hidden="true" /> {t("prStop")}</> : <><Play className="ic" aria-hidden="true" /> {t("prGuided")}</>}</button>
             <button className="btn" onClick={() => go(i + 1)} disabled={i === PRAYER_STEPS.length - 1}>{t("nextS")}</button>
           </div>
           <p className="b2 mid" style={{ margin: "12px 0 0" }}>{t("prPracticeNote")}</p>
@@ -166,7 +168,7 @@ function Practice() {
 
   return (
     <div className="pray-wrap">
-      <div className="demo-warning">⚠️ {t("ppWarn")}</div>
+      <div className="demo-warning"><TriangleAlert className="ic" aria-hidden="true" /> {t("ppWarn")}</div>
       <div className="langs" style={{ alignSelf: "flex-start" }}>
         {choices.map(([n, label]) => <button key={n} aria-pressed={count === n} onClick={() => restart(n)}>{t("prRakCount", { n: num(n) })} · {label}</button>)}
       </div>
@@ -184,13 +186,24 @@ function Practice() {
           <div className="pp-bar"><i style={{ width: `${((done ? events.length : i) / events.length) * 100}%` }} /></div>
           <div className="row" style={{ marginTop: 16 }}>
             {!running
-              ? <button className="btn" onClick={() => { if (done) restart(); setRunning(true); }}>▶ {i === 0 || done ? t("ppStart") : t("ppResume")}</button>
-              : <button className="btn" onClick={() => { stop.current?.(); setRunning(false); }}>⏸ {t("ppPause")}</button>}
-            <button className="btn sec" onClick={() => restart()}>↺ {t("ppRestart")}</button>
+              ? <button className="btn" onClick={() => { if (done) restart(); setRunning(true); }}><Play className="ic" aria-hidden="true" /> {i === 0 || done ? t("ppStart") : t("ppResume")}</button>
+              : <button className="btn" onClick={() => { stop.current?.(); setRunning(false); }}><Pause className="ic" aria-hidden="true" /> {t("ppPause")}</button>}
+            <button className="btn sec" onClick={() => restart()}><RotateCcw className="ic" aria-hidden="true" /> {t("ppRestart")}</button>
           </div>
         </div>
       </div>
-      <div className="diff-note"><b>📖 {t("ppNewH")}</b>{t("ppNewP")}</div>
+      {done && (
+        <div className="card tl" style={{ marginTop: 0 }}>
+          <b>{t("afterH")}</b>
+          <ol className="after-list">
+            <li>{t("af1")}<span className="b2 mid">Muslim 591</span></li>
+            <li>{t("af2")}<span className="b2 mid">Muslim 597</span></li>
+            <li>{t("af3")}<span className="b2 mid">Abu Dawud 1523, {t("af3g")}</span></li>
+          </ol>
+          <Link href="/dashboard" className="b2" style={{ color: "var(--gold)" }}>{t("afCounter")}</Link>
+        </div>
+      )}
+      <div className="diff-note"><b><BookOpen className="ic" aria-hidden="true" /> {t("ppNewH")}</b>{t("ppNewP")}</div>
     </div>
   );
 }
@@ -210,14 +223,14 @@ function Rakahs() {
               {Array.from({ length: r.count }, (_, j) => (
                 <span key={j} className="rak-wrap">
                   <i className="rak">{num(j + 1)}</i>
-                  {(j === 1 && r.count > 2) || j === r.count - 1 ? <i className="rak-sit" title={t("prTashahhud")}>🪑</i> : null}
+                  {(j === 1 && r.count > 2) || j === r.count - 1 ? <i className="rak-sit" title={t("prTashahhud")}><Armchair className="ic" aria-hidden="true" /></i> : null}
                 </span>
               ))}
             </div>
           </div>
         ))}
       </div>
-      <p className="b2 mid" style={{ margin: "14px 0 0" }}>🪑 {t("prSitLegend")}</p>
+      <p className="b2 mid" style={{ margin: "14px 0 0" }}><Armchair className="ic" aria-hidden="true" /> {t("prSitLegend")}</p>
     </div>
   );
 }
@@ -230,16 +243,16 @@ function PrayerInner() {
   return (
     <div className="admin">
       <div className="langs" role="tablist" style={{ alignSelf: "flex-start" }}>
-        <button aria-pressed={tab === "learn"} onClick={() => setTab("learn")}>🧎 {t("prLearn")}</button>
-        <button aria-pressed={tab === "practice"} onClick={() => setTab("practice")}>🎧 {t("ppTab")}</button>
-        <button aria-pressed={tab === "rakahs"} onClick={() => setTab("rakahs")}>🔢 {t("prRakTab")}</button>
-        <button aria-pressed={tab === "qibla"} onClick={() => setTab("qibla")}>🧭 {t("qibla")}</button>
+        <button aria-pressed={tab === "learn"} onClick={() => setTab("learn")}><GraduationCap className="ic" aria-hidden="true" /> {t("prLearn")}</button>
+        <button aria-pressed={tab === "practice"} onClick={() => setTab("practice")}><Headphones className="ic" aria-hidden="true" /> {t("ppTab")}</button>
+        <button aria-pressed={tab === "rakahs"} onClick={() => setTab("rakahs")}><ListOrdered className="ic" aria-hidden="true" /> {t("prRakTab")}</button>
+        <button aria-pressed={tab === "qibla"} onClick={() => setTab("qibla")}><Compass className="ic" aria-hidden="true" /> {t("qibla")}</button>
       </div>
       {tab === "learn" && <Learn />}
       {tab === "practice" && <Practice />}
       {tab === "rakahs" && <Rakahs />}
       {tab === "qibla" && <QiblaPage />}
-      {tab !== "qibla" && <Link href="/lessons" className="b2" style={{ color: "var(--gold)" }}>📖 {t("prLessons")}</Link>}
+      {tab !== "qibla" && <Link href="/lessons" className="b2" style={{ color: "var(--gold)" }}><BookOpen className="ic" aria-hidden="true" /> {t("prLessons")}</Link>}
     </div>
   );
 }

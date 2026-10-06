@@ -1,4 +1,5 @@
-import AuthForm from "@/components/AuthForm";
-export default function MentorLoginPage() {
-  return <AuthForm mode="login" audience="mentor" />;
+import { redirect } from "next/navigation";
+/** Old link: mentors now sign in at /mentor/login. */
+export default function OldMentorLogin() {
+  redirect("/mentor/login");
 }

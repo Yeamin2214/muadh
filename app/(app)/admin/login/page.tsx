@@ -1,0 +1,10 @@
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+/** Signed-in admins who open the sign-in link go straight to their page. Signed-out visitors see the sign-in form from the app frame. */
+export default function AdminLoginRedirect() {
+  const router = useRouter();
+  useEffect(() => { router.replace("/admin"); }, [router]);
+  return null;
+}

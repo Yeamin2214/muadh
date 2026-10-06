@@ -1,4 +1,5 @@
 "use client";
+import { Check } from "lucide-react";
 import Link from "next/link";
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -78,7 +79,7 @@ export default function LessonPage({ params }: { params: Promise<{ n: string }> 
         <div className="row" style={{ justifyContent: "space-between", marginTop: 24 }}>
           <Link className="btn sec" href={`/ask?about=${lesson.n}`}>{t("askAbout")}</Link>
           {isDone(done, lesson.n)
-            ? <span className="chip" style={{ marginTop: 0 }}>✓ {t("markedDone")}</span>
+            ? <span className="chip" style={{ marginTop: 0 }}><Check className="ic" aria-hidden="true" /> {t("markedDone")}</span>
             : <button className="btn" onClick={complete} disabled={busy}>{busy ? t("saving") : t("done")}</button>}
         </div>
       </article>

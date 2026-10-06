@@ -1,4 +1,5 @@
 "use client";
+import { Check, Hand, Info, Lock, Phone, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 
@@ -90,7 +91,7 @@ export default function MentorPortal() {
                 <span className={`tagp ${x.status === "answered" ? "ok" : ""}`} style={x.urgent ? { background: "rgba(207,102,121,.2)", color: "var(--err)" } : undefined}>{t(`r_${x.reason}`)}</span>
               </div>
               <div className="snip" dir="auto">{shown(x)}</div>
-              <div className="b2 mid">{time(x.created_at)}{x.preferred ? ` · ⭐ ${t("mBefore")}` : ""}{x.status === "claimed" ? ` · ${x.mine ? t("mTakenYou") : t("mTakenBy", { name: x.claimed_by_name ?? "" })}` : ""}</div>
+              <div className="b2 mid">{time(x.created_at)}{x.preferred ? ` · ${t("mBefore")}` : ""}{x.status === "claimed" ? ` · ${x.mine ? t("mTakenYou") : t("mTakenBy", { name: x.claimed_by_name ?? "" })}` : ""}</div>
             </button>
           ))}
         </aside>
@@ -101,7 +102,7 @@ export default function MentorPortal() {
               <h2 dir="rtl" lang="ar" style={{ margin: "14px 0 6px", textAlign: "right", fontFamily: "'IBM Plex Sans Arabic',sans-serif" }}>{ticket.question_ar}</h2>
               <div className="b2 mid">{t("mOriginal")} ({t(`l_${ticket.original_lang}`)})</div>
               <div className="orig" lang={ticket.original_lang}>{ticket.original}</div>
-              {ticket.learner?.phone && <p className="b2" style={{ color: "var(--gold)" }}>📞 {t("mContact")}: {ticket.learner.phone}</p>}
+              {ticket.learner?.phone && <p className="b2" style={{ color: "var(--gold)" }}><Phone className="ic" aria-hidden="true" /> {t("mContact")}: {ticket.learner.phone}</p>}
 
               {ticket.status === "answered" ? (
                 <>
@@ -109,17 +110,17 @@ export default function MentorPortal() {
                   {ticket.reply_learner && <div className="box" dir="ltr" lang={ticket.original_lang}><b>{t("mReceived")}</b>{ticket.reply_learner}</div>}
                 </>
               ) : ticket.status === "claimed" && !ticket.mine ? (
-                <p className="chip">🔒 {t("mTakenBy", { name: ticket.claimed_by_name ?? "" })}</p>
+                <p className="chip"><Lock className="ic" aria-hidden="true" /> {t("mTakenBy", { name: ticket.claimed_by_name ?? "" })}</p>
               ) : (
                 <>
-                  {ticket.status === "new" && <button className="btn sec" onClick={() => act("claim")} disabled={!!busy}>✋ {t("mClaim")}</button>}
+                  {ticket.status === "new" && <button className="btn sec" onClick={() => act("claim")} disabled={!!busy}><Hand className="ic" aria-hidden="true" /> {t("mClaim")}</button>}
                   {ticket.status === "claimed" && ticket.mine && (
-                    <div className="row"><span className="chip" style={{ marginTop: 0 }}>✓ {t("mTakenYou")}</span>
+                    <div className="row"><span className="chip" style={{ marginTop: 0 }}><Check className="ic" aria-hidden="true" /> {t("mTakenYou")}</span>
                       <button className="btn sec" onClick={() => act("release")} disabled={!!busy}>{t("mRelease")}</button></div>
                   )}
-                  {ticket.status === "new" && <p className="claim-first">👆 {t("mClaimFirst")}</p>}
+                  {ticket.status === "new" && <p className="claim-first"><Info className="ic" aria-hidden="true" /> {t("mClaimFirst")}</p>}
                   <label htmlFor="reply" style={{ display: "block", fontWeight: 600, marginTop: 16 }}>{t("mReply")}</label>
-                  {ticket.draft_ar && <p className="b2" style={{ color: "var(--gold)", margin: "4px 0" }}>✦ {t("mDraft")}</p>}
+                  {ticket.draft_ar && <p className="b2" style={{ color: "var(--gold)", margin: "4px 0" }}><Sparkles className="ic" aria-hidden="true" /> {t("mDraft")}</p>}
                   <p className="b2 mid" style={{ margin: "2px 0 0" }}>{t("mReplyHint")}</p>
                   <textarea id="reply" dir="auto" disabled={!ticket.mine} value={reply} onChange={(e) => { setReply(e.target.value); setBack(""); }} style={{ marginTop: 6 }} />
                   <div className="row" style={{ marginTop: 12 }}>

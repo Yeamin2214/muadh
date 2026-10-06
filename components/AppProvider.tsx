@@ -102,7 +102,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       num: (n) => n.toLocaleString(locale),
       signOut: async () => {
         const role = profile?.role;
-        const to = role === "admin" ? "/admin" : role === "mentor" || role === "applicant" ? "/mentors/login" : "/login";
+        const to = role === "admin" ? "/admin" : role === "mentor" || role === "applicant" ? "/mentor/login" : "/user/login";
         await supabase.auth.signOut();
         router.replace(to);
         setProfile(null);

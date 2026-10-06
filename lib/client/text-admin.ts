@@ -209,3 +209,74 @@ const PRACTICE2: Record<Lang, Record<string, string>> = {
   bn: { ppNext: "পরের রাকাতের জন্য দাঁড়ান", ppNextP: "আল্লাহু আকবার বলে পরের রাকাতের জন্য দাঁড়ান।", ppFatihaOnly: "এই রাকাতে শুধু সূরা ফাতিহা পড়া হয়।" },
 };
 (Object.keys(PRACTICE2) as Lang[]).forEach((l) => Object.assign(T[l], PRACTICE2[l]));
+
+const BUSY: Record<Lang, Record<string, string>> = {
+  en: { busyH: "Mu'adh is very busy right now", busyP: "Too many questions are being answered at the moment. Please try again in a minute. Your question was not lost." },
+  ar: { busyH: "معاذ مشغول جدًا الآن", busyP: "هناك أسئلة كثيرة في هذه اللحظة. يرجى المحاولة بعد دقيقة، ولم يضع سؤالك." },
+  bn: { busyH: "মুআয এখন খুব ব্যস্ত", busyP: "এই মুহূর্তে অনেক প্রশ্নের উত্তর দেওয়া হচ্ছে। এক মিনিট পর আবার চেষ্টা করুন। আপনার প্রশ্ন হারায়নি।" },
+};
+(Object.keys(BUSY) as Lang[]).forEach((l) => Object.assign(T[l], BUSY[l]));
+
+const PW: Record<Lang, Record<string, string>> = {
+  en: { pwShow: "Show password", pwHide: "Hide password" },
+  ar: { pwShow: "إظهار كلمة المرور", pwHide: "إخفاء كلمة المرور" },
+  bn: { pwShow: "পাসওয়ার্ড দেখান", pwHide: "পাসওয়ার্ড লুকান" },
+};
+(Object.keys(PW) as Lang[]).forEach((l) => Object.assign(T[l], PW[l]));
+
+const MISC: Record<Lang, Record<string, string>> = {
+  en: { skip: "Skip", setLangNote: "Mu'adh, your lessons and your mentor's replies will use this language." },
+  ar: { skip: "تخطَّ", setLangNote: "سيستخدم معاذ والدروس وردود مرشدك هذه اللغة." },
+  bn: { skip: "এড়িয়ে যান", setLangNote: "মুআয, আপনার পাঠ ও মেন্টরের উত্তর এই ভাষায় দেখাবে।" },
+};
+(Object.keys(MISC) as Lang[]).forEach((l) => Object.assign(T[l], MISC[l]));
+
+const PHONE: Record<Lang, Record<string, string>> = {
+  en: { phoneL: "Phone number", setPhoneNum: "Phone number" },
+  ar: { phoneL: "رقم الجوال", setPhoneNum: "رقم الجوال" },
+  bn: { phoneL: "ফোন নম্বর", setPhoneNum: "ফোন নম্বর" },
+};
+(Object.keys(PHONE) as Lang[]).forEach((l) => Object.assign(T[l], PHONE[l]));
+
+const QIBLA2: Record<Lang, Record<string, string>> = {
+  en: { qTap: "Tap anywhere to start the compass" },
+  ar: { qTap: "اضغط في أي مكان لتشغيل البوصلة" },
+  bn: { qTap: "কম্পাস চালু করতে যেকোনো জায়গায় চাপুন" },
+};
+(Object.keys(QIBLA2) as Lang[]).forEach((l) => Object.assign(T[l], QIBLA2[l]));
+
+const FOOT: Record<Lang, Record<string, string>> = {
+  en: { ftTag: "A gentle companion for new Muslims, with a human mentor always in the loop.", ftExplore: "Explore", ftAccount: "Account", ftSources: "Approved sources", ftRights: "Built to serve new Muslims, with trusted sources." },
+  ar: { ftTag: "رفيق لطيف للمسلمين الجدد، مع مرشد حقيقي دائمًا.", ftExplore: "استكشف", ftAccount: "الحساب", ftSources: "المصادر المعتمدة", ftRights: "صُمّم لخدمة المسلمين الجدد بمصادر موثوقة." },
+  bn: { ftTag: "নতুন মুসলিমদের এক কোমল সঙ্গী, সাথে সবসময় একজন সত্যিকারের মেন্টর।", ftExplore: "দেখুন", ftAccount: "অ্যাকাউন্ট", ftSources: "অনুমোদিত উৎস", ftRights: "বিশ্বস্ত উৎসের মাধ্যমে নতুন মুসলিমদের সেবায় তৈরি।" },
+};
+(Object.keys(FOOT) as Lang[]).forEach((l) => Object.assign(T[l], FOOT[l]));
+
+const MORE2: Record<Lang, Record<string, string>> = {
+  en: { learnerQ: "Are you a learner?", learnerLogin: "Sign in here", afterH: "After the prayer", stH: "Stories of new Muslims", stRead: "Read more", stLess: "Show less", stAnon: "A brother or sister", stShareH: "Share your story", stShareP: "How did you come to Islam? Your story can encourage others. Our team reviews every story before it is published.", stTitle: "Title", stBody: "Your story", stName: "Show my first name", stSend: "Submit for review", stSent: "JazakAllahu khairan! Your story will appear after our team reviews it.", stTab: "Stories", stApprove: "Publish", stReject: "Reject", docsH: "Certificates (optional)", docsP: "Upload up to 3 files (PDF or image), such as a degree, ijazah or experience letter. Only our admin team can see them.", docsTab: "Files" },
+  ar: { learnerQ: "هل أنت متعلم؟", learnerLogin: "سجّل الدخول هنا", afterH: "بعد الصلاة", stH: "قصص المسلمين الجدد", stRead: "اقرأ المزيد", stLess: "عرض أقل", stAnon: "أخ أو أخت", stShareH: "شارك قصتك", stShareP: "كيف وصلت إلى الإسلام؟ قصتك قد تشجع غيرك. يراجع فريقنا كل قصة قبل نشرها.", stTitle: "العنوان", stBody: "قصتك", stName: "أظهر اسمي الأول", stSend: "إرسال للمراجعة", stSent: "جزاك الله خيرًا! ستظهر قصتك بعد مراجعة فريقنا.", stTab: "القصص", stApprove: "نشر", stReject: "رفض", docsH: "الشهادات (اختياري)", docsP: "ارفع حتى ٣ ملفات (PDF أو صورة) مثل شهادة أو إجازة أو خطاب خبرة. لا يراها إلا فريق الإدارة.", docsTab: "الملفات" },
+  bn: { learnerQ: "আপনি কি শিক্ষার্থী?", learnerLogin: "এখানে সাইন ইন করুন", afterH: "নামাজের পরে", stH: "নতুন মুসলিমদের গল্প", stRead: "আরও পড়ুন", stLess: "কম দেখান", stAnon: "একজন ভাই বা বোন", stShareH: "আপনার গল্প শেয়ার করুন", stShareP: "আপনি কীভাবে ইসলামে এলেন? আপনার গল্প অন্যদের অনুপ্রাণিত করতে পারে। প্রকাশের আগে আমাদের টিম প্রতিটি গল্প পর্যালোচনা করে।", stTitle: "শিরোনাম", stBody: "আপনার গল্প", stName: "আমার প্রথম নাম দেখান", stSend: "পর্যালোচনার জন্য পাঠান", stSent: "জাযাকাল্লাহু খাইরান! আমাদের টিম পর্যালোচনার পর আপনার গল্প প্রকাশিত হবে।" },
+};
+(Object.keys(MORE2) as Lang[]).forEach((l) => Object.assign(T[l], MORE2[l]));
+
+const AFTER: Record<Lang, Record<string, string>> = {
+  en: {
+    af1: "Say Astaghfirullah (I ask Allah's forgiveness) three times, then: Allahumma antas-salam wa minkas-salam, tabarakta ya dhal-jalali wal-ikram.",
+    af2: "Say SubhanAllah 33 times, Alhamdulillah 33 times and Allahu Akbar 33 times, then once: La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd, wa huwa 'ala kulli shay'in qadir.",
+    af3: "Recite the three Quls: Al-Ikhlas, Al-Falaq and An-Nas.", af3g: "graded authentic by al-Albani",
+    afCounter: "Use the dhikr counter on your dashboard",
+  },
+  ar: {
+    af1: "قل: أستغفر الله ثلاث مرات، ثم: اللهم أنت السلام ومنك السلام، تباركت يا ذا الجلال والإكرام.",
+    af2: "سبّح الله ٣٣ مرة، واحمده ٣٣ مرة، وكبّره ٣٣ مرة، ثم قل مرة: لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء قدير.",
+    af3: "اقرأ المعوذات: الإخلاص والفلق والناس.", af3g: "صححه الألباني",
+    afCounter: "استخدم عدّاد الذكر في لوحتك",
+  },
+  bn: {
+    af1: "তিনবার আস্তাগফিরুল্লাহ বলুন, তারপর: আল্লাহুম্মা আনতাস সালাম ওয়া মিনকাস সালাম, তাবারাকতা ইয়া যাল জালালি ওয়াল ইকরাম।",
+    af2: "৩৩ বার সুবহানাল্লাহ, ৩৩ বার আলহামদুলিল্লাহ ও ৩৩ বার আল্লাহু আকবার বলুন, তারপর একবার: লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারিকা লাহ, লাহুল মুলকু ওয়া লাহুল হামদ, ওয়া হুয়া আলা কুল্লি শাইয়িন কাদির।",
+    af3: "তিন কুল পড়ুন: সূরা ইখলাস, ফালাক ও নাস।", af3g: "আলবানি সহীহ বলেছেন",
+    afCounter: "ড্যাশবোর্ডের যিকির কাউন্টার ব্যবহার করুন",
+  },
+};
+(Object.keys(AFTER) as Lang[]).forEach((l) => Object.assign(T[l], AFTER[l]));

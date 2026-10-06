@@ -1,4 +1,5 @@
 "use client";
+import { MapPin } from "lucide-react";
 import { useState } from "react";
 import { useApp } from "./AppProvider";
 import type { LocStatus } from "./usePlace";
@@ -28,7 +29,7 @@ export default function LocationBar({ place, label, status, ask, choose }: {
   return (
     <div className="locbar">
       <span className="b2 mid">
-        📍 {label || (place.located ? t("locNote") : t("locFallback"))}{" "}
+        <MapPin className="ic" aria-hidden="true" /> {label || (place.located ? t("locNote") : t("locFallback"))}{" "}
         {status === "locating" ? t("locating") : <button className="link" onClick={ask}>{t("useLoc")}</button>}
       </span>
       {reason && <p className="b2" style={{ color: "var(--gold)", margin: "6px 0 0" }}>{reason}</p>}

@@ -14,8 +14,13 @@ export async function GET() {
   const email = new Map((users.data?.users ?? []).map((u) => [u.id, u.email ?? ""]));
   const count = new Map<string, number>();
   (answered.data ?? []).forEach((t) => count.set(t.claimed_by as string, (count.get(t.claimed_by as string) ?? 0) + 1));
+  const withDocs = await Promise.all((apps.data ?? []).map(async (a) => {
+    const docs = ((a.details as { docs?: string[] })?.docs ?? []);
+    const links = docs.length ? (await db.storage.from("mentor-docs").createSignedUrls(docs, 3600)).data ?? [] : [];
+    return { ...a, email: email.get(a.user_id) ?? "", docLinks: links.map((l) => ({ name: (l.path ?? "").split("/").pop()?.replace(/^\d+-\d+-/, "") ?? "file", url: l.signedUrl })) };
+  }));
   return json({
-    applications: (apps.data ?? []).map((a) => ({ ...a, email: email.get(a.user_id) ?? "" })),
+    applications: withDocs,
     mentors: (mentors.data ?? []).map((m) => ({ ...m, email: email.get(m.id) ?? "", answered: count.get(m.id) ?? 0 })),
   });
 }

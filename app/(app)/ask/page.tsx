@@ -1,4 +1,5 @@
 "use client";
+import { BookOpen, Hourglass, MessagesSquare, Sparkles, UserRoundCheck, X } from "lucide-react";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useApp } from "@/components/AppProvider";
@@ -108,10 +109,10 @@ function AskInner() {
           <div key={c.id} className={`chatitem ${c.id === active ? "on" : ""}`}>
             <button className="chatopen" onClick={() => open(c.id)}>
               <span className="ct">{c.title}</span>
-              <span className="b2 mid">{day(c.updated_at)}{c.waiting ? " · ⏳" : ""}</span>
+              <span className="b2 mid">{day(c.updated_at)}{c.waiting ? <> · <Hourglass className="ic" aria-hidden="true" /></> : ""}</span>
               {c.unread > 0 && <i className="af-dot" style={{ position: "static" }}>{c.unread}</i>}
             </button>
-            <button className="chatdel" onClick={() => remove(c.id)} aria-label={t("deleteChat")}>✕</button>
+            <button className="chatdel" onClick={() => remove(c.id)} aria-label={t("deleteChat")}><X className="ic" aria-hidden="true" /></button>
           </div>
         ))}
       </div>
@@ -124,11 +125,11 @@ function AskInner() {
       {drawer && <div className="chatshade" onClick={() => setDrawer(false)} />}
       <section className="chatmain">
         <div className="row" style={{ justifyContent: "space-between" }}>
-          <button className="btn sec chatsbtn" onClick={() => setDrawer(true)}>☰ {t("chats")}</button>
+          <button className="btn sec chatsbtn" onClick={() => setDrawer(true)}><MessagesSquare className="ic" aria-hidden="true" /> {t("chats")}</button>
         </div>
         {about && (
           <div className="chip" style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-            <span>📖 {t("aboutLesson", { n: about.n, title: about.title })}</span>
+            <span><BookOpen className="ic" aria-hidden="true" /> {t("aboutLesson", { n: about.n, title: about.title })}</span>
             <button className="link" onClick={() => setAbout(null)}>{t("clear")}</button>
           </div>
         )}
@@ -145,14 +146,14 @@ function AskInner() {
           {messages.map((m) => (
             <div key={m.id} style={{ display: "contents" }}>
               <div className="bub me">{m.text}</div>
-              {m.pending && <div className="bub"><div className="loading"><span className="star">✦</span>{t("searching")}</div></div>}
+              {m.pending && <div className="bub"><div className="loading"><Sparkles className="ic star" aria-hidden="true" />{t("searching")}</div></div>}
               {m.error && <div className="bub ref">{t(m.error)}</div>}
               {m.answer && <Answer r={m.answer} questionId={m.answer.questionId ?? (m.id.startsWith("local-") ? undefined : m.id)} feedback={m.feedback ?? null} />}
               {m.tickets?.map((tk, k) => {
                 const name = tk.mentor?.name ?? t("yourMentor");
                 if (tk.status === "answered" && tk.reply_learner) return <div key={k} className="bub mentor"><b style={{ color: "var(--gold)" }}>{t("replied", { name })}</b><br />{tk.reply_learner}</div>;
-                if (tk.status === "claimed") return <div key={k} className="b2" style={{ color: "var(--gold)", paddingInlineStart: 6 }}>🧑‍🏫 {t("handling", { name })}</div>;
-                return <div key={k} className="b2 mid" style={{ paddingInlineStart: 6 }}>⏳ {t("waiting")}</div>;
+                if (tk.status === "claimed") return <div key={k} className="b2" style={{ color: "var(--gold)", paddingInlineStart: 6 }}><UserRoundCheck className="ic" aria-hidden="true" /> {t("handling", { name })}</div>;
+                return <div key={k} className="b2 mid" style={{ paddingInlineStart: 6 }}><Hourglass className="ic" aria-hidden="true" /> {t("waiting")}</div>;
               })}
             </div>
           ))}

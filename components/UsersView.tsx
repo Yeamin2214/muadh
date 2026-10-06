@@ -1,4 +1,5 @@
 "use client";
+import { UserRoundCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useApp } from "./AppProvider";
 
@@ -47,7 +48,7 @@ export default function UsersView() {
                     <div className="bub me" dir="auto">{m.text}</div>
                     <div className="b2 mid">→ {t(`a_${m.action}`)}{m.level ? ` · Level ${m.level}` : ""}</div>
                     {m.answer?.sentences && <div className="b2" dir="auto">{m.answer.sentences.map((s) => s.text).join(" ")}</div>}
-                    {m.tickets?.map((tk, i) => tk.reply_learner && <div key={i} className="b2" style={{ color: "var(--gold)" }} dir="auto">🧑‍🏫 {tk.reply_learner}</div>)}
+                    {m.tickets?.map((tk, i) => tk.reply_learner && <div key={i} className="b2" style={{ color: "var(--gold)" }} dir="auto"><UserRoundCheck className="ic" aria-hidden="true" /> {tk.reply_learner}</div>)}
                   </div>
                 ))}
               </div>

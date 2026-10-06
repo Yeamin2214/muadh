@@ -1,4 +1,5 @@
 "use client";
+import { Hourglass, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -14,7 +15,7 @@ export default function MentorStatus() {
   const [s, setS] = useState<Status | null>(null);
 
   useEffect(() => {
-    fetch("/api/mentors/status").then((r) => (r.status === 401 ? router.replace("/mentors/login") : r.json())).then((data) => {
+    fetch("/api/mentors/status").then((r) => (r.status === 401 ? router.replace("/mentor/login") : r.json())).then((data) => {
       if (!data) return;
       if (data.role === "admin") return router.replace("/admin");
       if (data.role === "mentor") return router.replace("/mentor");
@@ -32,7 +33,7 @@ export default function MentorStatus() {
         {s.role === "learner" && (<><p className="lead">{t("msLearner")}</p><Link className="btn" href="/dashboard">{t("msGoDash")}</Link></>)}
         {s.role === "applicant" && (!app || app.status === "pending") && (
           <>
-            <span className="chip">⏳ {t("msPending").split(".")[0]}</span>
+            <span className="chip"><Hourglass className="ic" aria-hidden="true" /> {t("msPending").split(".")[0]}</span>
             <p className="lead">{t("msPending")}</p>
             {app && <p className="b2 mid">{t("msSubmitted", { d: new Date(app.created_at).toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" }) })}</p>}
             {!app && <Link className="btn" href="/mentors/apply">{t("maSubmit")}</Link>}
@@ -45,7 +46,7 @@ export default function MentorStatus() {
             <Link className="btn" href="/mentors/apply">{t("msUpdate")}</Link>
           </>
         )}
-        <button className="btn sec" onClick={signOut} style={{ marginTop: 16 }}>↩ {t("signOut")}</button>
+        <button className="btn sec" onClick={signOut} style={{ marginTop: 16 }}><LogOut className="ic" aria-hidden="true" /> {t("signOut")}</button>
       </div>
     </div>
   );

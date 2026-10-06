@@ -1,4 +1,6 @@
 "use client";
+import { newAudio } from "@/lib/client/audio";
+import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { browserClient } from "@/lib/supabase/browser";
 import { useApp } from "./AppProvider";
@@ -27,7 +29,7 @@ export default function SourceBox({ label }: { label: string }) {
     audio.current?.pause();
     if (playing === id) return setPlaying(null);
     const [, s, a] = id.split(":");
-    const el = new Audio(`https://everyayah.com/data/Alafasy_128kbps/${s.padStart(3, "0")}${a.padStart(3, "0")}.mp3`);
+    const el = newAudio(`https://everyayah.com/data/Alafasy_128kbps/${s.padStart(3, "0")}${a.padStart(3, "0")}.mp3`);
     el.onended = () => setPlaying(null);
     audio.current = el;
     el.play().then(() => setPlaying(id)).catch(() => setPlaying(null));
@@ -49,7 +51,7 @@ export default function SourceBox({ label }: { label: string }) {
       {rows?.map((r) => (
         <div key={r.id} style={{ marginTop: 10 }}>
           <div className="verse">
-            <button className="play sm" onClick={() => play(r.id)} aria-label={`${t("play")} ${r.reference ?? ""}`}>{playing === r.id ? "❚❚" : "▶"}</button>
+            <button className="play sm" onClick={() => play(r.id)} aria-label={`${t("play")} ${r.reference ?? ""}`}>{playing === r.id ? <Pause className="ic" aria-hidden="true" /> : <Play className="ic" aria-hidden="true" />}</button>
             {r.arabic && <p className="ar-text" lang="ar" style={{ fontSize: 22, lineHeight: 2, textAlign: "right", margin: 0, flex: 1 }}>{r.arabic}</p>}
           </div>
           {lang !== "ar" && (r.translations?.[lang] || r.translations?.en) && <p style={{ margin: "4px 0 0", fontFamily: "var(--read)" }}>{r.translations[lang] || r.translations.en}</p>}

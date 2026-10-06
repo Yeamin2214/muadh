@@ -1,4 +1,5 @@
 "use client";
+import PasswordInput from "@/components/PasswordInput";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -52,14 +53,14 @@ export default function Forgot() {
           <label>{t("emailL")}<input className="field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" /></label>
           {error && <p className="err">{error}</p>}
           <button className="btn" disabled={busy || !email}>{busy ? t("saving") : t("fpSend")}</button>
-          <Link href="/login" className="b2" style={{ color: "var(--gold)" }}>{t("signIn")}</Link>
+          <Link href="/user/login" className="b2" style={{ color: "var(--gold)" }}>{t("signIn")}</Link>
         </form>
       ) : (
         <form className="card apply" onSubmit={reset}>
           <h1>{t("rpH")}</h1>
           <p className="mid" style={{ margin: 0 }}>{t("fpCodeP", { email })}</p>
           <label>{t("vCode")}<input className="field code-input" inputMode="numeric" autoComplete="one-time-code" maxLength={10} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} autoFocus /></label>
-          <label>{t("rpNew")}<input className="field" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("passHint")} autoComplete="new-password" /></label>
+          <label>{t("rpNew")}<PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("passHint")} autoComplete="new-password" /></label>
           {error && <p className="err">{error}</p>}
           <button className="btn" disabled={busy || code.length < 6}>{busy ? t("saving") : t("rpSave")}</button>
           <button type="button" className="link b2" onClick={() => sendCode()}>{t("vResend")}</button>

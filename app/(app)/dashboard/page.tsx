@@ -1,4 +1,5 @@
 "use client";
+import { Bell, BellRing, CalendarDays, CalendarPlus, Sparkles, Star } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import DailyPopups from "@/components/DailyPopups";
@@ -85,7 +86,7 @@ export default function Home() {
       {rateOpen && <RateDialog onClose={() => setRateOpen(false)} onDone={() => setRated(true)} />}
       {!rated && (
         <div className="card rate-card">
-          <span>⭐ {t("rtPrompt")}</span>
+          <span><Star className="ic" aria-hidden="true" /> {t("rtPrompt")}</span>
           <button className="btn" onClick={() => setRateOpen(true)}>{t("rtButton")}</button>
         </div>
       )}
@@ -102,7 +103,7 @@ export default function Home() {
           <div className="date">{hijri}</div>
           <h1>{t("greet")}{profile.name ? `, ${profile.name}` : ""}</h1>
           <p>{t("heroP")}</p>
-          <span className="chip">🕌 {jumuah}</span>
+          <span className="chip"><CalendarDays className="ic" aria-hidden="true" /> {jumuah}</span>
         </div>
         <div className="pring">
           <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
@@ -133,12 +134,12 @@ export default function Home() {
         </div>
         <div className="row" style={{ justifyContent: "space-between", marginTop: 16 }}>
           {reminders.status === "on"
-            ? <span className="chip" style={{ marginTop: 0 }}>🔔 {t("remActive")}</span>
-            : <button className="btn sec" onClick={reminders.turnOn}>🔔 {t("remOn")}</button>}
+            ? <span className="chip" style={{ marginTop: 0 }}><BellRing className="ic" aria-hidden="true" /> {t("remActive")}</span>
+            : <button className="btn sec" onClick={reminders.turnOn}><Bell className="ic" aria-hidden="true" /> {t("remOn")}</button>}
           {profile.work_pattern === 1 && <span className="b2" style={{ color: "var(--gold)" }}>{t("shiftNote")}</span>}
         </div>
         <p className="b2 mid" style={{ margin: "10px 0 0" }}>{({ denied: t("remDenied"), dismissed: t("remDismissed"), insecure: t("remInsecure"), unsupported: t("remUnsupported") } as Record<string, string>)[reminders.status] ?? t("remNote")}</p>
-        <button className="btn sec" style={{ marginTop: 12 }} onClick={downloadCalendar}>📅 {t("calBtn")}</button>
+        <button className="btn sec" style={{ marginTop: 12 }} onClick={downloadCalendar}><CalendarPlus className="ic" aria-hidden="true" /> {t("calBtn")}</button>
         {calNote && <p className="b2" style={{ color: "var(--gold)", margin: "8px 0 0" }}>{t("calDone")}</p>}
       </section>
 
@@ -178,9 +179,9 @@ export default function Home() {
           </div>
         </Link>
         <section className="card mini counter b-count">
-          <button className="ring" onClick={tap} style={{ ["--p" as string]: word === 3 ? 100 : (count / 33) * 100 }} aria-label={word === 3 ? t("tahlil") : list("dhikr")[word]}><span>{word === 3 ? "✦" : num(count)}</span></button>
-          <h3>{word === 3 ? t("tahlil") : list("dhikr")[word]}</h3>
-          <p className="b2 mid" style={{ margin: 0, textAlign: "center" }}>{word === 3 ? t("tahlilHint") : `${num(word + 1)} / ${num(3)} · ${t("dhikrSub")}`}</p>
+          <button className="ring" onClick={tap} style={{ ["--p" as string]: word === 3 ? 100 : (count / 33) * 100 }} aria-label={word === 3 ? t("tahlil") : list("dhikr")[word]}><span>{word === 3 ? <Sparkles className="ic" aria-hidden="true" /> : num(count)}</span></button>
+          <div className="cnt-text"><h3>{word === 3 ? t("tahlil") : list("dhikr")[word]}</h3>
+          <p className="b2 mid" style={{ margin: 0, textAlign: "center" }}>{word === 3 ? t("tahlilHint") : `${num(word + 1)} / ${num(3)} · ${t("dhikrSub")}`}</p></div>
         </section>
         <Link className="card mini duaRot b-dua" href="/duas">
           <div className="ttl">{t("duas")}<span className="b2" style={{ color: "var(--gold)" }}>{t("viewAll")}</span></div>

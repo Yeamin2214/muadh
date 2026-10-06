@@ -1,4 +1,5 @@
-import AuthForm from "@/components/AuthForm";
-export default function LoginPage() {
-  return <AuthForm mode="login" />;
+import { redirect } from "next/navigation";
+/** Old link: learners now sign in at /user/login. */
+export default function OldLogin() {
+  redirect("/user/login");
 }

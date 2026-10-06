@@ -1,10 +1,12 @@
 "use client";
+import PasswordInput from "@/components/PasswordInput";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserClient } from "@/lib/supabase/browser";
 import { useApp } from "@/components/AppProvider";
 import { LangSwitch, Logo } from "@/components/Shell";
+import PhoneInput from "@/components/PhoneInput";
 
 const LANGUAGES = ["Arabic", "English", "Bangla", "Urdu", "Other"];
 
@@ -17,6 +19,14 @@ export default function MentorApply() {
   const [gender, setGender] = useState<"male" | "female" | null>(null);
   const [langs, setLangs] = useState<string[]>(["Arabic"]);
   const [agreed, setAgreed] = useState(false);
+  const [docs, setDocs] = useState<(File | null)[]>([null, null, null]);
+  const uploadDocs = async () => {
+    const files = docs.filter((f): f is File => !!f);
+    if (!files.length) return;
+    const form = new FormData();
+    files.forEach((f) => form.append("files", f));
+    await fetch("/api/mentors/docs", { method: "POST", body: form }).catch(() => null);
+  };
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
@@ -46,6 +56,7 @@ export default function MentorApply() {
       const body = await res.json().catch(() => ({}));
       if (!res.ok) { setBusy(false); return setError(body.error === "taken" ? t("errTaken") : body.error === "missing_fields" ? t("maMissing") : t("errGeneric")); }
       await browserClient().auth.signInWithPassword({ email: f.email, password: f.password });
+      await uploadDocs();
       await refresh();
       return router.replace("/mentors/status");
     }
@@ -53,6 +64,7 @@ export default function MentorApply() {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ ...f, languages: langs, agreed }),
     });
+    if (res.ok) await uploadDocs();
     setBusy(false);
     if (!res.ok) return setError(t("errGeneric"));
     await refresh();
@@ -70,7 +82,7 @@ export default function MentorApply() {
           <fieldset><legend>{t("maAccount")}</legend>
             <label>{t("maFull")} *<input className="field" value={f.full_name} onChange={set("full_name")} autoComplete="name" /></label>
             <label>{t("emailL")} *<input className="field" type="email" value={f.email} onChange={set("email")} autoComplete="email" /></label>
-            <label>{t("passL")} *<input className="field" type="password" value={f.password} onChange={set("password")} placeholder={t("passHint")} autoComplete="new-password" /></label>
+            <label>{t("passL")} *<PasswordInput value={f.password} onChange={set("password")} placeholder={t("passHint")} autoComplete="new-password" /></label>
             <div className="lbl">{t("genderQ")} *</div>
             <div className="opts inline" style={{ gridTemplateColumns: "1fr 1fr" }}>
               <button type="button" className="opt" aria-pressed={gender === "male"} onClick={() => setGender("male")}>{t("brother")}</button>
@@ -82,7 +94,8 @@ export default function MentorApply() {
         {resubmit && <label>{t("maFull")} *<input className="field" value={f.full_name} onChange={set("full_name")} /></label>}
 
         <fieldset><legend>{t("maContact")}</legend>
-          <label>{t("maPhone")} *<input className="field" type="tel" value={f.phone} onChange={set("phone")} autoComplete="tel" /></label>
+          <div className="lbl">{t("maPhone")} *</div>
+          <PhoneInput value={f.phone} onChange={(v) => setF((x) => ({ ...x, phone: v }))} />
           <label>{t("maLocation")}<input className="field" value={f.location} onChange={set("location")} /></label>
         </fieldset>
 
@@ -100,13 +113,21 @@ export default function MentorApply() {
           <label>{t("maExp")}<input className="field" type="number" min={0} max={60} value={f.experience_years} onChange={set("experience_years")} /></label>
         </fieldset>
 
+        <fieldset><legend>{t("docsH")}</legend>
+          <p className="b2 mid" style={{ margin: 0 }}>{t("docsP")}</p>
+          {docs.map((_, i) => (
+            <input key={i} className="field" type="file" accept="application/pdf,image/jpeg,image/png,image/webp"
+              onChange={(e) => setDocs((d) => d.map((x, k) => (k === i ? e.target.files?.[0] ?? null : x)))} />
+          ))}
+        </fieldset>
+
         <div className="agree">
           <input id="agree" type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
           <label htmlFor="agree">{t("maAgree")} *</label>
         </div>
         {error && <p className="err" role="alert">{error}</p>}
         <button className="btn" disabled={busy} style={{ width: "100%" }}>{busy ? t("saving") : t("maSubmit")}</button>
-        {!resubmit && <p className="b2 mid" style={{ textAlign: "center" }}>{t("haveAcc")} <Link href="/mentors/login" style={{ color: "var(--gold)" }}>{t("mLoginBtn")}</Link></p>}
+        {!resubmit && <p className="b2 mid" style={{ textAlign: "center" }}>{t("haveAcc")} <Link href="/mentor/login" style={{ color: "var(--gold)" }}>{t("mLoginBtn")}</Link></p>}
       </form>
     </div>
   );

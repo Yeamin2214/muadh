@@ -1,4 +1,5 @@
 "use client";
+import { Check, Lock } from "lucide-react";
 import Link from "next/link";
 import { useApp, useProfile } from "@/components/AppProvider";
 import { LESSONS, STAGE_IMAGES, STAGE_RANGES, isDone, isOpen, nextLesson } from "@/lib/client/lessons";
@@ -33,7 +34,7 @@ export default function Lessons() {
                     return (
                       <li key={l.n} className={cls}>
                         {open || fin ? <Link href={`/lessons/${l.n}`} style={{ flex: 1 }}>{num(l.n)}. {l.title}</Link> : <span title={t("locked")}>{num(l.n)}. {l.title}</span>}
-                        <span className="b2 mid">{fin ? "✓" : open ? t("minutesW", { m: num(l.minutes) }) : "🔒"}</span>
+                        <span className="b2 mid">{fin ? <Check className="ic" aria-hidden="true" /> : open ? t("minutesW", { m: num(l.minutes) }) : <Lock className="ic" aria-hidden="true" />}</span>
                       </li>
                     );
                   })}

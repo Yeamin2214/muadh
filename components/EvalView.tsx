@@ -1,4 +1,5 @@
 "use client";
+import { TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useApp } from "./AppProvider";
 
@@ -65,7 +66,7 @@ export default function EvalView() {
           <div style={{ overflowX: "auto" }}>
             <table className="mdt"><thead><tr><th>ID</th><th>{t("evQuestion")}</th><th>{t("evExpected")}</th><th>{t("evActual")}</th></tr></thead>
               <tbody>{problems.map((r) => (
-                <tr key={r.id}><td>{r.critical ? "⚠ " : ""}{r.id}</td><td dir="auto">{r.question}</td><td>{r.expected_action}</td><td>{r.actual_action}{r.reason ? ` (${r.reason})` : ""}</td></tr>
+                <tr key={r.id}><td>{r.critical ? <TriangleAlert className="ic" aria-hidden="true" /> : null} {r.id}</td><td dir="auto">{r.question}</td><td>{r.expected_action}</td><td>{r.actual_action}{r.reason ? ` (${r.reason})` : ""}</td></tr>
               ))}</tbody></table>
           </div>
         )}

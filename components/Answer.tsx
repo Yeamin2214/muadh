@@ -1,4 +1,5 @@
 "use client";
+import { ExternalLink, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useState } from "react";
 import { useApp } from "./AppProvider";
 import type { AskResult } from "@/lib/engine";
@@ -14,8 +15,8 @@ function Helpful({ questionId, initial }: { questionId: string; initial: number 
   return (
     <div className="helpful">
       <span>{value ? t("fbThanks") : t("fbQ")}</span>
-      <button aria-pressed={value === 1} onClick={() => send(1)} aria-label="👍">👍</button>
-      <button aria-pressed={value === -1} onClick={() => send(-1)} aria-label="👎">👎</button>
+      <button aria-pressed={value === 1} onClick={() => send(1)} aria-label="Helpful"><ThumbsUp className="ic" aria-hidden="true" /></button>
+      <button aria-pressed={value === -1} onClick={() => send(-1)} aria-label="Not helpful"><ThumbsDown className="ic" aria-hidden="true" /></button>
     </div>
   );
 }
@@ -60,7 +61,7 @@ export default function Answer({ r, questionId, feedback = null }: { r: AskResul
             {d.source && <div className="b2"><b>{t("dorarSource")}:</b> <span lang="ar">{d.source}</span></div>}
           </div>
         )}
-        {d?.url && <a className="b2" href={d.url} target="_blank" rel="noreferrer" style={{ color: "var(--gold)", display: "inline-block", marginTop: 8 }}>{t("dorarOpen")} ↗</a>}
+        {d?.url && <a className="b2" href={d.url} target="_blank" rel="noreferrer" style={{ color: "var(--gold)", display: "inline-block", marginTop: 8 }}>{t("dorarOpen")} <ExternalLink className="ic" aria-hidden="true" /></a>}
       </div>
     );
   }
@@ -69,5 +70,6 @@ export default function Answer({ r, questionId, feedback = null }: { r: AskResul
     const lowSource = r.reason === "no_source" || r.reason === "low_confidence";
     return <div className="bub ref"><h3>{t(lowSource ? "noSrcH" : "refH")}</h3>{t(lowSource ? "noSrcP" : "refP")}</div>;
   }
+  if (r.busy) return <div className="bub ref"><h3>{t("busyH")}</h3>{t("busyP")}</div>;
   return <div className="bub">{t("otherP")}</div>;
 }

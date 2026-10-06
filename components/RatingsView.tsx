@@ -1,4 +1,5 @@
 "use client";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useApp } from "./AppProvider";
 
@@ -31,7 +32,7 @@ export default function RatingsView() {
         <div className="card kpi"><span>{t("rtEase")}</span><b>{s.ease ?? "—"}</b><small>/ 5</small></div>
         <div className="card kpi"><span>{t("rtTrust")}</span><b>{s.trust ?? "—"}</b><small>/ 5</small></div>
         <div className="card kpi"><span>{t("rtUseful")}</span><b>{s.useful ?? "—"}</b><small>/ 5</small></div>
-        <div className="card kpi"><span>{t("rtHelpful")}</span><b>{fb ? `${Math.round((d.answers.helpful / fb) * 100)}%` : "—"}</b><small>👍 {num(d.answers.helpful)} · 👎 {num(d.answers.notHelpful)}</small></div>
+        <div className="card kpi"><span>{t("rtHelpful")}</span><b>{fb ? `${Math.round((d.answers.helpful / fb) * 100)}%` : "—"}</b><small><ThumbsUp className="ic" aria-hidden="true" /> {num(d.answers.helpful)} · <ThumbsDown className="ic" aria-hidden="true" /> {num(d.answers.notHelpful)}</small></div>
       </div>
       <section className="card tl">
         <b>{t("rtDist")}</b>

@@ -1,4 +1,6 @@
 "use client";
+import { newAudio } from "@/lib/client/audio";
+import { Pause, Play } from "lucide-react";
 import { useRef, useState } from "react";
 import SurahText from "@/components/SurahText";
 import { useApp, useProfile } from "@/components/AppProvider";
@@ -14,7 +16,7 @@ export default function DuasPage() {
   const play = (id: string) => {
     audio.current?.pause();
     if (playing === id) return setPlaying(null);
-    const a = new Audio(`/audio/${id}.m4a`);
+    const a = newAudio(`/audio/${id}.m4a`);
     a.onended = () => setPlaying(null);
     a.play().then(() => { setPlaying(id); audio.current = a; }).catch(() => { setNote(t("audioSoon")); setTimeout(() => setNote(""), 2500); });
   };
@@ -37,7 +39,7 @@ export default function DuasPage() {
                   <div className="ar-text" lang="ar">{d.ar}</div>
                   {lang !== "ar" && <><div className="tr">{d.tr}</div><div className="mean">{d.m[lang]}</div></>}
                   <div className="foot"><span>{d.src} · {d.graded === "albani" ? t("gradeAlbani") : t("gradeCollection")}</span>
-                    <button className="play" onClick={() => play(d.id)} aria-label={`${t("listen")}: ${d.tr}`}>{playing === d.id ? "❚❚" : "▶"}</button>
+                    <button className="play" onClick={() => play(d.id)} aria-label={`${t("listen")}: ${d.tr}`}>{playing === d.id ? <Pause className="ic" aria-hidden="true" /> : <Play className="ic" aria-hidden="true" />}</button>
                   </div>
                 </article>
               ))}
@@ -54,7 +56,7 @@ export default function DuasPage() {
                 <article key={id} className="card dua">
                   <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
                     <h3 className="dua-title" style={{ margin: 0 }}>{t(`qul${surah}`)}</h3>
-                    <button className="play" onClick={() => play(id)} aria-label={`${t("listen")}: ${t(`qul${surah}`)}`}>{playing === id ? "❚❚" : "▶"}</button>
+                    <button className="play" onClick={() => play(id)} aria-label={`${t("listen")}: ${t(`qul${surah}`)}`}>{playing === id ? <Pause className="ic" aria-hidden="true" /> : <Play className="ic" aria-hidden="true" />}</button>
                   </div>
                   <SurahText surah={surah} verses={verses} />
                   <span className="b2 mid">{t("fullSurah")}</span>
