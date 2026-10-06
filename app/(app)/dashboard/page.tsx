@@ -16,6 +16,27 @@ import { DUAS } from "@/lib/client/text";
 import { nextLesson, STAGE_IMAGES } from "@/lib/client/lessons";
 
 
+/**
+ * Hijri date. Some Android browsers lack the Umm al-Qura calendar and silently print a Gregorian
+ * month with "BC"; in that case try the general Islamic calendar, and if that also fails, compute it.
+ */
+const HIJRI_MONTHS = ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qa'dah", "Dhu al-Hijjah"];
+function hijriDate(d: Date, locale: string) {
+  for (const cal of ["islamic-umalqura", "islamic"]) {
+    try {
+      const f = new Intl.DateTimeFormat(`${locale}-u-ca-${cal}`, { day: "numeric", month: "long", year: "numeric" });
+      if (f.resolvedOptions().calendar.startsWith("islamic")) return f.format(d);
+    } catch { /* try the next one */ }
+  }
+  // Arithmetic (tabular) Islamic calendar, within a day or two of Umm al-Qura; only a last resort.
+  const jd = Math.floor(d.getTime() / 86400000 + 2440587.5) - 1948440 + 10632;
+  const n = Math.floor((jd - 1) / 10631), r = jd - 10631 * n + 354;
+  const j = Math.floor((10985 - r) / 5316) * Math.floor((50 * r) / 17719) + Math.floor(r / 5670) * Math.floor((43 * r) / 15238);
+  const r2 = r - Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) - Math.floor(j / 16) * Math.floor((15238 * j) / 43) + 29;
+  const m = Math.floor((24 * r2) / 709), day = r2 - Math.floor((709 * m) / 24), y = 30 * n + j - 30;
+  return `${day} ${HIJRI_MONTHS[m - 1]} ${y} AH`;
+}
+
 export default function Home() {
   const profile = useProfile();
   const { t, list, num, locale, lang } = useApp();
@@ -79,7 +100,7 @@ export default function Home() {
   const passed = np.today.filter((d) => d <= now).length; // prayers already started today
   const sun = passed === 0 ? 0 : passed >= 5 ? 100
     : ((passed - 1 + (now.getTime() - np.today[passed - 1].getTime()) / (np.today[passed].getTime() - np.today[passed - 1].getTime())) / 4) * 100;
-  const hijri = new Intl.DateTimeFormat(`${locale}-u-ca-islamic-umalqura`, { day: "numeric", month: "long", year: "numeric" }).format(now);
+  const hijri = hijriDate(now, locale);
   const toFriday = (5 - now.getDay() + 7) % 7;
   const jumuah = toFriday === 0 ? t("jumuahToday") : toFriday === 1 ? t("jumuahTomorrow") : t("jumuahIn", { d: num(toFriday) });
   const lesson = nextLesson(profile.lessons_done ?? []);
